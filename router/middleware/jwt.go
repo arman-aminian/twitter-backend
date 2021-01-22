@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo"
 )
 
 type (

@@ -3,7 +3,7 @@ package utils
 import (
 	"fmt"
 
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo"
 	"gopkg.in/go-playground/validator.v9"
 )
 
