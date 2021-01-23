@@ -2,7 +2,6 @@ package store
 
 import (
 	"context"
-	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -41,10 +40,16 @@ func (us *UserStore) GetByUsername(username string) (*model.User, error) {
 }
 
 func (us *UserStore) AddFollower(u *model.User, follower *model.User) error {
-	fmt.Printf("before: %v %v\n", *u.Followers, follower)
 	*u.Followers = append(*u.Followers, follower.ID)
-	fmt.Printf("after: %v\n", *u.Followers)
+	_, err := us.db.UpdateOne(context.TODO(), bson.M{"username": u.Username}, bson.M{"$set": bson.M{"followers": u.Followers}})
+	if err != nil {
+		return err
+	}
 	*follower.Followings = append(*follower.Followings, u.ID)
+	_, err = us.db.UpdateOne(context.TODO(), bson.M{"username": follower.Username}, bson.M{"$set": bson.M{"followings": follower.Followings}})
+	if err != nil {
+		return err
+	}
 	return nil
 }
 

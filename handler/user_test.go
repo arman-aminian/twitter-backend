@@ -2,6 +2,8 @@ package handler
 
 import (
 	"fmt"
+	"github.com/arman-aminian/twitter-backend/router/middleware"
+	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 	"net/http"
@@ -78,31 +80,30 @@ func TestLoginFailedWrongPassword(t *testing.T) {
 	assert.Equal(t, http.StatusForbidden, rec.Code)
 }
 
-// func TestGetProfileSuccess(t *testing.T) {
-// 	setup([]string{"user1", "user2"}, true)
-// 	jwtMiddleware := middleware.JWT(utils.JWTSecret)
-// 	req := httptest.NewRequest(echo.GET, "/profiles/:username", nil)
-// 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-// 	req.Header.Set(echo.HeaderAuthorization, authHeader(utils.GenerateJWT("user1")))
-// 	rec := httptest.NewRecorder()
-// 	c := e.NewContext(req, rec)
-// 	c.SetPath("/profiles/:username")
-// 	c.SetParamNames("username")
-// 	c.SetParamValues("user1")
-// 	err := jwtMiddleware(func(context echo.Context) error {
-// 		return h.GetProfile(c)
-// 	})(c)
-// 	assert.NoError(t, err)
-// 	if assert.Equal(t, http.StatusOK, rec.Code) {
-// 		m := responseMap(rec.Body.Bytes(), "profile")
-// 		assert.Equal(t, "user1", m["username"])
-// 		assert.Equal(t, "user1 bio", m["bio"])
-// 		assert.Equal(t, "https://aux.iconspalace.com/uploads/18923702171865348111.png", m["profile_picture"])
-// 		assert.Equal(t, "https://www.polystar.com/wp-content/uploads/2019/01/polystar-solutions-header.jpg", m["header_picture"])
-// 		fmt.Println(m["followers"])
-// 		assert.NotEmpty(t, m["followers"])
-// 		assert.NotEmpty(t, m["followings"])
-// 		assert.Equal(t, false, m["is_following"])
-// 	}
-// 	// _ = cleanUp([]string{"user1", "user2"})
-// }
+func TestGetProfileSuccess(t *testing.T) {
+	setup([]string{"user1", "user2"}, true)
+	jwtMiddleware := middleware.JWT(utils.JWTSecret)
+	req := httptest.NewRequest(echo.GET, "/profiles/:username", nil)
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	req.Header.Set(echo.HeaderAuthorization, authHeader(utils.GenerateJWT("user1")))
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetPath("/profiles/:username")
+	c.SetParamNames("username")
+	c.SetParamValues("user1")
+	err := jwtMiddleware(func(context echo.Context) error {
+		return h.GetProfile(c)
+	})(c)
+	assert.NoError(t, err)
+	if assert.Equal(t, http.StatusOK, rec.Code) {
+		m := responseMap(rec.Body.Bytes(), "profile")
+		assert.Equal(t, "user1", m["username"])
+		assert.Equal(t, "user1 bio", m["bio"])
+		assert.Equal(t, "https://aux.iconspalace.com/uploads/18923702171865348111.png", m["profile_picture"])
+		assert.Equal(t, "https://www.polystar.com/wp-content/uploads/2019/01/polystar-solutions-header.jpg", m["header_picture"])
+		assert.Empty(t, m["followers"])
+		assert.NotEmpty(t, m["followings"])
+		assert.Equal(t, false, m["is_following"])
+	}
+	// _ = cleanUp([]string{"user1", "user2"})
+}
