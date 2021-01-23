@@ -2,8 +2,10 @@ package db
 
 import (
 	"context"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"log"
 	"sync"
 )
 
@@ -34,4 +36,29 @@ func GetMongoClient() (*mongo.Client, error) {
 		clientInstance = client
 	})
 	return clientInstance, clientInstanceError
+}
+
+func SetupUsersDb() *mongo.Collection {
+	mongoClient, err := GetMongoClient()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	usersDb := mongoClient.Database("twitter_db").Collection("users")
+	createUniqueIndices(usersDb, "username")
+	createUniqueIndices(usersDb, "email")
+	return usersDb
+}
+
+func createUniqueIndices(db *mongo.Collection, field string) {
+	_, err := db.Indexes().CreateOne(
+		context.Background(),
+		mongo.IndexModel{
+			Keys:    bson.D{{Key: field, Value: 1}},
+			Options: options.Index().SetUnique(true),
+		},
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
