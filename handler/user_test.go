@@ -88,7 +88,7 @@ func TestGetProfileSuccess(t *testing.T) {
 	req.Header.Set(echo.HeaderAuthorization, authHeader(utils.GenerateJWT("user1")))
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
-	c.SetPath("/profiles")
+	c.SetPath("/profiles/:username")
 	c.SetParamNames("username")
 	c.SetParamValues("user1")
 	err := jwtMiddleware(func(context echo.Context) error {
@@ -101,8 +101,7 @@ func TestGetProfileSuccess(t *testing.T) {
 		assert.Equal(t, "user1 bio", m["bio"])
 		assert.Equal(t, "https://aux.iconspalace.com/uploads/18923702171865348111.png", m["profile_picture"])
 		assert.Equal(t, "https://www.polystar.com/wp-content/uploads/2019/01/polystar-solutions-header.jpg", m["header_picture"])
-		fmt.Println(m["followers"])
-		assert.NotEmpty(t, m["followers"])
+		assert.Empty(t, m["followers"])
 		assert.NotEmpty(t, m["followings"])
 		assert.Equal(t, false, m["is_following"])
 	}

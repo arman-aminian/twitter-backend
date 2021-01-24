@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/arman-aminian/twitter-backend/db"
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/router"
@@ -47,7 +46,7 @@ func loadFixtures() error {
 	u1.Bio = "user1 bio"
 	u1.ProfilePicture = "https://aux.iconspalace.com/uploads/18923702171865348111.png"
 	u1.HeaderPicture = "https://www.polystar.com/wp-content/uploads/2019/01/polystar-solutions-header.jpg"
-	u1.Password, _ = u1.HashPassword("user2_pass")
+	u1.Password, _ = u1.HashPassword("user1_pass")
 	if err := us.Create(u1); err != nil {
 		return err
 	}
@@ -64,8 +63,6 @@ func loadFixtures() error {
 	}
 
 	err := us.AddFollower(u2, u1)
-
-	fmt.Println(u1.Followings)
 
 	return err
 }
