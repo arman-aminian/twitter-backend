@@ -46,3 +46,22 @@ func (r *userLoginRequest) bind(c echo.Context) error {
 	}
 	return nil
 }
+
+type tweetCreateRequest struct {
+	Tweet struct {
+		Text  string `json:"text" bson:"text"`
+		Media string `json:"media" bson:"media"`
+	} `json:"tweet"`
+}
+
+func (r *tweetCreateRequest) bind(c echo.Context, a *model.Tweet) error {
+	if err := c.Bind(r); err != nil {
+		return err
+	}
+	if err := c.Validate(r); err != nil {
+		return err
+	}
+	a.Text = r.Tweet.Text
+	a.Media = r.Tweet.Media
+	return nil
+}

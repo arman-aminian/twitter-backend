@@ -38,12 +38,7 @@ func GetMongoClient() (*mongo.Client, error) {
 	return clientInstance, clientInstanceError
 }
 
-func SetupUsersDb() *mongo.Collection {
-	mongoClient, err := GetMongoClient()
-	if err != nil {
-		log.Fatal(err)
-	}
-
+func SetupUsersDb(mongoClient *mongo.Client) *mongo.Collection {
 	usersDb := mongoClient.Database("twitter_db").Collection("users")
 	createUniqueIndices(usersDb, "username")
 	createUniqueIndices(usersDb, "email")
@@ -61,4 +56,9 @@ func createUniqueIndices(db *mongo.Collection, field string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func SetupTweetsDb(mongoClient *mongo.Client) *mongo.Collection {
+	usersDb := mongoClient.Database("twitter_db").Collection("tweets")
+	return usersDb
 }

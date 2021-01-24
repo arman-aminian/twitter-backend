@@ -19,4 +19,18 @@ func (h *Handler) Register(g *echo.Group) {
 
 	profiles := g.Group(profiles, jwtMiddleware)
 	profiles.GET("/:username", h.GetProfile)
+
+	articles := g.Group("/tweets", middleware.JWTWithConfig(
+		middleware.JWTConfig{
+			Skipper: func(c echo.Context) bool {
+				//TODO replace INJA and uncomment
+				//if c.Request().Method == "GET" && c.Path() != "/tweets/INJA" {
+				//	return true
+				//}
+				return false
+			},
+			SigningKey: utils.JWTSecret,
+		},
+	))
+	articles.POST("", h.CreateTweet)
 }

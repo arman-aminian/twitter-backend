@@ -7,6 +7,7 @@ import (
 	"github.com/arman-aminian/twitter-backend/router"
 	"github.com/arman-aminian/twitter-backend/store"
 	echoSwagger "github.com/swaggo/echo-swagger" // echo-swagger middleware
+	"log"
 )
 
 func main() {
@@ -14,11 +15,17 @@ func main() {
 
 	r.GET("/swagger/*", echoSwagger.WrapHandler)
 
-	usersDb := db.SetupUsersDb()
+	mongoClient, err := db.GetMongoClient()
+	if err != nil {
+		log.Fatal(err)
+	}
+	usersDb := db.SetupUsersDb(mongoClient)
+	tweetsDb := db.SetupTweetsDb(mongoClient)
 
 	g := r.Group("")
 	us := store.NewUserStore(usersDb)
-	h := handler.NewHandler(us)
+	ts := store.NewTweetStore(tweetsDb)
+	h := handler.NewHandler(us, ts)
 	h.Register(g)
 
 	r.Logger.Fatal(r.Start("127.0.0.1:8585"))

@@ -1,11 +1,9 @@
 package model
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
-
 type Tweet struct {
-	Text     string                `json:"text" bson:"text"`
-	Media    string                `json:"media" bson:"media"`
-	Owner    string                `json:"owner" bson:"owner"`
-	Likes    *[]primitive.ObjectID `json:"likes" bson:"likes"`
-	Retweets *[]primitive.ObjectID `json:"retweets" bson:"retweets"`
+	Text     string   `json:"text" bson:"text"`
+	Media    string   `json:"media" bson:"media"`
+	Owner    *User    `json:"owner" bson:"owner"`
+	Likes    []string `json:"likes" bson:"likes"`
+	Retweets []string `json:"retweets" bson:"retweets"`
 }
