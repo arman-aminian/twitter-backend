@@ -139,6 +139,20 @@ func (h *Handler) Like(c echo.Context) error {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 
+	e := CreateLikeEvent(u, t)
+	err = h.userStore.AddLog(u, e)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	target, err := h.userStore.GetByUsername(t.Owner.Username)
+	if target == nil {
+		return c.JSON(http.StatusNotFound, utils.NotFound())
+	}
+	err = h.userStore.AddNotification(target, e)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+
 	return c.JSON(http.StatusOK, newTweetResponse(c, t))
 }
 
@@ -225,6 +239,20 @@ func (h *Handler) Retweet(c echo.Context) error {
 
 	if err := h.tweetStore.Retweet(t, u); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
+
+	e := CreateRetweetEvent(u, t)
+	err = h.userStore.AddLog(u, e)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	target, err := h.userStore.GetByUsername(t.Owner.Username)
+	if target == nil {
+		return c.JSON(http.StatusNotFound, utils.NotFound())
+	}
+	err = h.userStore.AddNotification(target, e)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
 
 	return c.JSON(http.StatusOK, newTweetResponse(c, t))
