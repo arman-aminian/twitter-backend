@@ -39,5 +39,8 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 	}
 	//print(a.OwnerUsername)
 	err = h.userStore.AddTweet(u, t)
+	if err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
 	return c.JSON(http.StatusCreated, newTweetResponse(c, t))
 }
