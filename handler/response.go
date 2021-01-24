@@ -46,7 +46,7 @@ func newProfileResponse(us user.Store, srcUsername string, u *model.User) *profi
 	r.Profile.Tweets = u.Tweets
 	r.Profile.Followings = u.Followings
 	r.Profile.Followers = u.Followers
-	// Does srcUsername follow u.Username?
+	// Does srcUsername follow u?
 	r.Profile.IsFollowing, _ = us.IsFollower(u.Username, srcUsername)
 	return r
 }
@@ -80,13 +80,13 @@ func newTweetResponse(c echo.Context, t *model.Tweet) *singleTweetResponse {
 	tr.Text = t.Text
 	tr.Media = t.Media
 	for _, u := range *t.Likes {
-		if u == usernameFromToken(c) {
+		if u == stringFieldFromToken(c, "username") {
 			tr.Liked = true
 		}
 	}
 	tr.LikesCount = len(*t.Likes)
 	for _, u := range *t.Retweets {
-		if u == usernameFromToken(c) {
+		if u == stringFieldFromToken(c, "username") {
 			tr.Retweeted = true
 		}
 	}

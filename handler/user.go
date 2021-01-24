@@ -1,9 +1,11 @@
 package handler
 
 import (
+	"errors"
 	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/utils"
+	"github.com/jinzhu/copier"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
@@ -66,6 +68,45 @@ func (h *Handler) Login(c echo.Context) error {
 	return c.JSON(http.StatusOK, newUserResponse(u))
 }
 
+// UpdateUser godoc
+// @Summary Update current user
+// @Description Update user information for current user
+// @ID update-user
+// @Tags user
+// @Accept  json
+// @Produce  json
+// @Param user body userUpdateRequest true "User details to update. At least **one** field is required."
+// @Success 200 {object} userResponse
+// @Failure 400 {object} utils.Error
+// @Failure 401 {object} utils.Error
+// @Failure 422 {object} utils.Error
+// @Failure 404 {object} utils.Error
+// @Failure 500 {object} utils.Error
+// @Security ApiKeyAuth
+// @Router /user [put]
+func (h *Handler) UpdateUser(c echo.Context) error {
+	oldUser, err := h.userStore.GetByUsername(c.Param("username"))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	if oldUser == nil {
+		return c.JSON(http.StatusNotFound, utils.NotFound())
+	}
+	newUser := model.NewUser()
+	_ = copier.Copy(&newUser, &oldUser)
+	req := newUserUpdateRequest()
+	req.populate(newUser)
+	if err := req.bind(c, newUser); err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
+	fmt.Println(oldUser)
+	fmt.Println(newUser)
+	if err := h.userStore.Update(oldUser, newUser); err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
+	return c.JSON(http.StatusOK, newUserResponse(newUser))
+}
+
 // GetProfile godoc
 // @Summary Get a profile
 // @Description Get a profile of a user of the system. Auth is optional
@@ -91,7 +132,7 @@ func (h *Handler) GetProfile(c echo.Context) error {
 	if u == nil {
 		return c.JSON(http.StatusNotFound, utils.NotFound())
 	}
-	return c.JSON(http.StatusOK, newProfileResponse(h.userStore, usernameFromToken(c), u))
+	return c.JSON(http.StatusOK, newProfileResponse(h.userStore, stringFieldFromToken(c, "username"), u))
 }
 
 // UpdateProfile godoc
@@ -111,7 +152,7 @@ func (h *Handler) GetProfile(c echo.Context) error {
 // @Security ApiKeyAuth
 // @Router /user [put]
 func (h *Handler) UpdateProfile(c echo.Context) error {
-	u, err := h.userStore.GetByUsername(usernameFromToken(c))
+	u, err := h.userStore.GetByUsername(stringFieldFromToken(c, "username"))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
@@ -129,46 +170,100 @@ func (h *Handler) UpdateProfile(c echo.Context) error {
 	return c.JSON(http.StatusOK, newProfileResponse(h.userStore, u.Username, u))
 }
 
-// UpdateUser godoc
-// @Summary Update current user
-// @Description Update user information for current user
-// @ID update-user
-// @Tags user
+// Follow godoc
+// @Summary Follow a user
+// @Description Follow a user by username
+// @ID follow
+// @Tags follow
 // @Accept  json
 // @Produce  json
-// @Param user body userUpdateRequest true "User details to update. At least **one** field is required."
-// @Success 200 {object} userResponse
+// @Param username path string true "Username of the profile you want to follow"
+// @Success 200 {object} profileResponse
 // @Failure 400 {object} utils.Error
 // @Failure 401 {object} utils.Error
 // @Failure 422 {object} utils.Error
 // @Failure 404 {object} utils.Error
 // @Failure 500 {object} utils.Error
 // @Security ApiKeyAuth
-// @Router /user [put]
-func (h *Handler) UpdateUser(c echo.Context) error {
-	u, err := h.userStore.GetByUsername(usernameFromToken(c))
+// @Router /profiles/{username}/follow [post]
+func (h *Handler) Follow(c echo.Context) error {
+	follower, err := h.userStore.GetByUsername(stringFieldFromToken(c, "username"))
+	fmt.Println(follower)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	u, err := h.userStore.GetByUsername(c.Param("username"))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
 	if u == nil {
 		return c.JSON(http.StatusNotFound, utils.NotFound())
 	}
-	req := newUserUpdateRequest()
-	req.populate(u)
-	if err := req.bind(c, u); err != nil {
+	if u.Username == follower.Username {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(errors.New("can't follow yourself")))
+	}
+	if Contains(*u.Followers, follower.Username) || Contains(*follower.Followings, u.Username) {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(errors.New("already follows the target")))
+	}
+	if err := h.userStore.AddFollower(u, follower); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	fmt.Println(u)
-	if err := h.userStore.Update(u); err != nil {
-		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
-	}
-	return c.JSON(http.StatusOK, newUserResponse(u))
+	return c.JSON(http.StatusOK, newProfileResponse(h.userStore, follower.Username, u))
 }
 
-func usernameFromToken(c echo.Context) string {
-	username, ok := c.Get("username").(string)
+// Unfollow godoc
+// @Summary Unfollow a user
+// @Description Unfollow a user by username
+// @ID unfollow
+// @Tags follow
+// @Accept  json
+// @Produce  json
+// @Param username path string true "Username of the profile you want to unfollow"
+// @Success 201 {object} userResponse
+// @Failure 400 {object} utils.Error
+// @Failure 401 {object} utils.Error
+// @Failure 422 {object} utils.Error
+// @Failure 404 {object} utils.Error
+// @Failure 500 {object} utils.Error
+// @Security ApiKeyAuth
+// @Router /profiles/{username}/follow [delete]
+func (h *Handler) UnFollow(c echo.Context) error {
+	follower, err := h.userStore.GetByUsername(stringFieldFromToken(c, "username"))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	u, err := h.userStore.GetByUsername(c.Param("username"))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	if u == nil {
+		return c.JSON(http.StatusNotFound, utils.NotFound())
+	}
+	if u.Username == follower.Username {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(errors.New("can't unfollow yourself")))
+	}
+	if !Contains(*u.Followers, follower.Username) || !Contains(*follower.Followings, u.Username) {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(errors.New("doesn't follow the target")))
+	}
+	if err := h.userStore.RemoveFollower(u, follower); err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
+	return c.JSON(http.StatusOK, newProfileResponse(h.userStore, stringFieldFromToken(c, "username"), u))
+}
+
+func stringFieldFromToken(c echo.Context, field string) string {
+	field, ok := c.Get(field).(string)
 	if !ok {
 		return ""
 	}
-	return username
+	return field
+}
+
+func Contains(slice []string, val string) bool {
+	for _, item := range slice {
+		if item == val {
+			return true
+		}
+	}
+	return false
 }

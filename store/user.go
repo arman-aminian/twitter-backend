@@ -2,6 +2,7 @@ package store
 
 import (
 	"context"
+	"github.com/arman-aminian/twitter-backend/handler"
 	"github.com/arman-aminian/twitter-backend/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -22,26 +23,27 @@ func (us *UserStore) Create(u *model.User) error {
 	return err
 }
 
-func (us *UserStore) Remove(username string) error {
-	_, err := us.db.DeleteOne(context.TODO(), bson.M{"_id": username})
+func (us *UserStore) Remove(field, value string) error {
+	_, err := us.db.DeleteOne(context.TODO(), bson.M{field: value})
 	return err
 }
 
-func (us *UserStore) Update(u *model.User) error {
-	_, err := us.db.UpdateOne(context.TODO(),
-		bson.M{"_id": u.User},
-		bson.M{"$set": bson.M{
-			"username": u.Username,
-			"email":    u.Email,
-			"password": u.Password,
-		},
-		})
+func (us *UserStore) Update(old *model.User, new *model.User) error {
+	var err error
+	if old.Username != new.Username {
+		err = us.Remove("_id", old.Username)
+	} else if old.Email != new.Email {
+		err = us.Remove("email", old.Email)
+	} else if old.Password != new.Password {
+		err = us.Remove("password", old.Password)
+	}
+	err = us.Create(new)
 	return err
 }
 
 func (us *UserStore) UpdateProfile(u *model.User) error {
 	_, err := us.db.UpdateOne(context.TODO(),
-		bson.M{"username": u.Username},
+		bson.M{"_id": u.Username},
 		bson.M{"$set": bson.M{
 			"bio":             u.Bio,
 			"profile_picture": u.ProfilePicture,
@@ -71,6 +73,43 @@ func (us *UserStore) AddFollower(u *model.User, follower *model.User) error {
 	}
 	*follower.Followings = append(*follower.Followings, u.Username)
 	_, err = us.db.UpdateOne(context.TODO(), bson.M{"_id": follower.Username}, bson.M{"$set": bson.M{"followings": follower.Followings}})
+	if err != nil {
+		return err
+	}
+
+	eLog := handler.CreateFollowLogEvent(follower, u)
+	eNotif := handler.CreateFollowNotificationEvent(follower, u)
+	err = us.AddLog(follower, eLog)
+	if err != nil {
+		return err
+	}
+	err = us.AddNotification(u, eNotif)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (us *UserStore) RemoveFollower(u *model.User, follower *model.User) error {
+	newFollowers := &[]string{}
+	for _, i := range *u.Followers {
+		if i != follower.Username {
+			*newFollowers = append(*newFollowers, i)
+		}
+	}
+	_, err := us.db.UpdateOne(context.TODO(), bson.M{"_id": u.Username}, bson.M{"$set": bson.M{"followers": newFollowers}})
+	if err != nil {
+		return err
+	}
+
+	newFollowings := &[]string{}
+	for _, i := range *follower.Followings {
+		if i != u.Username {
+			*newFollowings = append(*newFollowings, i)
+		}
+	}
+	_, err = us.db.UpdateOne(context.TODO(), bson.M{"_id": follower.Username}, bson.M{"$set": bson.M{"followings": newFollowings}})
 	if err != nil {
 		return err
 	}
@@ -107,4 +146,22 @@ func (us *UserStore) AddTweet(u *model.User, t *model.Tweet) error {
 	*u.Tweets = append(*u.Tweets, t.ID)
 	_, err := us.db.UpdateOne(context.TODO(), bson.M{"_id": u.Username}, bson.M{"$set": bson.M{"tweets": u.Tweets}})
 	return err
+}
+
+func (us *UserStore) AddLog(u *model.User, e *model.Event) error {
+	*u.Logs = append(*u.Logs, *e)
+	_, err := us.db.UpdateOne(context.TODO(), bson.M{"_id": u.Username}, bson.M{"$set": bson.M{"logs": u.Logs}})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (us *UserStore) AddNotification(u *model.User, e *model.Event) error {
+	*u.Notifications = append(*u.Notifications, *e)
+	_, err := us.db.UpdateOne(context.TODO(), bson.M{"_id": u.Username}, bson.M{"$set": bson.M{"notifications": u.Notifications}})
+	if err != nil {
+		return err
+	}
+	return nil
 }

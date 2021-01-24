@@ -31,7 +31,7 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 
-	u, _ := h.userStore.GetByUsername(usernameFromToken(c))
+	u, _ := h.userStore.GetByUsername(stringFieldFromToken(c, "username"))
 	t.Owner.Username = u.Username
 	t.Owner.ProfilePicture = u.ProfilePicture
 	t.ID = primitive.NewObjectID()

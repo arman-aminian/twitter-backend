@@ -7,10 +7,13 @@ import (
 )
 
 const (
-	signUp   = "/signup"
-	login    = "/login"
-	userPath = "/user"
-	profiles = "/profiles"
+	signUp    = "/signup"
+	login     = "/login"
+	userPath  = "/user"
+	profiles  = "/profiles"
+	tweets    = "/tweets"
+	usernameQ = "/:username"
+	follow    = usernameQ + "/follow"
 )
 
 func (h *Handler) Register(g *echo.Group) {
@@ -19,13 +22,15 @@ func (h *Handler) Register(g *echo.Group) {
 	g.POST(login, h.Login)
 
 	user := g.Group(userPath, jwtMiddleware)
-	user.PUT("/:username", h.UpdateUser)
+	user.PUT(usernameQ, h.UpdateUser)
 
 	profiles := g.Group(profiles, jwtMiddleware)
-	profiles.GET("/:username", h.GetProfile)
-	profiles.PUT("/:username", h.UpdateProfile)
+	profiles.GET(usernameQ, h.GetProfile)
+	profiles.PUT(usernameQ, h.UpdateProfile)
+	profiles.POST(follow, h.Follow)
+	profiles.DELETE(follow, h.UnFollow)
 
-	tweets := g.Group("/tweets", middleware.JWTWithConfig(
+	tweets := g.Group(tweets, middleware.JWTWithConfig(
 		middleware.JWTConfig{
 			Skipper: func(c echo.Context) bool {
 				// TODO replace INJA and uncomment
