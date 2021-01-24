@@ -32,8 +32,8 @@ type profileResponse struct {
 		ProfilePicture string                `json:"profile_picture"`
 		HeaderPicture  string                `json:"header_picture"`
 		Tweets         *[]primitive.ObjectID `json:"tweets"`
-		Followings     *[]string             `json:"followings"`
-		Followers      *[]string             `json:"followers"`
+		Followings     *[]model.Owner        `json:"followings"`
+		Followers      *[]model.Owner        `json:"followers"`
 	} `json:"profile"`
 }
 
@@ -46,9 +46,22 @@ func newProfileResponse(us user.Store, srcUsername string, u *model.User) *profi
 	r.Profile.Tweets = u.Tweets
 	r.Profile.Followings = u.Followings
 	r.Profile.Followers = u.Followers
-	// Does srcUsername follow u?
 	r.Profile.IsFollowing, _ = us.IsFollower(u.Username, srcUsername)
 	return r
+}
+
+type FollowersAndFollowingListResponse struct {
+	Followers   *[]model.Owner `json:"followers" bson:"followers"`
+	Followings  *[]model.Owner `json:"followings" bson:"followings"`
+	IsFollowing bool           `json:"is_following, omitempty"`
+}
+
+func newFollowingAndFollowersList(us user.Store, srcUsername string, u *model.User) *FollowersAndFollowingListResponse {
+	l := new(FollowersAndFollowingListResponse)
+	l.Followers = u.Followers
+	l.Followings = u.Followings
+	l.IsFollowing, _ = us.IsFollower(u.Username, srcUsername)
+	return l
 }
 
 //	********************** Tweet Response **********************

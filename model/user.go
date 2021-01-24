@@ -17,8 +17,8 @@ type User struct {
 	HeaderPicture  string `json:"header_picture" bson:"header_picture"`
 
 	Tweets        *[]primitive.ObjectID `json:"tweets" bson:"tweets"`
-	Followings    *[]string             `json:"followings" bson:"followings"`
-	Followers     *[]string             `json:"followers" bson:"followers"`
+	Followings    *[]Owner              `json:"followings" bson:"followings"`
+	Followers     *[]Owner              `json:"followers" bson:"followers"`
 	Notifications *[]Event              `json:"notifications" bson:"notifications"`
 	Logs          *[]Event              `json:"logs" bson:"logs"`
 }
@@ -26,8 +26,8 @@ type User struct {
 func NewUser() *User {
 	var u User
 	u.Tweets = &[]primitive.ObjectID{}
-	u.Followings = &[]string{}
-	u.Followers = &[]string{}
+	u.Followings = &[]Owner{}
+	u.Followers = &[]Owner{}
 	u.Notifications = &[]Event{}
 	u.Logs = &[]Event{}
 	return &u

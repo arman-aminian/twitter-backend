@@ -2,11 +2,6 @@ package model
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
-type Owner struct {
-	Username       string `json:"username"`
-	ProfilePicture string `json:"profile_picture"`
-}
-
 type Tweet struct {
 	ID       primitive.ObjectID `json:"id,omitempty" bson:"_id"`
 	Text     string             `json:"text" bson:"text"`

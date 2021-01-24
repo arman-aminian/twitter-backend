@@ -29,6 +29,7 @@ func (h *Handler) Register(g *echo.Group) {
 	profiles.PUT(usernameQ, h.UpdateProfile)
 	profiles.POST(follow, h.Follow)
 	profiles.DELETE(follow, h.UnFollow)
+	profiles.GET(usernameQ+"/list", h.GetFollowingAndFollowersList)
 
 	tweets := g.Group(tweets, middleware.JWTWithConfig(
 		middleware.JWTConfig{
