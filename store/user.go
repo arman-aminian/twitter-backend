@@ -66,12 +66,12 @@ func (us *UserStore) GetByUsername(username string) (*model.User, error) {
 }
 
 func (us *UserStore) AddFollower(u *model.User, follower *model.User) error {
-	*u.Followers = append(*u.Followers, follower.Username)
+	*u.Followers = append(*u.Followers, *model.NewOwner(follower.Username, follower.ProfilePicture))
 	_, err := us.db.UpdateOne(context.TODO(), bson.M{"_id": u.Username}, bson.M{"$set": bson.M{"followers": u.Followers}})
 	if err != nil {
 		return err
 	}
-	*follower.Followings = append(*follower.Followings, u.Username)
+	*follower.Followings = append(*follower.Followings, *model.NewOwner(u.Username, u.ProfilePicture))
 	_, err = us.db.UpdateOne(context.TODO(), bson.M{"_id": follower.Username}, bson.M{"$set": bson.M{"followings": follower.Followings}})
 	if err != nil {
 		return err
@@ -92,10 +92,10 @@ func (us *UserStore) AddFollower(u *model.User, follower *model.User) error {
 }
 
 func (us *UserStore) RemoveFollower(u *model.User, follower *model.User) error {
-	newFollowers := &[]string{}
-	for _, i := range *u.Followers {
-		if i != follower.Username {
-			*newFollowers = append(*newFollowers, i)
+	newFollowers := &[]model.Owner{}
+	for _, o := range *u.Followers {
+		if o.Username != follower.Username {
+			*newFollowers = append(*newFollowers, o)
 		}
 	}
 	_, err := us.db.UpdateOne(context.TODO(), bson.M{"_id": u.Username}, bson.M{"$set": bson.M{"followers": newFollowers}})
@@ -104,10 +104,10 @@ func (us *UserStore) RemoveFollower(u *model.User, follower *model.User) error {
 	}
 	u.Followers = newFollowers
 
-	newFollowings := &[]string{}
-	for _, i := range *follower.Followings {
-		if i != u.Username {
-			*newFollowings = append(*newFollowings, i)
+	newFollowings := &[]model.Owner{}
+	for _, o := range *follower.Followings {
+		if o.Username != u.Username {
+			*newFollowings = append(*newFollowings, o)
 		}
 	}
 	_, err = us.db.UpdateOne(context.TODO(), bson.M{"_id": follower.Username}, bson.M{"$set": bson.M{"followings": newFollowings}})
@@ -128,15 +128,15 @@ func (us *UserStore) IsFollower(username, followerUsername string) (bool, error)
 		return false, nil
 	}
 	doesFollow := false
-	for _, f := range *u.Followers {
-		if f == follower.Username {
+	for _, o := range *u.Followers {
+		if o.Username == follower.Username {
 			doesFollow = true
 			break
 		}
 	}
 	hasInFollowings := false
-	for _, f := range *follower.Followings {
-		if f == u.Username {
+	for _, o := range *follower.Followings {
+		if o.Username == u.Username {
 			hasInFollowings = true
 			break
 		}

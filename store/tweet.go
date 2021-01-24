@@ -34,10 +34,7 @@ func (ts *TweetStore) GetTweetById(id *string) (*model.Tweet, error) {
 }
 
 func (ts *TweetStore) LikeTweet(t *model.Tweet, u *model.User) error {
-	*t.Likes = append(*t.Likes, model.Owner{
-		Username:       u.Username,
-		ProfilePicture: u.ProfilePicture,
-	})
+	*t.Likes = append(*t.Likes, *model.NewOwner(u.Username, u.ProfilePicture))
 	_, err := ts.db.UpdateOne(context.TODO(), bson.M{"_id": t.ID}, bson.M{"$set": bson.M{"likes": t.Likes}})
 	if err != nil {
 		return err
@@ -61,10 +58,7 @@ func (ts *TweetStore) UnLikeTweet(t *model.Tweet, u *model.User) error {
 }
 
 func (ts *TweetStore) Retweet(t *model.Tweet, u *model.User) error {
-	*t.Retweets = append(*t.Retweets, model.Owner{
-		Username:       u.Username,
-		ProfilePicture: u.ProfilePicture,
-	})
+	*t.Retweets = append(*t.Retweets, *model.NewOwner(u.Username, u.ProfilePicture))
 	_, err := ts.db.UpdateOne(context.TODO(), bson.M{"_id": t.ID}, bson.M{"$set": bson.M{"retweets": t.Retweets}})
 	if err != nil {
 		return err

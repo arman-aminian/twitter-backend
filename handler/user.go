@@ -188,7 +188,6 @@ func (h *Handler) UpdateProfile(c echo.Context) error {
 // @Router /profiles/{username}/follow [post]
 func (h *Handler) Follow(c echo.Context) error {
 	follower, err := h.userStore.GetByUsername(stringFieldFromToken(c, "username"))
-	fmt.Println(follower)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
@@ -251,6 +250,17 @@ func (h *Handler) UnFollow(c echo.Context) error {
 	return c.JSON(http.StatusOK, newProfileResponse(h.userStore, stringFieldFromToken(c, "username"), u))
 }
 
+func (h *Handler) GetFollowingAndFollowersList(c echo.Context) error {
+	u, err := h.userStore.GetByUsername(c.Param("username"))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	if u == nil {
+		return c.JSON(http.StatusNotFound, utils.NotFound())
+	}
+	return c.JSON(http.StatusOK, newFollowingAndFollowersList(h.userStore, stringFieldFromToken(c, "username"), u))
+}
+
 func stringFieldFromToken(c echo.Context, field string) string {
 	field, ok := c.Get(field).(string)
 	if !ok {
@@ -259,9 +269,9 @@ func stringFieldFromToken(c echo.Context, field string) string {
 	return field
 }
 
-func Contains(slice []string, val string) bool {
+func Contains(slice []model.Owner, val string) bool {
 	for _, item := range slice {
-		if item == val {
+		if item.Username == val {
 			return true
 		}
 	}
