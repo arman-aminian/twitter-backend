@@ -10,7 +10,8 @@ type User struct {
 	Username string `json:"username" bson:"_id"`
 	Email    string `json:"email" bson:"email"`
 	Password string `json:"password" bson:"password"`
-	// Fluff
+
+	// Fluff shown to user as profile
 	Bio            string `json:"bio" bson:"bio"`
 	ProfilePicture string `json:"profile_picture" bson:"profile_picture"`
 	HeaderPicture  string `json:"header_picture" bson:"header_picture"`

@@ -9,6 +9,7 @@ import (
 	"github.com/arman-aminian/twitter-backend/user"
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/mongo"
+	"log"
 )
 
 var (
@@ -23,9 +24,15 @@ func authHeader(token string) string {
 }
 
 func setup(usernames []string, shouldLoadFixtures bool) {
-	usersDb = db.SetupUsersDb()
+	mongoClient, err := db.GetMongoClient()
+	if err != nil {
+		log.Fatal(err)
+	}
+	usersDb = db.SetupUsersDb(mongoClient)
+	tweetsDb := db.SetupTweetsDb(mongoClient)
 	us = store.NewUserStore(usersDb)
-	h = NewHandler(us)
+	ts := store.NewTweetStore(tweetsDb)
+	h = NewHandler(us, ts)
 	e = router.New()
 	_ = cleanUp(usernames)
 	if shouldLoadFixtures {
@@ -62,7 +69,7 @@ func loadFixtures() error {
 		return err
 	}
 
-	err := us.AddFollower(u2, u1)
+	err := us.AddFollower(u1, u2)
 
 	return err
 }

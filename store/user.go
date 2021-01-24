@@ -27,6 +27,30 @@ func (us *UserStore) Remove(username string) error {
 	return err
 }
 
+func (us *UserStore) Update(u *model.User) error {
+	_, err := us.db.UpdateOne(context.TODO(),
+		bson.M{"_id": u.User},
+		bson.M{"$set": bson.M{
+			"username": u.Username,
+			"email":    u.Email,
+			"password": u.Password,
+		},
+		})
+	return err
+}
+
+func (us *UserStore) UpdateProfile(u *model.User) error {
+	_, err := us.db.UpdateOne(context.TODO(),
+		bson.M{"username": u.Username},
+		bson.M{"$set": bson.M{
+			"bio":             u.Bio,
+			"profile_picture": u.ProfilePicture,
+			"header_picture":  u.HeaderPicture,
+		},
+		})
+	return err
+}
+
 func (us *UserStore) GetByEmail(email string) (*model.User, error) {
 	var u model.User
 	err := us.db.FindOne(context.TODO(), bson.M{"email": email}).Decode(&u)
