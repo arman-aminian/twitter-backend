@@ -191,7 +191,6 @@ func (h *Handler) Follow(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
-	fmt.Println("adsfasdfasdfasdf")
 	u, err := h.userStore.GetByUsername(c.Param("username"))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))

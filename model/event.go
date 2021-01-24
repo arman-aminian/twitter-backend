@@ -6,8 +6,8 @@ import (
 
 type Event struct {
 	Mode      string    `json:"mode" bson:"mode"`
-	Source    string    `json:"source" bson:"source"`
-	Target    string    `json:"target" bson:"target"`
+	Source    Owner     `json:"source" bson:"source"`
+	Target    Owner     `json:"target" bson:"target"`
 	Content   string    `json:"content" bson:"content"`
 	TimeStamp time.Time `json:"timestamp" bson:"timestamp"`
 	// EventID   string              `json:"event_id" bson:"event_id"`

@@ -2,7 +2,6 @@ package store
 
 import (
 	"context"
-	"fmt"
 	"github.com/arman-aminian/twitter-backend/handler"
 	"github.com/arman-aminian/twitter-backend/model"
 	"go.mongodb.org/mongo-driver/bson"
@@ -63,7 +62,6 @@ func (us *UserStore) GetByEmail(email string) (*model.User, error) {
 func (us *UserStore) GetByUsername(username string) (*model.User, error) {
 	var u model.User
 	err := us.db.FindOne(context.TODO(), bson.M{"_id": username}).Decode(&u)
-	fmt.Println(err)
 	return &u, err
 }
 
