@@ -8,17 +8,18 @@ import (
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
+	"time"
 )
 
 // CreateArticle godoc
-// @Summary Create an article
-// @Description Create an article. Auth is require
-// @ID create-article
+// @Summary Create an tweet
+// @Description Create an tweet
+// @ID create-tweet
 // @Tags article
 // @Accept  json
 // @Produce  json
-// @Param article body articleCreateRequest true "Article to create"
-// @Success 201 {object} singleArticleResponse
+// @Param article body tweetCreateRequest true "Article to create"
+// @Success 201 {object} singleTweetResponse
 // @Failure 401 {object} utils.Error
 // @Failure 422 {object} utils.Error
 // @Failure 500 {object} utils.Error
@@ -35,6 +36,7 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 	u, _ := h.userStore.GetByUsername(stringFieldFromToken(c, "username"))
 	t.Owner.Username = u.Username
 	t.Owner.ProfilePicture = u.ProfilePicture
+	t.Time = time.Now()
 	t.ID = primitive.NewObjectID()
 	err := h.tweetStore.CreateTweet(t)
 	if err != nil {

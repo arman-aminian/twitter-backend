@@ -6,6 +6,7 @@ import (
 	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"time"
 )
 
 type userResponse struct {
@@ -74,6 +75,7 @@ type tweetResponse struct {
 	LikesCount    int         `json:"likes_count"`
 	Retweeted     bool        `json:"retweeted"`
 	RetweetsCount int         `json:"retweets_count"`
+	Time          time.Time   `json:"time" bson:"time"`
 	Owner         model.Owner `json:"owner"`
 }
 
@@ -91,6 +93,7 @@ func newTweetResponse(c echo.Context, t *model.Tweet) *singleTweetResponse {
 	tr.ID = t.ID.Hex()
 	tr.Text = t.Text
 	tr.Media = t.Media
+	tr.Time = t.Time
 	for _, u := range *t.Likes {
 		if u.Username == stringFieldFromToken(c, "username") {
 			tr.Liked = true
@@ -121,4 +124,8 @@ func newLikeAndRetweetResponse(t *model.Tweet) *tweetLikeAndRetweetResponse {
 	tr.LikesList = t.Likes
 	tr.RetweetsList = t.Retweets
 	return tr
+}
+
+type timelineResponse struct {
+	timeline *[]model.Tweet
 }
