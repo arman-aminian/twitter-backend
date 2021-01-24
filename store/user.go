@@ -53,6 +53,12 @@ func (us *UserStore) AddFollower(u *model.User, follower *model.User) error {
 	return nil
 }
 
+func (us *UserStore) AddTweet(u *model.User, t *model.Tweet) error {
+	*u.Tweets = append(*u.Tweets, t.ID)
+	_, err := us.db.UpdateOne(context.TODO(), bson.M{"_id": u.Username}, bson.M{"$set": bson.M{"tweets": u.Tweets}})
+	return err
+}
+
 func (us *UserStore) IsFollower(username, followerUsername string) (bool, error) {
 	u, err := us.GetByUsername(username)
 	if err != nil {

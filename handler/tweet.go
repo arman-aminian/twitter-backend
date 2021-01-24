@@ -4,6 +4,7 @@ import (
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/labstack/echo/v4"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
 )
 
@@ -29,12 +30,14 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 
-	t.Owner, _ = h.userStore.GetByUsername(usernameFromToken(c))
-
+	u, _ := h.userStore.GetByUsername(usernameFromToken(c))
+	t.Owner = u
+	t.ID = primitive.NewObjectID()
 	err := h.tweetStore.CreateTweet(t)
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 	//print(a.OwnerUsername)
+	err = h.userStore.AddTweet(u, t)
 	return c.JSON(http.StatusCreated, newTweetResponse(c, t))
 }
