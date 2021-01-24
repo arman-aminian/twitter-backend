@@ -9,6 +9,7 @@ import (
 const (
 	signUp   = "/signup"
 	login    = "/login"
+	userPath = "/user"
 	profiles = "/profiles"
 )
 
@@ -17,20 +18,24 @@ func (h *Handler) Register(g *echo.Group) {
 	g.POST(signUp, h.SignUp)
 	g.POST(login, h.Login)
 
+	user := g.Group(userPath, jwtMiddleware)
+	user.PUT("/:username", h.UpdateUser)
+
 	profiles := g.Group(profiles, jwtMiddleware)
 	profiles.GET("/:username", h.GetProfile)
+	profiles.PUT("/:username", h.UpdateProfile)
 
-	articles := g.Group("/tweets", middleware.JWTWithConfig(
+	tweets := g.Group("/tweets", middleware.JWTWithConfig(
 		middleware.JWTConfig{
 			Skipper: func(c echo.Context) bool {
-				//TODO replace INJA and uncomment
-				//if c.Request().Method == "GET" && c.Path() != "/tweets/INJA" {
+				// TODO replace INJA and uncomment
+				// if c.Request().Method == "GET" && c.Path() != "/tweets/INJA" {
 				//	return true
-				//}
+				// }
 				return false
 			},
 			SigningKey: utils.JWTSecret,
 		},
 	))
-	articles.POST("", h.CreateTweet)
+	tweets.POST("", h.CreateTweet)
 }

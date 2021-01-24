@@ -59,6 +59,6 @@ func createUniqueIndices(db *mongo.Collection, field string) {
 }
 
 func SetupTweetsDb(mongoClient *mongo.Client) *mongo.Collection {
-	usersDb := mongoClient.Database("twitter_db").Collection("tweets")
-	return usersDb
+	tweetsDb := mongoClient.Database("twitter_db").Collection("tweets")
+	return tweetsDb
 }
