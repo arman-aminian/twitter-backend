@@ -7,29 +7,27 @@ import (
 )
 
 type User struct {
-	ID       primitive.ObjectID `bson:"_id,omitempty"`
-	Username string             `json:"username" bson:"username"`
-	Email    string             `json:"email" bson:"email"`
-	Password string             `json:"password" bson:"password"`
+	Username string `json:"username" bson:"_id"`
+	Email    string `json:"email" bson:"email"`
+	Password string `json:"password" bson:"password"`
 
-	// Fluff shown as user profile
+	// Fluff shown to user as profile
 	Bio            string `json:"bio" bson:"bio"`
 	ProfilePicture string `json:"profile_picture" bson:"profile_picture"`
 	HeaderPicture  string `json:"header_picture" bson:"header_picture"`
 
 	Tweets        *[]primitive.ObjectID `json:"tweets" bson:"tweets"`
-	Followings    *[]primitive.ObjectID `json:"followings" bson:"followings"`
-	Followers     *[]primitive.ObjectID `json:"followers" bson:"followers"`
+	Followings    *[]string             `json:"followings" bson:"followings"`
+	Followers     *[]string             `json:"followers" bson:"followers"`
 	Notifications *[]Event              `json:"notifications" bson:"notifications"`
 	Logs          *[]Event              `json:"logs" bson:"logs"`
 }
 
 func NewUser() *User {
 	var u User
-	u.ID = primitive.NewObjectID()
 	u.Tweets = &[]primitive.ObjectID{}
-	u.Followings = &[]primitive.ObjectID{}
-	u.Followers = &[]primitive.ObjectID{}
+	u.Followings = &[]string{}
+	u.Followers = &[]string{}
 	u.Notifications = &[]Event{}
 	u.Logs = &[]Event{}
 	return &u

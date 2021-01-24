@@ -4,6 +4,7 @@ import (
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/labstack/echo/v4"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
 )
 
@@ -22,19 +23,24 @@ import (
 // @Security ApiKeyAuth
 // @Router /articles [post]
 func (h *Handler) CreateTweet(c echo.Context) error {
-	var a model.Tweet
+	t := model.NewTweet()
 
 	req := &tweetCreateRequest{}
-	if err := req.bind(c, &a); err != nil {
+	if err := req.bind(c, t); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 
-	a.Owner, _ = h.userStore.GetByUsername(usernameFromToken(c))
-
-	err := h.tweetStore.CreateTweet(&a)
+	u, _ := h.userStore.GetByUsername(usernameFromToken(c))
+	t.Owner = u
+	t.ID = primitive.NewObjectID()
+	err := h.tweetStore.CreateTweet(t)
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 	//print(a.OwnerUsername)
-	return c.JSON(http.StatusCreated, newTweetResponse(c, &a))
+	err = h.userStore.AddTweet(u, t)
+	if err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
+	return c.JSON(http.StatusCreated, newTweetResponse(c, t))
 }
