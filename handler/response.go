@@ -54,16 +54,14 @@ func newProfileResponse(us user.Store, srcUsername string, u *model.User) *profi
 //	********************** Tweet Response **********************
 
 type tweetResponse struct {
-	Text          string `json:"text"`
-	Media         string `json:"media"`
-	Liked         bool   `json:"liked"`
-	LikesCount    int    `json:"likes_count"`
-	Retweeted     bool   `json:"retweeted"`
-	RetweetsCount int    `json:"retweets_count"`
-	Owner         struct {
-		Username       string `json:"username"`
-		ProfilePicture string `json:"profile_picture"`
-	} `json:"owner"`
+	ID            string      `json:"id"`
+	Text          string      `json:"text"`
+	Media         string      `json:"media"`
+	Liked         bool        `json:"liked"`
+	LikesCount    int         `json:"likes_count"`
+	Retweeted     bool        `json:"retweeted"`
+	RetweetsCount int         `json:"retweets_count"`
+	Owner         model.Owner `json:"owner"`
 }
 
 type singleTweetResponse struct {
@@ -77,17 +75,20 @@ type tweetListResponse struct {
 
 func newTweetResponse(c echo.Context, t *model.Tweet) *singleTweetResponse {
 	tr := new(tweetResponse)
+	tr.ID = t.ID.Hex()
 	tr.Text = t.Text
 	tr.Media = t.Media
 	for _, u := range *t.Likes {
-		if u == stringFieldFromToken(c, "username") {
+		if u.Username == stringFieldFromToken(c, "username") {
 			tr.Liked = true
+			break
 		}
 	}
 	tr.LikesCount = len(*t.Likes)
 	for _, u := range *t.Retweets {
-		if u == stringFieldFromToken(c, "username") {
+		if u.Username == stringFieldFromToken(c, "username") {
 			tr.Retweeted = true
+			break
 		}
 	}
 	tr.RetweetsCount = len(*t.Retweets)
@@ -95,4 +96,16 @@ func newTweetResponse(c echo.Context, t *model.Tweet) *singleTweetResponse {
 	tr.Owner.ProfilePicture = t.Owner.ProfilePicture
 
 	return &singleTweetResponse{tr}
+}
+
+type tweetLikeAndRetweetResponse struct {
+	LikesList    *[]model.Owner `json:"likes" bson:"likes"`
+	RetweetsList *[]model.Owner `json:"retweets" bson:"retweets"`
+}
+
+func newLikeAndRetweetResponse(t *model.Tweet) *tweetLikeAndRetweetResponse {
+	tr := new(tweetLikeAndRetweetResponse)
+	tr.LikesList = t.Likes
+	tr.RetweetsList = t.Retweets
+	return tr
 }

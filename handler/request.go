@@ -126,7 +126,7 @@ func (r *userUpdateRequest) bind(c echo.Context, u *model.User) error {
 	return nil
 }
 
-// Tweet request section start from here
+//	********************** Tweet Request **********************
 
 type tweetCreateRequest struct {
 	Tweet struct {

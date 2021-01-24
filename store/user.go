@@ -102,6 +102,7 @@ func (us *UserStore) RemoveFollower(u *model.User, follower *model.User) error {
 	if err != nil {
 		return err
 	}
+	u.Followers = newFollowers
 
 	newFollowings := &[]string{}
 	for _, i := range *follower.Followings {
@@ -113,6 +114,7 @@ func (us *UserStore) RemoveFollower(u *model.User, follower *model.User) error {
 	if err != nil {
 		return err
 	}
+	follower.Followings = newFollowings
 	return nil
 }
 

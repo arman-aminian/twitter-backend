@@ -243,7 +243,7 @@ func (h *Handler) UnFollow(c echo.Context) error {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(errors.New("can't unfollow yourself")))
 	}
 	if !Contains(*u.Followers, follower.Username) || !Contains(*follower.Followings, u.Username) {
-		return c.JSON(http.StatusInternalServerError, utils.NewError(errors.New("doesn't follow the target")))
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(errors.New("doesn't follow the target")))
 	}
 	if err := h.userStore.RemoveFollower(u, follower); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))

@@ -2,21 +2,23 @@ package model
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
+type Owner struct {
+	Username       string `json:"username"`
+	ProfilePicture string `json:"profile_picture"`
+}
+
 type Tweet struct {
-	ID    primitive.ObjectID `json:"id,omitempty" bson:"_id"`
-	Text  string             `json:"text" bson:"text"`
-	Media string             `json:"media" bson:"media"`
-	Owner struct {
-		Username       string `json:"username"`
-		ProfilePicture string `json:"profile_picture"`
-	} `json:"owner" bson:"owner"`
-	Likes    *[]string `json:"likes" bson:"likes"`
-	Retweets *[]string `json:"retweets" bson:"retweets"`
+	ID       primitive.ObjectID `json:"id,omitempty" bson:"_id"`
+	Text     string             `json:"text" bson:"text"`
+	Media    string             `json:"media" bson:"media"`
+	Owner    Owner              `json:"owner" bson:"owner"`
+	Likes    *[]Owner           `json:"likes" bson:"likes"`
+	Retweets *[]Owner           `json:"retweets" bson:"retweets"`
 }
 
 func NewTweet() *Tweet {
 	var t Tweet
-	t.Likes = &[]string{}
-	t.Retweets = &[]string{}
+	t.Likes = &[]Owner{}
+	t.Retweets = &[]Owner{}
 	return &t
 }
