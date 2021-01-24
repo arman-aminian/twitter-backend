@@ -10,7 +10,7 @@ import (
 
 type userResponse struct {
 	User struct {
-		Username string `json:"username"`
+		Username string `json:"username" bson:"_id"`
 		Email    string `json:"email"`
 		Token    string `json:"token"`
 	} `json:"user"`
@@ -27,13 +27,13 @@ func newUserResponse(u *model.User) *userResponse {
 type profileResponse struct {
 	Profile struct {
 		IsFollowing    bool                  `json:"is_following, omitempty"`
-		Username       string                `json:"username"`
+		Username       string                `json:"username" bson:"_id"`
 		Bio            string                `json:"bio"`
 		ProfilePicture string                `json:"profile_picture"`
 		HeaderPicture  string                `json:"header_picture"`
 		Tweets         *[]primitive.ObjectID `json:"tweets"`
-		Followings     *[]primitive.ObjectID `json:"followings"`
-		Followers      *[]primitive.ObjectID `json:"followers"`
+		Followings     *[]string             `json:"followings"`
+		Followers      *[]string             `json:"followers"`
 	} `json:"profile"`
 }
 
@@ -79,18 +79,18 @@ func newTweetResponse(c echo.Context, t *model.Tweet) *singleTweetResponse {
 	tr := new(tweetResponse)
 	tr.Text = t.Text
 	tr.Media = t.Media
-	for _, u := range t.Likes {
+	for _, u := range *t.Likes {
 		if u == usernameFromToken(c) {
 			tr.Liked = true
 		}
 	}
-	tr.LikesCount = len(t.Likes)
-	for _, u := range t.Retweets {
+	tr.LikesCount = len(*t.Likes)
+	for _, u := range *t.Retweets {
 		if u == usernameFromToken(c) {
 			tr.Retweeted = true
 		}
 	}
-	tr.RetweetsCount = len(t.Retweets)
+	tr.RetweetsCount = len(*t.Retweets)
 	tr.Owner.Username = t.Owner.Username
 	tr.Owner.ProfilePicture = t.Owner.ProfilePicture
 

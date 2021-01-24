@@ -40,7 +40,7 @@ func GetMongoClient() (*mongo.Client, error) {
 
 func SetupUsersDb(mongoClient *mongo.Client) *mongo.Collection {
 	usersDb := mongoClient.Database("twitter_db").Collection("users")
-	createUniqueIndices(usersDb, "username")
+	//createUniqueIndices(usersDb, "_id")
 	createUniqueIndices(usersDb, "email")
 	return usersDb
 }
