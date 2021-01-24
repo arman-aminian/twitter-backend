@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/labstack/echo/v4"
@@ -31,7 +32,8 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 	}
 
 	u, _ := h.userStore.GetByUsername(usernameFromToken(c))
-	t.Owner = u
+	t.Owner.Username = u.Username
+	t.Owner.ProfilePicture = u.ProfilePicture
 	t.ID = primitive.NewObjectID()
 	err := h.tweetStore.CreateTweet(t)
 	if err != nil {
@@ -42,5 +44,7 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	return c.JSON(http.StatusCreated, newTweetResponse(c, t))
+	res := newTweetResponse(c, t)
+	fmt.Println(res)
+	return c.JSON(http.StatusCreated, res)
 }
