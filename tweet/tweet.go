@@ -3,10 +3,12 @@ package tweet
 import (
 	"github.com/arman-aminian/twitter-backend/model"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type Store interface {
 	CreateTweet(*model.Tweet) error
+	AddCommentToTweet(parent *model.Tweet, child *model.Tweet) error
 	RemoveTweet(*model.Tweet) error
 	GetTweetById(id *string) (*model.Tweet, error)
 	GetAllTweets() ([]bson.M, error)
@@ -17,5 +19,5 @@ type Store interface {
 
 	ExtractHashtags(t *model.Tweet) map[string]int
 
-	GetTimelineFromFollowingsUsernames(usernames []string) (*[]model.Tweet, error)
+	GetTimelineFromUsernames(usernames []primitive.ObjectID) (*[]model.Tweet, error)
 }

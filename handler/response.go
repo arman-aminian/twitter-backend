@@ -77,6 +77,8 @@ type tweetResponse struct {
 	RetweetsCount int         `json:"retweets_count"`
 	Time          time.Time   `json:"time" bson:"time"`
 	Owner         model.Owner `json:"owner"`
+	Parents       *[]string   `json:"parents" bson:"parents"`
+	Comments      *[]string   `json:"comments" bson:"comments"`
 }
 
 type singleTweetResponse struct {
@@ -92,6 +94,8 @@ func newTweetResponse(c echo.Context, t *model.Tweet) *singleTweetResponse {
 	tr := new(tweetResponse)
 	tr.ID = t.ID.Hex()
 	tr.Text = t.Text
+	tr.Parents = t.Parents
+	tr.Comments = t.Comments
 	tr.Media = t.Media
 	tr.Time = t.Time
 	for _, u := range *t.Likes {
@@ -122,6 +126,8 @@ func newTweetListResponse(c echo.Context, username string, tweets *[]model.Tweet
 	for i, tweet := range *tweets {
 		tr[i].ID = tweet.ID.Hex()
 		tr[i].Text = tweet.Text
+		tr[i].Parents = tweet.Parents
+		tr[i].Comments = tweet.Comments
 		tr[i].Media = tweet.Media
 		tr[i].Time = tweet.Time
 

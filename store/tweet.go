@@ -50,6 +50,15 @@ func (ts *TweetStore) GetAllTweets() ([]bson.M, error) {
 	return ret, nil
 }
 
+func (ts *TweetStore) AddCommentToTweet(parent *model.Tweet, child *model.Tweet) error {
+	*parent.Comments = append(*parent.Comments, child.ID.Hex())
+	_, err := ts.db.UpdateOne(context.TODO(), bson.M{"_id": parent.ID}, bson.M{"$set": bson.M{"comments": parent.Comments}})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (ts *TweetStore) LikeTweet(t *model.Tweet, u *model.User) error {
 	*t.Likes = append(*t.Likes, *model.NewOwner(u.Username, u.ProfilePicture))
 	_, err := ts.db.UpdateOne(context.TODO(), bson.M{"_id": t.ID}, bson.M{"$set": bson.M{"likes": t.Likes}})
@@ -112,19 +121,19 @@ func (ts *TweetStore) ExtractHashtags(t *model.Tweet) map[string]int {
 	return res
 }
 
-func (ts *TweetStore) GetTimelineFromFollowingsUsernames(usernames []string) (*[]model.Tweet, error) {
+func (ts *TweetStore) GetTimelineFromUsernames(tweetsIDs []primitive.ObjectID) (*[]model.Tweet, error) {
+
 	date := time.Now().Format("2006-01-02")
 	var tweets []model.Tweet
 	filter := bson.M{
 		"$and": []bson.M{
-			{"owner.username": bson.M{"$in": usernames}},
+			{"_id": bson.M{"$in": tweetsIDs}},
 			{"date": date},
 		},
 	}
 	// query := bson.M{"username": bson.M{"$in": usernames}, "date": bson.M{"$in": date}}
 	res, err := ts.db.Find(context.TODO(), filter)
 	if err != nil {
-		println("injaaaaaa")
 		fmt.Println(err)
 		return nil, err
 	}

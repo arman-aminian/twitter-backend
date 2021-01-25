@@ -184,3 +184,21 @@ func (us *UserStore) GetUserListFromUsernameList(usernames []string) (*[]model.U
 	}
 	return &users, err
 }
+
+func (us *UserStore) GetTweetIdListFromUsernameList(usernames []string) (*[]primitive.ObjectID, error) {
+	var users []model.User
+	query := bson.M{"_id": bson.M{"$in": usernames}}
+	res, err := us.db.Find(context.TODO(), query)
+	if err != nil {
+		return nil, err
+	}
+	//var episodes []bson.M
+	if err = res.All(context.TODO(), &users); err != nil {
+		return nil, err
+	}
+	var tweetsId []primitive.ObjectID
+	for _, user := range users {
+		tweetsId = append(tweetsId, *user.Tweets...)
+	}
+	return &tweetsId, err
+}

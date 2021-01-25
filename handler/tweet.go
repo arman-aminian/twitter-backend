@@ -29,7 +29,24 @@ import (
 func (h *Handler) CreateTweet(c echo.Context) error {
 	t := model.NewTweet()
 
+	t.ID = primitive.NewObjectID()
 	t.Text = c.FormValue("text")
+	parentId := c.FormValue("parent")
+	if parentId != "" {
+		p, err := h.tweetStore.GetTweetById(&parentId)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+		}
+		if p == nil {
+			return c.JSON(http.StatusNotFound, utils.NotFound())
+		}
+		*t.Parents = append(*p.Parents, parentId)
+		err = h.tweetStore.AddCommentToTweet(p, t)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+		}
+	}
+
 	file, err := c.FormFile("media")
 	if err == nil {
 		src, err := file.Open()
@@ -60,7 +77,6 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 	t.Owner.ProfilePicture = u.ProfilePicture
 	t.Time = time.Now()
 	t.Date = time.Now().Format("2006-01-02")
-	t.ID = primitive.NewObjectID()
 	err = h.tweetStore.CreateTweet(t)
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))

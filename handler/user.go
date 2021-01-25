@@ -350,7 +350,11 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 	if len(usernames) == 0 {
 		return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), nil, 0))
 	}
-	tweets, err := h.tweetStore.GetTimelineFromFollowingsUsernames(usernames)
+	tweetsId, err := h.userStore.GetTweetIdListFromUsernameList(usernames)
+	if err != nil {
+		return err
+	}
+	tweets, err := h.tweetStore.GetTimelineFromUsernames(*tweetsId)
 	if err != nil {
 		return err
 	}

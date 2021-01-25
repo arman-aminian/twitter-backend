@@ -2,6 +2,7 @@ package user
 
 import (
 	"github.com/arman-aminian/twitter-backend/model"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type Store interface {
@@ -23,4 +24,5 @@ type Store interface {
 	AddNotification(u *model.User, e *model.Event) error
 
 	GetUserListFromUsernameList(usernames []string) (*[]model.User, error)
+	GetTweetIdListFromUsernameList(usernames []string) (*[]primitive.ObjectID, error)
 }
