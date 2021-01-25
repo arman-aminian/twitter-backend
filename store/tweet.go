@@ -91,7 +91,6 @@ func (ts *TweetStore) GetTimelineFromFollowingsUsernames(usernames []string) (*[
 			{"date": date},
 		},
 	}
-	//query := bson.M{"username": bson.M{"$in": usernames}, "date": bson.M{"$in": date}}
 	res, err := ts.db.Find(context.TODO(), filter)
 	if err != nil {
 		return nil, err
