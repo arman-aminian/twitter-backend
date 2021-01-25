@@ -53,6 +53,7 @@ func (r *userLoginRequest) bind(c echo.Context) error {
 // Profile update request
 type userProfileUpdateRequest struct {
 	User struct {
+		Name           string `json:"name"`
 		Bio            string `json:"bio"`
 		ProfilePicture string `json:"profile_picture"`
 		HeaderPicture  string `json:"header_Picture"`
@@ -64,6 +65,9 @@ func newUserProfileUpdateRequest() *userProfileUpdateRequest {
 }
 
 func (r *userProfileUpdateRequest) populate(u *model.User) {
+	if 1 <= len(u.Name) && len(u.Name) <= 50 {
+		r.User.Name = u.Name
+	}
 	if len(u.Bio) <= 160 {
 		r.User.Bio = u.Bio
 	}
@@ -82,6 +86,7 @@ func (r *userProfileUpdateRequest) bind(c echo.Context, u *model.User) error {
 	if err := c.Validate(r); err != nil {
 		return err
 	}
+	u.Name = r.User.Name
 	u.Bio = r.User.Bio
 	u.ProfilePicture = r.User.ProfilePicture
 	u.HeaderPicture = r.User.HeaderPicture
