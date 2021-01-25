@@ -372,6 +372,28 @@ func (h *Handler) GetFollowingAndFollowersList(c echo.Context) error {
 	return c.JSON(http.StatusOK, newFollowingAndFollowersList(h.userStore, stringFieldFromToken(c, "username"), u))
 }
 
+func (h *Handler) GetLogs(c echo.Context) error {
+	u, err := h.userStore.GetByUsername(c.Param("username"))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	if u == nil {
+		return c.JSON(http.StatusNotFound, utils.NotFound())
+	}
+	return c.JSON(http.StatusOK, newLogsList(u))
+}
+
+func (h *Handler) GetNotifications(c echo.Context) error {
+	u, err := h.userStore.GetByUsername(c.Param("username"))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	if u == nil {
+		return c.JSON(http.StatusNotFound, utils.NotFound())
+	}
+	return c.JSON(http.StatusOK, newNotificationsList(u))
+}
+
 func stringFieldFromToken(c echo.Context, field string) string {
 	field, ok := c.Get(field).(string)
 	if !ok {

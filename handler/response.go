@@ -66,6 +66,46 @@ func newFollowingAndFollowersList(us user.Store, srcUsername string, u *model.Us
 	return l
 }
 
+type SingleEventResponse struct {
+	Mode      string      `json:"mode"`
+	Source    model.Owner `json:"source"`
+	Target    model.Owner `json:"target"`
+	Content   string      `json:"content"`
+	TimeStamp time.Time   `json:"timestamp"`
+}
+
+type EventListResponse struct {
+	Events []SingleEventResponse `json:"events"`
+}
+
+func newLogsList(u *model.User) *EventListResponse {
+	ret := new(EventListResponse)
+	for _, e := range *u.Logs {
+		l := new(SingleEventResponse)
+		l.Mode = e.Mode
+		l.Source = e.Source
+		l.Target = e.Target
+		l.Content = e.Content
+		l.TimeStamp = e.TimeStamp
+		ret.Events = append(ret.Events, *l)
+	}
+	return ret
+}
+
+func newNotificationsList(u *model.User) *EventListResponse {
+	ret := new(EventListResponse)
+	for _, e := range *u.Notifications {
+		l := new(SingleEventResponse)
+		l.Mode = e.Mode
+		l.Source = e.Source
+		l.Target = e.Target
+		l.Content = e.Content
+		l.TimeStamp = e.TimeStamp
+		ret.Events = append(ret.Events, *l)
+	}
+	return ret
+}
+
 //	********************** Tweet Response **********************
 
 type tweetResponse struct {
