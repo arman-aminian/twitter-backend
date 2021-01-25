@@ -14,11 +14,14 @@ type Tweet struct {
 	Owner    Owner              `json:"owner" bson:"owner"`
 	Likes    *[]Owner           `json:"likes" bson:"likes"`
 	Retweets *[]Owner           `json:"retweets" bson:"retweets"`
+	Parent   string             `json:"parent" bson:"parent"`
+	Comments *[]string          `json:"comments" bson:"comments"`
 }
 
 func NewTweet() *Tweet {
 	var t Tweet
 	t.Likes = &[]Owner{}
 	t.Retweets = &[]Owner{}
+	t.Comments = &[]string{}
 	return &t
 }
