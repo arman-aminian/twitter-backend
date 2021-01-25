@@ -271,21 +271,15 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
-	fmt.Println(*u.Followings)
 	var usernames []string
 	for _, f := range *u.Followings {
 		usernames = append(usernames, f.Username)
 	}
-	users, err := h.tweetStore.GetTimelineFromFollowingsUsernames(usernames)
+	tweets, err := h.tweetStore.GetTimelineFromFollowingsUsernames(usernames)
 	if err != nil {
 		return err
 	}
-	println("resuuult")
-	fmt.Println(usernames)
-	fmt.Println(users)
-	return c.JSON(http.StatusInternalServerError, utils.NewError(err))
-
-	//return c.JSON(http.StatusOK, newArticleListResponse(h.userStore, userIDFromToken(c), articles, count))
+	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), tweets, len(*tweets)))
 }
 
 func (h *Handler) GetFollowingAndFollowersList(c echo.Context) error {

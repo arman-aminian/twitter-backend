@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/user"
 	"github.com/arman-aminian/twitter-backend/utils"
@@ -84,8 +85,8 @@ type singleTweetResponse struct {
 }
 
 type tweetListResponse struct {
-	Tweets      []*tweetResponse `json:"tweets"`
-	TweetsCount int              `json:"tweetsCount"`
+	Tweets      []tweetResponse `json:"tweets"`
+	TweetsCount int             `json:"tweetsCount"`
 }
 
 func newTweetResponse(c echo.Context, t *model.Tweet) *singleTweetResponse {
@@ -112,6 +113,35 @@ func newTweetResponse(c echo.Context, t *model.Tweet) *singleTweetResponse {
 	tr.Owner.ProfilePicture = t.Owner.ProfilePicture
 
 	return &singleTweetResponse{tr}
+}
+
+func newTweetListResponse(c echo.Context, username string, tweets *[]model.Tweet, size int) *tweetListResponse {
+	tr := make([]tweetResponse, size)
+	fmt.Println(tr)
+	for i, tweet := range *tweets {
+		tr[i].ID = tweet.ID.Hex()
+		tr[i].Text = tweet.Text
+		tr[i].Media = tweet.Media
+		tr[i].Time = tweet.Time
+
+		for _, t := range *tweet.Likes {
+			if t.Username == username {
+				tr[i].Liked = true
+				break
+			}
+		}
+		tr[i].LikesCount = len(*tweet.Likes)
+		for _, t := range *tweet.Retweets {
+			if t.Username == username {
+				tr[i].Retweeted = true
+				break
+			}
+		}
+		tr[i].RetweetsCount = len(*tweet.Retweets)
+		tr[i].Owner.Username = tweet.Owner.Username
+		tr[i].Owner.ProfilePicture = tweet.Owner.ProfilePicture
+	}
+	return &tweetListResponse{tr, size}
 }
 
 type tweetLikeAndRetweetResponse struct {
