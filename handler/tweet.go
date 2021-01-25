@@ -80,6 +80,19 @@ func (h *Handler) GetTweetAssetFile(c echo.Context) error {
 	return c.File(mediaPath)
 }
 
+func (h *Handler) GetTweet(c echo.Context) error {
+	id := c.Param("id")
+	t, err := h.tweetStore.GetTweetById(&id)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	if t == nil {
+		return c.JSON(http.StatusNotFound, utils.NotFound())
+	}
+
+	return c.JSON(http.StatusOK, newTweetResponse(c, t))
+}
+
 // GetArticle godoc
 // @Summary Get an article
 // @Description Get an article. Auth not required
@@ -271,6 +284,11 @@ func (h *Handler) Retweet(c echo.Context) error {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 
+	err = h.userStore.AddTweet(u, t)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+
 	e := CreateRetweetEvent(u, t)
 	err = h.userStore.AddLog(u, e)
 	if err != nil {
@@ -329,6 +347,11 @@ func (h *Handler) UnRetweet(c echo.Context) error {
 
 	if err := h.tweetStore.UnRetweet(t, u); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
+
+	err = h.userStore.RemoveTweet(u, &id)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
 
 	return c.JSON(http.StatusOK, newTweetResponse(c, t))

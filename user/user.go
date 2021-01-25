@@ -17,6 +17,7 @@ type Store interface {
 	IsFollower(username, followerUsername string) (bool, error)
 
 	AddTweet(u *model.User, t *model.Tweet) error
+	RemoveTweet(u *model.User, id *string) error
 
 	AddLog(u *model.User, e *model.Event) error
 	AddNotification(u *model.User, e *model.Event) error
