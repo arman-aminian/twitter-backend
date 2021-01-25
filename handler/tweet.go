@@ -7,7 +7,9 @@ import (
 	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"io"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -28,9 +30,30 @@ import (
 func (h *Handler) CreateTweet(c echo.Context) error {
 	t := model.NewTweet()
 
-	req := &tweetCreateRequest{}
-	if err := req.bind(c, t); err != nil {
-		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	t.Text = c.FormValue("text")
+	file, err := c.FormFile("media")
+	if err == nil {
+		src, err := file.Open()
+		if err != nil {
+			panic(err)
+		}
+		defer src.Close()
+
+		mediaFolderName := "media/"
+		mediaPath := mediaFolderName + file.Filename
+		dst, err := os.Create(mediaPath)
+		if err != nil {
+			panic(err)
+		}
+		defer dst.Close()
+
+		if _, err = io.Copy(dst, src); err != nil {
+			panic(err)
+		}
+		t.Media = mediaPath
+	} else {
+		// Without media
+		t.Media = ""
 	}
 
 	u, _ := h.userStore.GetByUsername(stringFieldFromToken(c, "username"))
@@ -39,7 +62,7 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 	t.Time = time.Now()
 	t.Date = time.Now().Format("2006-01-02")
 	t.ID = primitive.NewObjectID()
-	err := h.tweetStore.CreateTweet(t)
+	err = h.tweetStore.CreateTweet(t)
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
