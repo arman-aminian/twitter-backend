@@ -6,7 +6,9 @@ import (
 	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/jinzhu/copier"
 	"github.com/labstack/echo/v4"
+	"io"
 	"net/http"
+	"os"
 )
 
 // signUp godoc
@@ -158,13 +160,74 @@ func (h *Handler) UpdateProfile(c echo.Context) error {
 	}
 	req := newUserProfileUpdateRequest()
 	req.populate(u)
-	if err := req.bind(c, u); err != nil {
-		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+
+	u.Bio = c.FormValue("bio")
+	ppf, err := c.FormFile("profile_picture")
+	if err == nil {
+		src, err := ppf.Open()
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+		}
+		defer src.Close()
+
+		mediaFolderName := "media/profile-pictures/"
+		mediaPath := mediaFolderName + ppf.Filename
+		dst, err := os.Create(mediaPath)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+		}
+		defer dst.Close()
+
+		if _, err = io.Copy(dst, src); err != nil {
+			return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+		}
+		u.ProfilePicture = mediaPath
+	} else {
+		// Update without Profile Picture
+		u.ProfilePicture = ""
 	}
+
+	hpf, err := c.FormFile("header_picture")
+	if err == nil {
+		src, err := hpf.Open()
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+		}
+		defer src.Close()
+
+		mediaFolderName := "media/header-pictures/"
+		mediaPath := mediaFolderName + hpf.Filename
+		dst, err := os.Create(mediaPath)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+		}
+		defer dst.Close()
+
+		if _, err = io.Copy(dst, src); err != nil {
+			return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+		}
+		u.HeaderPicture = mediaPath
+	} else {
+		// Update without Header Picture
+		u.HeaderPicture = ""
+	}
+
 	if err := h.userStore.UpdateProfile(u); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 	return c.JSON(http.StatusOK, newProfileResponse(h.userStore, u.Username, u))
+}
+
+func (h *Handler) GetProfilePictureFile(c echo.Context) error {
+	mediaFolderName := "media/profile-pictures/"
+	mediaPath := mediaFolderName + c.Param("filename")
+	return c.File(mediaPath)
+}
+
+func (h *Handler) GetHeaderPictureFile(c echo.Context) error {
+	mediaFolderName := "media/header-pictures/"
+	mediaPath := mediaFolderName + c.Param("filename")
+	return c.File(mediaPath)
 }
 
 // Follow godoc

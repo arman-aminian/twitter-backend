@@ -2,7 +2,6 @@ package handler
 
 import (
 	"errors"
-	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/labstack/echo/v4"
@@ -35,24 +34,24 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 	if err == nil {
 		src, err := file.Open()
 		if err != nil {
-			panic(err)
+			return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 		}
 		defer src.Close()
 
-		mediaFolderName := "media/"
+		mediaFolderName := "media/tweet-assets/"
 		mediaPath := mediaFolderName + file.Filename
 		dst, err := os.Create(mediaPath)
 		if err != nil {
-			panic(err)
+			return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 		}
 		defer dst.Close()
 
 		if _, err = io.Copy(dst, src); err != nil {
-			panic(err)
+			return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 		}
 		t.Media = mediaPath
 	} else {
-		// Without media
+		// Tweet without media
 		t.Media = ""
 	}
 
@@ -81,10 +80,9 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 	return c.JSON(http.StatusCreated, res)
 }
 
-func (h *Handler) GetFile(c echo.Context) error {
-	mediaFolderName := "media/"
+func (h *Handler) GetTweetAssetFile(c echo.Context) error {
+	mediaFolderName := "media/tweet-assets/"
 	mediaPath := mediaFolderName + c.Param("filename")
-	fmt.Println(mediaPath)
 	return c.File(mediaPath)
 }
 

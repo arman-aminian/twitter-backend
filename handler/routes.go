@@ -31,6 +31,7 @@ func (h *Handler) Register(g *echo.Group) {
 
 	profiles := g.Group(profiles, jwtMiddleware)
 	profiles.GET(usernameQ, h.GetProfile)
+
 	profiles.PUT(usernameQ, h.UpdateProfile)
 	profiles.POST(follow, h.Follow)
 	profiles.DELETE(follow, h.UnFollow)
@@ -58,7 +59,9 @@ func (h *Handler) Register(g *echo.Group) {
 	tweets.DELETE("/:id/retweet", h.UnRetweet)
 
 	files := g.Group(media)
-	files.GET("/:filename", h.GetFile)
+	files.GET("/tweet-assets/:filename", h.GetTweetAssetFile)
+	files.GET("/profile-pictures/:filename", h.GetProfilePictureFile)
+	files.GET("/header-pictures/:filename", h.GetHeaderPictureFile)
 
 	g.GET("/trends", h.GetTrends)
 }
