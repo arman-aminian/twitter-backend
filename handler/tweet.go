@@ -72,8 +72,14 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 	res := newTweetResponse(c, t)
-	fmt.Println(res)
 	return c.JSON(http.StatusCreated, res)
+}
+
+func (h *Handler) GetFile(c echo.Context) error {
+	mediaFolderName := "media/"
+	mediaPath := mediaFolderName + c.Param("filename")
+	fmt.Println(mediaPath)
+	return c.File(mediaPath)
 }
 
 // GetArticle godoc

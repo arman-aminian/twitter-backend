@@ -15,6 +15,7 @@ const (
 	tweets    = "/tweets"
 	usernameQ = "/:username"
 	follow    = usernameQ + "/follow"
+	media     = "/media"
 )
 
 func (h *Handler) Register(g *echo.Group) {
@@ -53,4 +54,8 @@ func (h *Handler) Register(g *echo.Group) {
 	tweets.DELETE("/:id/like", h.UnLike)
 	tweets.POST("/:id/retweet", h.Retweet)
 	tweets.DELETE("/:id/retweet", h.UnRetweet)
+
+	files := g.Group(media)
+	files.GET("/:filename", h.GetFile)
+
 }
