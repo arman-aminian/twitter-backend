@@ -347,6 +347,9 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 	for _, f := range *u.Followings {
 		usernames = append(usernames, f.Username)
 	}
+	if len(usernames) == 0 {
+		return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), nil, 0))
+	}
 	tweets, err := h.tweetStore.GetTimelineFromFollowingsUsernames(usernames)
 	if err != nil {
 		return err

@@ -2,6 +2,7 @@ package store
 
 import (
 	"context"
+	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -123,6 +124,8 @@ func (ts *TweetStore) GetTimelineFromFollowingsUsernames(usernames []string) (*[
 	// query := bson.M{"username": bson.M{"$in": usernames}, "date": bson.M{"$in": date}}
 	res, err := ts.db.Find(context.TODO(), filter)
 	if err != nil {
+		println("injaaaaaa")
+		fmt.Println(err)
 		return nil, err
 	}
 

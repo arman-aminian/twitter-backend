@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/user"
 	"github.com/arman-aminian/twitter-backend/utils"
@@ -118,7 +117,9 @@ func newTweetResponse(c echo.Context, t *model.Tweet) *singleTweetResponse {
 
 func newTweetListResponse(c echo.Context, username string, tweets *[]model.Tweet, size int) *tweetListResponse {
 	tr := make([]tweetResponse, size)
-	fmt.Println(tr)
+	if tweets == nil {
+		return &tweetListResponse{tr, size}
+	}
 	for i, tweet := range *tweets {
 		tr[i].ID = tweet.ID.Hex()
 		tr[i].Text = tweet.Text
