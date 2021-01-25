@@ -204,9 +204,21 @@ func (h *Handler) Follow(c echo.Context) error {
 	if Contains(*u.Followers, follower.Username) || Contains(*follower.Followings, u.Username) {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(errors.New("already follows the target")))
 	}
+
 	if err := h.userStore.AddFollower(u, follower); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
+
+	e := CreateFollowEvent(follower, u)
+	err = h.userStore.AddLog(follower, e)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	err = h.userStore.AddNotification(u, e)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+
 	return c.JSON(http.StatusOK, newProfileResponse(h.userStore, follower.Username, u))
 }
 

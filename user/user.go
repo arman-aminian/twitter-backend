@@ -18,5 +18,8 @@ type Store interface {
 
 	AddTweet(u *model.User, t *model.Tweet) error
 
+	AddLog(u *model.User, e *model.Event) error
+	AddNotification(u *model.User, e *model.Event) error
+
 	GetUserListFromUsernameList(usernames []string) (*[]model.User, error)
 }

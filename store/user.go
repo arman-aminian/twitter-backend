@@ -2,7 +2,6 @@ package store
 
 import (
 	"context"
-	"github.com/arman-aminian/twitter-backend/handler"
 	"github.com/arman-aminian/twitter-backend/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -76,18 +75,6 @@ func (us *UserStore) AddFollower(u *model.User, follower *model.User) error {
 	if err != nil {
 		return err
 	}
-
-	eLog := handler.CreateFollowLogEvent(follower, u)
-	eNotif := handler.CreateFollowNotificationEvent(follower, u)
-	err = us.AddLog(follower, eLog)
-	if err != nil {
-		return err
-	}
-	err = us.AddNotification(u, eNotif)
-	if err != nil {
-		return err
-	}
-
 	return nil
 }
 
