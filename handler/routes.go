@@ -51,6 +51,7 @@ func (h *Handler) Register(g *echo.Group) {
 	))
 	tweets.POST("", h.CreateTweet)
 	tweets.GET("/:id", h.GetTweet)
+	tweets.DELETE("/:id", h.DeleteTweet)
 	tweets.GET("/:id/list", h.GetTweetLikeAndRetweetList)
 	tweets.POST("/:id/like", h.Like)
 	tweets.DELETE("/:id/like", h.UnLike)
@@ -62,4 +63,5 @@ func (h *Handler) Register(g *echo.Group) {
 	files.GET("/profile-pictures/:filename", h.GetProfilePictureFile)
 	files.GET("/header-pictures/:filename", h.GetHeaderPictureFile)
 
+	g.GET("/trends", h.GetTrends)
 }

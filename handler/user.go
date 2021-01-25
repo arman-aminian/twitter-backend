@@ -269,7 +269,7 @@ func (h *Handler) Follow(c echo.Context) error {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 
-	e := CreateFollowEvent(follower, u)
+	e := h.CreateFollowEvent(follower, u)
 	err = h.userStore.AddLog(follower, e)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))

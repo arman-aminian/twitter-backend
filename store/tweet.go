@@ -7,6 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"regexp"
 	"time"
 )
 
@@ -25,6 +26,11 @@ func (ts *TweetStore) CreateTweet(t *model.Tweet) error {
 	return err
 }
 
+func (ts *TweetStore) RemoveTweet(t *model.Tweet) error {
+	_, err := ts.db.DeleteOne(context.TODO(), t)
+	return err
+}
+
 func (ts *TweetStore) GetTweetById(id *string) (*model.Tweet, error) {
 	var t model.Tweet
 	oid, err := primitive.ObjectIDFromHex(*id)
@@ -33,6 +39,15 @@ func (ts *TweetStore) GetTweetById(id *string) (*model.Tweet, error) {
 	}
 	err = ts.db.FindOne(context.TODO(), bson.M{"_id": oid}).Decode(&t)
 	return &t, err
+}
+
+func (ts *TweetStore) GetAllTweets() ([]bson.M, error) {
+	var ret []bson.M
+	cur, err := ts.db.Find(context.TODO(), bson.M{})
+	if err = cur.All(context.TODO(), &ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 func (ts *TweetStore) LikeTweet(t *model.Tweet, u *model.User) error {
@@ -83,6 +98,20 @@ func (ts *TweetStore) UnRetweet(t *model.Tweet, u *model.User) error {
 	return nil
 }
 
+func (ts *TweetStore) ExtractHashtags(t *model.Tweet) map[string]int {
+	matchTags := regexp.MustCompile(`\B[#]\w*[a-zA-Z]+\w*`)
+	res := map[string]int{}
+	for _, v := range matchTags.FindAllString(t.Text, -1) {
+		vn := v[1:]
+		if _, ok := res[vn]; ok {
+			res[vn] += 1
+		} else {
+			res[vn] = 1
+		}
+	}
+	return res
+}
+
 func (ts *TweetStore) GetTimelineFromFollowingsUsernames(usernames []string) (*[]model.Tweet, error) {
 	date := time.Now().Format("2006-01-02")
 	var tweets []model.Tweet
@@ -92,6 +121,7 @@ func (ts *TweetStore) GetTimelineFromFollowingsUsernames(usernames []string) (*[
 			{"date": date},
 		},
 	}
+	// query := bson.M{"username": bson.M{"$in": usernames}, "date": bson.M{"$in": date}}
 	res, err := ts.db.Find(context.TODO(), filter)
 	if err != nil {
 		println("injaaaaaa")

@@ -5,7 +5,7 @@ import (
 	"github.com/arman-aminian/twitter-backend/model"
 )
 
-func CreateFollowEvent(src *model.User, target *model.User) *model.Event {
+func (h *Handler) CreateFollowEvent(src *model.User, target *model.User) *model.Event {
 	e := model.NewEvent()
 	e.Mode = "Follow"
 	e.Source = *model.NewOwner(src.Username, src.ProfilePicture)
@@ -14,7 +14,7 @@ func CreateFollowEvent(src *model.User, target *model.User) *model.Event {
 	return e
 }
 
-func CreateLikeEvent(src *model.User, t *model.Tweet) *model.Event {
+func (h *Handler) CreateLikeEvent(src *model.User, t *model.Tweet) *model.Event {
 	e := model.NewEvent()
 	e.Mode = "Like"
 	e.Source = *model.NewOwner(src.Username, src.ProfilePicture)
@@ -23,7 +23,7 @@ func CreateLikeEvent(src *model.User, t *model.Tweet) *model.Event {
 	return e
 }
 
-func CreateRetweetEvent(src *model.User, t *model.Tweet) *model.Event {
+func (h *Handler) CreateRetweetEvent(src *model.User, t *model.Tweet) *model.Event {
 	e := model.NewEvent()
 	e.Mode = "Retweet"
 	e.Source = *model.NewOwner(src.Username, src.ProfilePicture)

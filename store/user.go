@@ -143,10 +143,10 @@ func (us *UserStore) RemoveTweet(u *model.User, id *string) error {
 	if err != nil {
 		return err
 	}
-	newTweets := &[]model.Tweet{}
-	for _, t := range *newTweets {
-		if t.ID != oid {
-			*newTweets = append(*newTweets, t)
+	newTweets := &[]primitive.ObjectID{}
+	for _, tid := range *u.Tweets {
+		if tid != oid {
+			*newTweets = append(*newTweets, tid)
 		}
 	}
 	_, err = us.db.UpdateOne(context.TODO(), bson.M{"_id": u.Username}, bson.M{"$set": bson.M{"tweets": newTweets}})
