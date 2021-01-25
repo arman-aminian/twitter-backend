@@ -27,6 +27,7 @@ func newUserResponse(u *model.User) *userResponse {
 
 type profileResponse struct {
 	Profile struct {
+		Name           string                `json:"name"`
 		IsFollowing    bool                  `json:"is_following, omitempty"`
 		Username       string                `json:"username" bson:"_id"`
 		Bio            string                `json:"bio"`

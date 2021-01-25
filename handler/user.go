@@ -160,7 +160,7 @@ func (h *Handler) UpdateProfile(c echo.Context) error {
 	}
 	req := newUserProfileUpdateRequest()
 	req.populate(u)
-
+	u.Name = c.FormValue("name")
 	u.Bio = c.FormValue("bio")
 	ppf, err := c.FormFile("profile_picture")
 	if err == nil {

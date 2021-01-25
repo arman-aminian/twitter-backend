@@ -7,6 +7,7 @@ import (
 )
 
 type User struct {
+	Name     string `json:"name" bson:"name"`
 	Username string `json:"username" bson:"_id"`
 	Email    string `json:"email" bson:"email"`
 	Password string `json:"password" bson:"password"`
@@ -25,6 +26,7 @@ type User struct {
 
 func NewUser() *User {
 	var u User
+	u.Name = "Twitter User"
 	u.Tweets = &[]primitive.ObjectID{}
 	u.Followings = &[]Owner{}
 	u.Followers = &[]Owner{}
