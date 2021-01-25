@@ -37,6 +37,7 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 	t.Owner.Username = u.Username
 	t.Owner.ProfilePicture = u.ProfilePicture
 	t.Time = time.Now()
+	t.Date = time.Now().Format("2006-01-02")
 	t.ID = primitive.NewObjectID()
 	err := h.tweetStore.CreateTweet(t)
 	if err != nil {

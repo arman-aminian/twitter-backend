@@ -6,6 +6,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"time"
 )
 
 type TweetStore struct {
@@ -79,4 +80,25 @@ func (ts *TweetStore) UnRetweet(t *model.Tweet, u *model.User) error {
 	}
 	t.Retweets = newRetweets
 	return nil
+}
+
+func (ts *TweetStore) GetTimelineFromFollowingsUsernames(usernames []string) (*[]model.Tweet, error) {
+	date := time.Now().Format("2006-01-02")
+	var tweets []model.Tweet
+	filter := bson.M{
+		"$and": []bson.M{
+			{"owner.username": bson.M{"$in": usernames}},
+			{"date": date},
+		},
+	}
+	//query := bson.M{"username": bson.M{"$in": usernames}, "date": bson.M{"$in": date}}
+	res, err := ts.db.Find(context.TODO(), filter)
+	if err != nil {
+		return nil, err
+	}
+
+	if err = res.All(context.TODO(), &tweets); err != nil {
+		return nil, err
+	}
+	return &tweets, err
 }

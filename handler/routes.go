@@ -9,6 +9,7 @@ import (
 const (
 	signUp    = "/signup"
 	login     = "/login"
+	timeline  = "/home"
 	userPath  = "/user"
 	profiles  = "/profiles"
 	tweets    = "/tweets"
@@ -20,6 +21,9 @@ func (h *Handler) Register(g *echo.Group) {
 	jwtMiddleware := middleware.JWT(utils.JWTSecret)
 	g.POST(signUp, h.SignUp)
 	g.POST(login, h.Login)
+
+	home := g.Group(timeline, jwtMiddleware)
+	home.GET("", h.GetTimeline)
 
 	user := g.Group(userPath, jwtMiddleware)
 	user.PUT(usernameQ, h.UpdateUser)

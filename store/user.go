@@ -167,3 +167,17 @@ func (us *UserStore) AddNotification(u *model.User, e *model.Event) error {
 	}
 	return nil
 }
+
+func (us *UserStore) GetUserListFromUsernameList(usernames []string) (*[]model.User, error) {
+	var users []model.User
+	query := bson.M{"_id": bson.M{"$in": usernames}}
+	res, err := us.db.Find(context.TODO(), query)
+	if err != nil {
+		return nil, err
+	}
+	//var episodes []bson.M
+	if err = res.All(context.TODO(), &users); err != nil {
+		return nil, err
+	}
+	return &users, err
+}

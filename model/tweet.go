@@ -9,6 +9,7 @@ type Tweet struct {
 	ID       primitive.ObjectID `json:"id,omitempty" bson:"_id"`
 	Text     string             `json:"text" bson:"text"`
 	Media    string             `json:"media" bson:"media"`
+	Date     string             `json:"date" bson:"date"`
 	Time     time.Time          `json:"time" bson:"time"`
 	Owner    Owner              `json:"owner" bson:"owner"`
 	Likes    *[]Owner           `json:"likes" bson:"likes"`

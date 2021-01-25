@@ -250,6 +250,44 @@ func (h *Handler) UnFollow(c echo.Context) error {
 	return c.JSON(http.StatusOK, newProfileResponse(h.userStore, stringFieldFromToken(c, "username"), u))
 }
 
+// Articles godoc
+// @Summary Get recent articles globally
+// @Description Get most recent articles globally. Use query parameters to filter results. Auth is optional
+// @ID get-articles
+// @Tags article
+// @Accept  json
+// @Produce  json
+// @Param tag query string false "Filter by tag"
+// @Param author query string false "Filter by author (username)"
+// @Param favorited query string false "Filter by favorites of a user (username)"
+// @Param limit query integer false "Limit number of articles returned (default is 20)"
+// @Param offset query integer false "Offset/skip number of articles (default is 0)"
+// @Success 200 {object} articleListResponse
+// @Failure 500 {object} utils.Error
+// @Router /articles [get]
+func (h *Handler) GetTimeline(c echo.Context) error {
+
+	u, err := h.userStore.GetByUsername(stringFieldFromToken(c, "username"))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	fmt.Println(*u.Followings)
+	var usernames []string
+	for _, f := range *u.Followings {
+		usernames = append(usernames, f.Username)
+	}
+	users, err := h.tweetStore.GetTimelineFromFollowingsUsernames(usernames)
+	if err != nil {
+		return err
+	}
+	println("resuuult")
+	fmt.Println(usernames)
+	fmt.Println(users)
+	return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+
+	//return c.JSON(http.StatusOK, newArticleListResponse(h.userStore, userIDFromToken(c), articles, count))
+}
+
 func (h *Handler) GetFollowingAndFollowersList(c echo.Context) error {
 	u, err := h.userStore.GetByUsername(c.Param("username"))
 	if err != nil {

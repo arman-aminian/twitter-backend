@@ -11,4 +11,6 @@ type Store interface {
 	UnLikeTweet(t *model.Tweet, u *model.User) error
 	Retweet(t *model.Tweet, u *model.User) error
 	UnRetweet(t *model.Tweet, u *model.User) error
+
+	GetTimelineFromFollowingsUsernames(usernames []string) (*[]model.Tweet, error)
 }

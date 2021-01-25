@@ -17,4 +17,6 @@ type Store interface {
 	IsFollower(username, followerUsername string) (bool, error)
 
 	AddTweet(u *model.User, t *model.Tweet) error
+
+	GetUserListFromUsernameList(usernames []string) (*[]model.User, error)
 }
