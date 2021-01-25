@@ -2,7 +2,6 @@ package handler
 
 import (
 	"errors"
-	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/jinzhu/copier"
@@ -99,8 +98,6 @@ func (h *Handler) UpdateUser(c echo.Context) error {
 	if err := req.bind(c, newUser); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	fmt.Println(oldUser)
-	fmt.Println(newUser)
 	if err := h.userStore.Update(oldUser, newUser); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}

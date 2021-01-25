@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/arman-aminian/twitter-backend/model"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -134,6 +135,21 @@ func (us *UserStore) IsFollower(username, followerUsername string) (bool, error)
 func (us *UserStore) AddTweet(u *model.User, t *model.Tweet) error {
 	*u.Tweets = append(*u.Tweets, t.ID)
 	_, err := us.db.UpdateOne(context.TODO(), bson.M{"_id": u.Username}, bson.M{"$set": bson.M{"tweets": u.Tweets}})
+	return err
+}
+
+func (us *UserStore) RemoveTweet(u *model.User, id *string) error {
+	oid, err := primitive.ObjectIDFromHex(*id)
+	if err != nil {
+		return err
+	}
+	newTweets := &[]model.Tweet{}
+	for _, t := range *newTweets {
+		if t.ID != oid {
+			*newTweets = append(*newTweets, t)
+		}
+	}
+	_, err = us.db.UpdateOne(context.TODO(), bson.M{"_id": u.Username}, bson.M{"$set": bson.M{"tweets": newTweets}})
 	return err
 }
 
