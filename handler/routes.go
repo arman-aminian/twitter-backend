@@ -68,5 +68,6 @@ func (h *Handler) Register(g *echo.Group) {
 	files.GET("/profile-pictures/:filename", h.GetProfilePictureFile)
 	files.GET("/header-pictures/:filename", h.GetHeaderPictureFile)
 
+	g.GET("/hashtags/:name", h.GetHashtagTweets)
 	g.GET("/trends", h.GetTrends)
 }
