@@ -125,17 +125,17 @@ func newNotificationsList(u *model.User) *EventListResponse {
 //	********************** Tweet Response **********************
 
 type tweetResponse struct {
-	ID            string      `json:"id"`
-	Text          string      `json:"text"`
-	Media         string      `json:"media"`
-	Liked         bool        `json:"liked"`
-	LikesCount    int         `json:"likes_count"`
-	Retweeted     bool        `json:"retweeted"`
-	RetweetsCount int         `json:"retweets_count"`
-	Time          time.Time   `json:"time" bson:"time"`
-	Owner         model.Owner `json:"owner"`
-	Parents       *[]string   `json:"parents" bson:"parents"`
-	Comments      *[]string   `json:"comments" bson:"comments"`
+	ID            string                `json:"id"`
+	Text          string                `json:"text"`
+	Media         string                `json:"media"`
+	Liked         bool                  `json:"liked"`
+	LikesCount    int                   `json:"likes_count"`
+	Retweeted     bool                  `json:"retweeted"`
+	RetweetsCount int                   `json:"retweets_count"`
+	Time          time.Time             `json:"time" bson:"time"`
+	Owner         model.Owner           `json:"owner"`
+	Parents       *[]model.CommentTweet `json:"parents" bson:"parents"`
+	Comments      *[]model.CommentTweet `json:"comments" bson:"comments"`
 }
 
 type singleTweetResponse struct {

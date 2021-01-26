@@ -49,8 +49,8 @@ func (ts *TweetStore) GetAllTweets() ([]bson.M, error) {
 	return ret, nil
 }
 
-func (ts *TweetStore) AddCommentToTweet(parent *model.Tweet, child *model.Tweet) error {
-	*parent.Comments = append(*parent.Comments, child.ID.Hex())
+func (ts *TweetStore) AddCommentToTweet(parent *model.Tweet, child *model.CommentTweet) error {
+	*parent.Comments = append(*parent.Comments, *child)
 	_, err := ts.db.UpdateOne(context.TODO(), bson.M{"_id": parent.ID}, bson.M{"$set": bson.M{"comments": parent.Comments}})
 	if err != nil {
 		return err
