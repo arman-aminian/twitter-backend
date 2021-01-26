@@ -36,7 +36,6 @@ func JWTWithConfig(config JWTConfig) echo.MiddlewareFunc {
 		return func(c echo.Context) error {
 			auth, _ := extractor(c)
 			if auth == "" {
-				println("coookie")
 				cookie, err := c.Cookie("Token")
 				if err != nil {
 					return err

@@ -8,7 +8,7 @@ import (
 
 type Store interface {
 	CreateTweet(*model.Tweet) error
-	AddCommentToTweet(parent *model.Tweet, child *model.Tweet) error
+	AddCommentToTweet(parent *model.Tweet, child *model.CommentTweet) error
 	RemoveTweet(*model.Tweet) error
 	GetTweetById(id *string) (*model.Tweet, error)
 	GetAllTweets() ([]bson.M, error)
