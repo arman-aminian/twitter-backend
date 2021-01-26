@@ -139,3 +139,15 @@ func (ts *TweetStore) GetTimelineFromUsernames(tweetsIDs []primitive.ObjectID) (
 	}
 	return &tweets, err
 }
+
+func (ts *TweetStore) GetTweetSearchResult(query string) (*[]model.Tweet, error) {
+	var result []model.Tweet
+	res, err := ts.db.Find(context.Background(), bson.M{"$text": bson.M{"$search": query}})
+	if err != nil {
+		return nil, err
+	}
+	if err = res.All(context.TODO(), &result); err != nil {
+		return nil, err
+	}
+	return &result, nil
+}

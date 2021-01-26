@@ -28,7 +28,8 @@ func (h *Handler) Register(g *echo.Group) {
 	home.GET("", h.GetTimeline)
 
 	search := g.Group(search)
-	search.GET("/username", h.SearchUsername)
+	search.GET("/username", h.SearchUsernames)
+	search.POST("/tweet", h.SearchTweets)
 
 	user := g.Group(userPath, jwtMiddleware)
 	user.PUT(usernameQ, h.UpdateUser)

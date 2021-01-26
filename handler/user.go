@@ -352,16 +352,16 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 	}
 	tweetsId, err := h.userStore.GetTweetIdListFromUsernameList(usernames)
 	if err != nil {
-		return err
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 	tweets, err := h.tweetStore.GetTimelineFromUsernames(*tweetsId)
 	if err != nil {
-		return err
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), tweets, len(*tweets)))
 }
 
-func (h *Handler) SearchUsername(c echo.Context) error {
+func (h *Handler) SearchUsernames(c echo.Context) error {
 	query := c.QueryParam("query")
 	if query == "" {
 		return c.JSON(http.StatusBadRequest, utils.NewError(errors.New("nothing to search for")))
@@ -377,19 +377,21 @@ func (h *Handler) SearchUsername(c echo.Context) error {
 	return c.JSON(http.StatusOK, newOwnerList(result))
 }
 
-//func (h *Handler) SearchTweet(c echo.Context) error {
-//	var articles []model.Tweet
-//	//tweetsDb.EnsureIndexKey("abc")
-//	res, err := tweetsDb.Find(context.Background(), bson.M{"$text": bson.M{"$search": "\"adsasd fsd\""}})
-//	if err != nil {
-//		panic(err)
-//	}
-//	if err = res.All(context.TODO(), &articles); err != nil {
-//		panic(err)
-//	}
-//	fmt.Println(articles)
-//	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), tweets, len(*tweets)))
-//}
+func (h *Handler) SearchTweets(c echo.Context) error {
+	query := &model.SearchQuery{}
+	err := c.Bind(query)
+	if err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
+	if query.Query == "" {
+		return c.JSON(http.StatusBadRequest, utils.NewError(errors.New("nothing to search for")))
+	}
+	result, err := h.tweetStore.GetTweetSearchResult(query.Query)
+	if err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
+	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), result, len(*result)))
+}
 
 func (h *Handler) GetFollowingAndFollowersList(c echo.Context) error {
 	u, err := h.userStore.GetByUsername(c.Param("username"))
