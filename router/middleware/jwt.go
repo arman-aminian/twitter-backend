@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"errors"
 	"fmt"
 	"github.com/arman-aminian/twitter-backend/utils"
 	"net/http"
@@ -33,14 +34,22 @@ func JWTWithConfig(config JWTConfig) echo.MiddlewareFunc {
 	extractor := jwtFromHeader("Authorization", "Token")
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			auth, err := extractor(c)
-			if err != nil {
+			auth, _ := extractor(c)
+			if auth == "" {
+				println("coookie")
+				cookie, err := c.Cookie("Token")
+				if err != nil {
+					return err
+				}
+				auth = cookie.Value
+			}
+			if auth == "" {
 				if config.Skipper != nil {
 					if config.Skipper(c) {
 						return next(c)
 					}
 				}
-				return c.JSON(http.StatusUnauthorized, utils.NewError(err))
+				return c.JSON(http.StatusUnauthorized, utils.NewError(errors.New("missing or malformed jwt")))
 			}
 			token, err := jwt.Parse(auth, func(token *jwt.Token) (interface{}, error) {
 				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {

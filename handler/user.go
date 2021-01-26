@@ -9,6 +9,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
 )
 
 // signUp godoc
@@ -33,7 +34,13 @@ func (h *Handler) SignUp(c echo.Context) error {
 	if err := h.userStore.Create(u); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	return c.JSON(http.StatusCreated, newUserResponse(u))
+	response := newUserResponse(u)
+	cookie := new(http.Cookie)
+	cookie.Name = "Token"
+	cookie.Value = response.User.Token
+	cookie.Expires = time.Now().Add(24 * time.Hour)
+	c.SetCookie(cookie)
+	return c.JSON(http.StatusCreated, response)
 }
 
 // Login godoc
@@ -66,7 +73,13 @@ func (h *Handler) Login(c echo.Context) error {
 	if !u.CheckPassword(req.User.Password) {
 		return c.JSON(http.StatusForbidden, utils.AccessForbidden())
 	}
-	return c.JSON(http.StatusOK, newUserResponse(u))
+	response := newUserResponse(u)
+	cookie := new(http.Cookie)
+	cookie.Name = "Token"
+	cookie.Value = response.User.Token
+	cookie.Expires = time.Now().Add(24 * time.Hour)
+	c.SetCookie(cookie)
+	return c.JSON(http.StatusCreated, response)
 }
 
 // UpdateUser godoc
