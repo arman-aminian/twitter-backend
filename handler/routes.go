@@ -30,6 +30,7 @@ func (h *Handler) Register(g *echo.Group) {
 	search := g.Group(search)
 	search.GET("/username", h.SearchUsernames)
 	search.POST("/tweet", h.SearchTweets)
+	search.GET("/hashtag", h.SearchHashtag)
 
 	user := g.Group(userPath, jwtMiddleware)
 	user.PUT(usernameQ, h.UpdateUser)
@@ -69,6 +70,5 @@ func (h *Handler) Register(g *echo.Group) {
 	files.GET("/profile-pictures/:filename", h.GetProfilePictureFile)
 	files.GET("/header-pictures/:filename", h.GetHeaderPictureFile)
 
-	g.GET("/hashtags/:name", h.GetHashtagTweets)
 	g.GET("/trends", h.GetTrends)
 }
