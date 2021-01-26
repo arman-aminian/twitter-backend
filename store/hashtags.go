@@ -102,6 +102,14 @@ func (hs *HashtagStore) DeleteTweetHashtags(t *model.Tweet, hashtags map[string]
 	return nil
 }
 
+func (hs *HashtagStore) GetHashtagTweets(name string) (*[]primitive.ObjectID, error) {
+	h, err := hs.GetHashtagByName(name)
+	if err != nil {
+		return nil, err
+	}
+	return h.Tweets, nil
+}
+
 func (hs *HashtagStore) Update() error {
 	opt := options.Find()
 	opt.SetSort(bson.D{{"count", -1}})

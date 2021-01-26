@@ -1,8 +1,10 @@
 package handler
 
 import (
+	"errors"
 	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
+	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
@@ -42,7 +44,27 @@ func (h *Handler) GetTrends(c echo.Context) error {
 	return c.JSON(http.StatusOK, res)
 }
 
-func (h *Handler) GetHashtagTweets(c echo.Context) error {
-	// name :=
-	return nil
+func (h *Handler) SearchHashtag(c echo.Context) error {
+	query := &model.SearchQuery{}
+	err := c.Bind(query)
+	if err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
+	if query.Query == "" {
+		return c.JSON(http.StatusBadRequest, utils.NewError(errors.New("nothing to search for")))
+	}
+	result, err := h.hashtagStore.GetHashtagTweets(query.Query)
+	if err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
+	tweets := &[]model.Tweet{}
+	for _, id := range *result {
+		s := id.Hex()
+		t, err := h.tweetStore.GetTweetById(&s)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+		}
+		*tweets = append(*tweets, *t)
+	}
+	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), tweets, len(*tweets)))
 }
