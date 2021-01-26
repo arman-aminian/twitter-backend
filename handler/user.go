@@ -361,6 +361,36 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), tweets, len(*tweets)))
 }
 
+func (h *Handler) SearchUsername(c echo.Context) error {
+	query := c.QueryParam("query")
+	if query == "" {
+		return c.JSON(http.StatusBadRequest, utils.NewError(errors.New("nothing to search for")))
+	}
+
+	result, err := h.userStore.GetUsernameSearchResult(query)
+	if err != nil {
+		return err
+	}
+	if len(*result) == 0 {
+		return c.JSON(http.StatusNotFound, utils.NotFound())
+	}
+	return c.JSON(http.StatusOK, newOwnerList(result))
+}
+
+//func (h *Handler) SearchTweet(c echo.Context) error {
+//	var articles []model.Tweet
+//	//tweetsDb.EnsureIndexKey("abc")
+//	res, err := tweetsDb.Find(context.Background(), bson.M{"$text": bson.M{"$search": "\"adsasd fsd\""}})
+//	if err != nil {
+//		panic(err)
+//	}
+//	if err = res.All(context.TODO(), &articles); err != nil {
+//		panic(err)
+//	}
+//	fmt.Println(articles)
+//	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), tweets, len(*tweets)))
+//}
+
 func (h *Handler) GetFollowingAndFollowersList(c echo.Context) error {
 	u, err := h.userStore.GetByUsername(c.Param("username"))
 	if err != nil {

@@ -25,4 +25,6 @@ type Store interface {
 
 	GetUserListFromUsernameList(usernames []string) (*[]model.User, error)
 	GetTweetIdListFromUsernameList(usernames []string) (*[]primitive.ObjectID, error)
+
+	GetUsernameSearchResult(username string) (*[]model.Owner, error)
 }

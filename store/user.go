@@ -66,12 +66,12 @@ func (us *UserStore) GetByUsername(username string) (*model.User, error) {
 }
 
 func (us *UserStore) AddFollower(u *model.User, follower *model.User) error {
-	*u.Followers = append(*u.Followers, *model.NewOwner(follower.Username, follower.ProfilePicture))
+	*u.Followers = append(*u.Followers, *model.NewOwner(follower.Username, follower.ProfilePicture, follower.Name, follower.Bio))
 	_, err := us.db.UpdateOne(context.TODO(), bson.M{"_id": u.Username}, bson.M{"$set": bson.M{"followers": u.Followers}})
 	if err != nil {
 		return err
 	}
-	*follower.Followings = append(*follower.Followings, *model.NewOwner(u.Username, u.ProfilePicture))
+	*follower.Followings = append(*follower.Followings, *model.NewOwner(u.Username, u.ProfilePicture, u.Name, u.Bio))
 	_, err = us.db.UpdateOne(context.TODO(), bson.M{"_id": follower.Username}, bson.M{"$set": bson.M{"followings": follower.Followings}})
 	if err != nil {
 		return err
@@ -201,4 +201,27 @@ func (us *UserStore) GetTweetIdListFromUsernameList(usernames []string) (*[]prim
 		tweetsId = append(tweetsId, *user.Tweets...)
 	}
 	return &tweetsId, err
+}
+
+func (us *UserStore) GetUsernameSearchResult(username string) (*[]model.Owner, error) {
+	var users []model.User
+	reg := "^" + username // usernames that starts with "query"
+	query := bson.M{"_id": bson.M{"$regex": reg}}
+	res, err := us.db.Find(context.TODO(), query)
+	if err != nil {
+		return nil, err
+	}
+	if err = res.All(context.TODO(), &users); err != nil {
+		return nil, err
+	}
+	var result []model.Owner
+	for _, user := range users {
+		result = append(result, model.Owner{
+			Username:       user.Username,
+			ProfilePicture: user.ProfilePicture,
+			Name:           user.Name,
+			Bio:            user.Bio,
+		})
+	}
+	return &result, err
 }

@@ -66,6 +66,16 @@ func newFollowingAndFollowersList(us user.Store, srcUsername string, u *model.Us
 	return l
 }
 
+type OwnerListResponse struct {
+	Users *[]model.Owner `json:"users"`
+}
+
+func newOwnerList(users *[]model.Owner) *OwnerListResponse {
+	l := new(OwnerListResponse)
+	l.Users = users
+	return l
+}
+
 type SingleEventResponse struct {
 	Mode      string      `json:"mode"`
 	Source    model.Owner `json:"source"`

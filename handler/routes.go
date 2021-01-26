@@ -10,6 +10,7 @@ const (
 	signUp    = "/signup"
 	login     = "/login"
 	timeline  = "/home"
+	search    = "/search"
 	userPath  = "/user"
 	profiles  = "/profiles"
 	tweets    = "/tweets"
@@ -25,6 +26,9 @@ func (h *Handler) Register(g *echo.Group) {
 
 	home := g.Group(timeline, jwtMiddleware)
 	home.GET("", h.GetTimeline)
+
+	search := g.Group(search)
+	search.GET("/username", h.SearchUsername)
 
 	user := g.Group(userPath, jwtMiddleware)
 	user.PUT(usernameQ, h.UpdateUser)

@@ -2,7 +2,6 @@ package store
 
 import (
 	"context"
-	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -60,7 +59,7 @@ func (ts *TweetStore) AddCommentToTweet(parent *model.Tweet, child *model.Tweet)
 }
 
 func (ts *TweetStore) LikeTweet(t *model.Tweet, u *model.User) error {
-	*t.Likes = append(*t.Likes, *model.NewOwner(u.Username, u.ProfilePicture))
+	*t.Likes = append(*t.Likes, *model.NewOwner(u.Username, u.ProfilePicture, u.Name, u.Bio))
 	_, err := ts.db.UpdateOne(context.TODO(), bson.M{"_id": t.ID}, bson.M{"$set": bson.M{"likes": t.Likes}})
 	if err != nil {
 		return err
@@ -84,7 +83,7 @@ func (ts *TweetStore) UnLikeTweet(t *model.Tweet, u *model.User) error {
 }
 
 func (ts *TweetStore) Retweet(t *model.Tweet, u *model.User) error {
-	*t.Retweets = append(*t.Retweets, *model.NewOwner(u.Username, u.ProfilePicture))
+	*t.Retweets = append(*t.Retweets, *model.NewOwner(u.Username, u.ProfilePicture, u.Name, u.Bio))
 	_, err := ts.db.UpdateOne(context.TODO(), bson.M{"_id": t.ID}, bson.M{"$set": bson.M{"retweets": t.Retweets}})
 	if err != nil {
 		return err
@@ -122,7 +121,6 @@ func (ts *TweetStore) ExtractHashtags(t *model.Tweet) map[string]int {
 }
 
 func (ts *TweetStore) GetTimelineFromUsernames(tweetsIDs []primitive.ObjectID) (*[]model.Tweet, error) {
-
 	date := time.Now().Format("2006-01-02")
 	var tweets []model.Tweet
 	filter := bson.M{
@@ -131,13 +129,11 @@ func (ts *TweetStore) GetTimelineFromUsernames(tweetsIDs []primitive.ObjectID) (
 			{"date": date},
 		},
 	}
-	// query := bson.M{"username": bson.M{"$in": usernames}, "date": bson.M{"$in": date}}
+
 	res, err := ts.db.Find(context.TODO(), filter)
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
-
 	if err = res.All(context.TODO(), &tweets); err != nil {
 		return nil, err
 	}

@@ -26,6 +26,7 @@ func main() {
 		}
 		usersDb := db.SetupUsersDb(mongoClient)
 		tweetsDb := db.SetupTweetsDb(mongoClient)
+
 		g := r.Group("")
 		us := store.NewUserStore(usersDb)
 		ts := store.NewTweetStore(tweetsDb)
