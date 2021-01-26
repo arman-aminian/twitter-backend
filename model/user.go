@@ -26,7 +26,7 @@ type User struct {
 
 func NewUser() *User {
 	var u User
-	u.Name = "Twitter User"
+	u.Name = "Twitter User "
 	u.Tweets = &[]primitive.ObjectID{}
 	u.Followings = &[]Owner{}
 	u.Followers = &[]Owner{}
