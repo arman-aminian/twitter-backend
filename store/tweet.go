@@ -7,7 +7,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"regexp"
-	"time"
 )
 
 type TweetStore struct {
@@ -121,12 +120,12 @@ func (ts *TweetStore) ExtractHashtags(t *model.Tweet) map[string]int {
 }
 
 func (ts *TweetStore) GetTimelineFromUsernames(tweetsIDs []primitive.ObjectID) (*[]model.Tweet, error) {
-	date := time.Now().Format("2006-01-02")
+	// date := time.Now().Format("2006-01-02")
 	var tweets []model.Tweet
 	filter := bson.M{
 		"$and": []bson.M{
 			{"_id": bson.M{"$in": tweetsIDs}},
-			{"date": date},
+			// {"date": date},
 		},
 	}
 

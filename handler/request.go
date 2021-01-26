@@ -22,7 +22,6 @@ func (r *userRegisterRequest) bind(c echo.Context, u *model.User) error {
 	if err := c.Validate(r); err != nil {
 		return err
 	}
-	print(r.User.Username)
 	u.Name = r.User.Name
 	u.Username = r.User.Username
 	u.Email = r.User.Email

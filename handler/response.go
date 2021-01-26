@@ -47,6 +47,7 @@ type profileResponse struct {
 
 func newProfileResponse(us user.Store, srcUsername string, u *model.User) *profileResponse {
 	r := new(profileResponse)
+	r.Profile.Name = u.Name
 	r.Profile.Username = u.Username
 	r.Profile.Bio = u.Bio
 	r.Profile.ProfilePicture = u.ProfilePicture
