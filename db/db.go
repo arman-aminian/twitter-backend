@@ -44,6 +44,17 @@ func SetupUsersDb(mongoClient *mongo.Client) *mongo.Collection {
 	return usersDb
 }
 
+func SetupTweetsDb(mongoClient *mongo.Client) *mongo.Collection {
+	tweetsDb := mongoClient.Database("twitter_db").Collection("tweets")
+	return tweetsDb
+}
+
+func SetupHashtagsDb(mongoClient *mongo.Client) *mongo.Collection {
+	hashtagsDb := mongoClient.Database("twitter_db").Collection("hashtags")
+	createUniqueIndices(hashtagsDb, "name")
+	return hashtagsDb
+}
+
 func createUniqueIndices(db *mongo.Collection, field string) {
 	_, err := db.Indexes().CreateOne(
 		context.Background(),
@@ -55,9 +66,4 @@ func createUniqueIndices(db *mongo.Collection, field string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-
-func SetupTweetsDb(mongoClient *mongo.Client) *mongo.Collection {
-	tweetsDb := mongoClient.Database("twitter_db").Collection("tweets")
-	return tweetsDb
 }

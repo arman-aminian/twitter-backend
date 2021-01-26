@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-func (h *Handler) AddHashtag(name string, t *model.Tweet, count int) {
-	h.hashtagStore.AddHashtag(&model.Hashtag{
+func (h *Handler) AddHashtag(name string, t *model.Tweet, count int) error {
+	return h.hashtagStore.AddHashtag(&model.Hashtag{
 		Name:   name,
 		Tweets: &[]primitive.ObjectID{t.ID},
 		Count:  count,
@@ -29,7 +29,7 @@ type trendResponse struct {
 
 func (h *Handler) GetTrends(c echo.Context) error {
 	trends := h.hashtagStore.GetTrends()
-	fmt.Println(trends)
+	fmt.Println("hahahahahah ", trends)
 	res := trendResponse{}
 	for _, t := range *trends {
 		s := singleTrend{
@@ -40,4 +40,9 @@ func (h *Handler) GetTrends(c echo.Context) error {
 	}
 	res.Timestamp = time.Now()
 	return c.JSON(http.StatusOK, res)
+}
+
+func (h *Handler) GetHashtagTweets(c echo.Context) error {
+	// name :=
+	return nil
 }

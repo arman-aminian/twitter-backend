@@ -15,6 +15,7 @@ require (
 	github.com/swaggo/swag v1.7.0
 	go.mongodb.org/mongo-driver v1.4.5
 	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
+	golang.org/x/tools v0.0.0-20201207182000-5679438983bd
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0
 )
