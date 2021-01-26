@@ -11,9 +11,12 @@ import (
 
 type userResponse struct {
 	User struct {
-		Username string `json:"username" bson:"_id"`
-		Email    string `json:"email"`
-		Token    string `json:"token"`
+		Username       string `json:"username" bson:"_id"`
+		Email          string `json:"email"`
+		Name           string `json:"name"`
+		Bio            string `json:"bio"`
+		ProfilePicture string `json:"profile_picture"`
+		Token          string `json:"token"`
 	} `json:"user"`
 }
 
@@ -21,6 +24,9 @@ func newUserResponse(u *model.User) *userResponse {
 	r := new(userResponse)
 	r.User.Username = u.Username
 	r.User.Email = u.Email
+	r.User.Name = u.Name
+	r.User.Bio = u.Bio
+	r.User.ProfilePicture = u.ProfilePicture
 	r.User.Token = utils.GenerateJWT(u.Username)
 	return r
 }
