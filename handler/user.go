@@ -477,9 +477,19 @@ func (h *Handler) GetSuggestions(c echo.Context) error {
 		return c.JSON(http.StatusOK, newOwnerList(nil))
 	}
 	var suggestions []model.Owner
-	for _, f := range *u.Followings {
+	followings := *u.Followings
+	for _, f := range followings {
 		following, _ := h.userStore.GetByUsername(f.Username)
 		suggestions = append(suggestions, *following.Followings...)
+	}
+
+	for i := range suggestions {
+		for j := range followings {
+			if suggestions[i] == followings[j] {
+				suggestions = removeIndex(suggestions, i)
+				break
+			}
+		}
 	}
 
 	// to sort suggestions by their frequencies
@@ -498,6 +508,10 @@ func (h *Handler) GetSuggestions(c echo.Context) error {
 	}
 	sorted = sorted[:maxNumberOfSuggestions]
 	return c.JSON(http.StatusOK, newOwnerList(&sorted))
+}
+
+func removeIndex(s []model.Owner, index int) []model.Owner {
+	return append(s[:index], s[index+1:]...)
 }
 
 func dupCount(list []model.Owner) map[model.Owner]int {
