@@ -38,7 +38,8 @@ func JWTWithConfig(config JWTConfig) echo.MiddlewareFunc {
 			if auth == "" {
 				cookie, err := c.Cookie("Token")
 				if err != nil {
-					return err
+					c.Set("username", "")
+					return next(c)
 				}
 				auth = cookie.Value
 			}
