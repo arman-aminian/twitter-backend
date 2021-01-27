@@ -10,6 +10,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"sort"
 	"time"
 )
 
@@ -134,8 +135,13 @@ func (h *Handler) GetTweets(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	fmt.Println(res)
-	return c.JSON(http.StatusOK, newTweetsResponse(stringFieldFromToken(c, "username"), res))
+
+	// sort tweets
+	sorted := *res
+	sort.Slice(sorted, func(i, j int) bool {
+		return sorted[i].Time.After(sorted[j].Time)
+	})
+	return c.JSON(http.StatusOK, newTweetsResponse(stringFieldFromToken(c, "username"), &sorted))
 }
 
 func (h *Handler) DeleteTweet(c echo.Context) error {

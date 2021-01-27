@@ -399,7 +399,6 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 	sort.Slice(timeline, func(i, j int) bool {
 		return timeline[i].Time.After(timeline[j].Time)
 	})
-	fmt.Println(timeline[0])
 	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), &timeline, len(timeline)))
 }
 
