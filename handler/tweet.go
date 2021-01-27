@@ -59,7 +59,10 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 		t.Media = ""
 	}
 
-	u, _ := h.userStore.GetByUsername(stringFieldFromToken(c, "username"))
+	u, err := h.userStore.GetByUsername(stringFieldFromToken(c, "username"))
+	if err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
 	t.Owner.Username = u.Username
 	t.Owner.ProfilePicture = u.ProfilePicture
 	t.Time = time.Now()
@@ -90,7 +93,6 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-
 	err = h.userStore.AddTweet(u, t)
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
