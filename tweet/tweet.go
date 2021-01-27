@@ -19,6 +19,6 @@ type Store interface {
 
 	ExtractHashtags(t *model.Tweet) map[string]int
 
-	GetTimelineFromUsernames(usernames []primitive.ObjectID) (*[]model.Tweet, error)
+	GetTimelineFromTweetIDs(usernames []primitive.ObjectID, day int) (*[]model.Tweet, error)
 	GetTweetSearchResult(username string) (*[]model.Tweet, error)
 }

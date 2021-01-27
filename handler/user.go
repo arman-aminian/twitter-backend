@@ -377,11 +377,11 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	tweets, err := h.tweetStore.GetTimelineFromUsernames(*tweetsId)
+	timelineTweets, err := h.tweetStore.GetTimelineFromTweetIDs(*tweetsId, 0)
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), tweets, len(*tweets)))
+	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), timelineTweets, len(*timelineTweets)))
 }
 
 func (h *Handler) SearchUsernames(c echo.Context) error {
