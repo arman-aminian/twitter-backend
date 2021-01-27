@@ -45,6 +45,7 @@ func (us *UserStore) UpdateProfile(u *model.User) error {
 	_, err := us.db.UpdateOne(context.TODO(),
 		bson.M{"_id": u.Username},
 		bson.M{"$set": bson.M{
+			"name":            u.Name,
 			"bio":             u.Bio,
 			"profile_picture": u.ProfilePicture,
 			"header_picture":  u.HeaderPicture,
@@ -178,7 +179,7 @@ func (us *UserStore) GetUserListFromUsernameList(usernames []string) (*[]model.U
 	if err != nil {
 		return nil, err
 	}
-	//var episodes []bson.M
+	// var episodes []bson.M
 	if err = res.All(context.TODO(), &users); err != nil {
 		return nil, err
 	}
@@ -192,7 +193,7 @@ func (us *UserStore) GetTweetIdListFromUsernameList(usernames []string) (*[]prim
 	if err != nil {
 		return nil, err
 	}
-	//var episodes []bson.M
+	// var episodes []bson.M
 	if err = res.All(context.TODO(), &users); err != nil {
 		return nil, err
 	}
