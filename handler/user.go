@@ -2,6 +2,7 @@ package handler
 
 import (
 	"errors"
+	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/jinzhu/copier"
@@ -9,6 +10,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"sort"
 	"time"
 )
 
@@ -40,6 +42,13 @@ func (h *Handler) SignUp(c echo.Context) error {
 	cookie.Value = response.User.Token
 	cookie.Expires = time.Now().Add(24 * time.Hour)
 	c.SetCookie(cookie)
+	//header('Access-Control-Allow-Origin', yourExactHostname);
+
+	//c.Response().Header().Set(echo.HeaderAccessControlAllowOrigin, "http://localhost:3000")
+	//c.Response().Header().Add(echo.HeaderAccessControlAllowCredentials, "true")
+	//c.Response().Header().Add(echo.HeaderAccessControlAllowOrigin, "http://localhost:3000")
+	//c.Response().Header().Add(echo.HeaderAccessControlAllowHeaders, "Origin, X-Requested-With, Content-Type, Accept")
+	//c.Response().Header().
 	return c.JSON(http.StatusCreated, response)
 }
 
@@ -74,11 +83,11 @@ func (h *Handler) Login(c echo.Context) error {
 		return c.JSON(http.StatusForbidden, utils.AccessForbidden())
 	}
 	response := newUserResponse(u)
-	cookie := new(http.Cookie)
-	cookie.Name = "Token"
-	cookie.Value = response.User.Token
-	cookie.Expires = time.Now().Add(24 * time.Hour)
-	c.SetCookie(cookie)
+	//cookie := new(http.Cookie)
+	//cookie.Name = "Token"
+	//cookie.Value = response.User.Token
+	//cookie.Expires = time.Now().Add(24 * time.Hour)
+	//c.SetCookie(cookie)
 	return c.JSON(http.StatusCreated, response)
 }
 
@@ -137,6 +146,7 @@ func (h *Handler) UpdateUser(c echo.Context) error {
 // @Router /profiles/{username} [get]
 func (h *Handler) GetProfile(c echo.Context) error {
 	destUsername := c.Param("username")
+	fmt.Println(destUsername)
 	u, err := h.userStore.GetByUsername(destUsername)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
@@ -384,9 +394,6 @@ func (h *Handler) SearchUsernames(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-	if len(*result) == 0 {
-		return c.JSON(http.StatusNotFound, utils.NotFound())
-	}
 	return c.JSON(http.StatusOK, newOwnerList(result))
 }
 
@@ -437,6 +444,66 @@ func (h *Handler) GetNotifications(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, utils.NotFound())
 	}
 	return c.JSON(http.StatusOK, newNotificationsList(u))
+}
+
+func (h *Handler) GetSuggestions(c echo.Context) error {
+	println("suggestions")
+	username := stringFieldFromToken(c, "username")
+	u, err := h.userStore.GetByUsername(username)
+	fmt.Println(u)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+	if u == nil {
+		return c.JSON(http.StatusNotFound, utils.NotFound())
+	}
+	if len(*u.Followings) == 0 {
+		return c.JSON(http.StatusOK, newOwnerList(nil))
+	}
+	var suggestions []model.Owner
+	for _, f := range *u.Followings {
+		following, _ := h.userStore.GetByUsername(f.Username)
+		suggestions = append(suggestions, *following.Followings...)
+	}
+
+	// to sort suggestions by their frequencies
+	suggestionsFreq := dupCount(suggestions)
+	fmt.Println(suggestionsFreq)
+	sorted := make([]model.Owner, 0, len(suggestionsFreq))
+	for name := range suggestionsFreq {
+		sorted = append(sorted, name)
+	}
+	sort.Slice(sorted, func(i, j int) bool {
+		return suggestionsFreq[sorted[i]] > suggestionsFreq[sorted[j]]
+	})
+
+	maxNumberOfSuggestions := 3
+	if len(sorted) < maxNumberOfSuggestions {
+		return c.JSON(http.StatusOK, newOwnerList(&sorted))
+	}
+	sorted = sorted[:maxNumberOfSuggestions]
+	return c.JSON(http.StatusOK, newOwnerList(&sorted))
+}
+
+func dupCount(list []model.Owner) map[model.Owner]int {
+	duplicateFrequency := make(map[model.Owner]int)
+	for _, item := range list {
+		_, exist := duplicateFrequency[item]
+		if exist {
+			duplicateFrequency[item] += 1 // increase counter by 1 if already in the map
+		} else {
+			duplicateFrequency[item] = 1 // else start counting from 1
+		}
+	}
+	return duplicateFrequency
+}
+
+func getFollowingUsernames(followings []model.Owner) []string {
+	var res []string
+	for _, f := range followings {
+		res = append(res, f.Username)
+	}
+	return res
 }
 
 func stringFieldFromToken(c echo.Context, field string) string {
