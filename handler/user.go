@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/utils"
-	"github.com/jinzhu/copier"
 	"github.com/labstack/echo/v4"
 	"io"
 	"net/http"
@@ -117,7 +116,21 @@ func (h *Handler) UpdateUser(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, utils.NotFound())
 	}
 	newUser := model.NewUser()
-	_ = copier.Copy(&newUser, &oldUser)
+
+	newUser.Username = oldUser.Username
+	newUser.Tweets = oldUser.Tweets
+	newUser.Followings = oldUser.Followings
+	newUser.Followers = oldUser.Followers
+	newUser.Bio = oldUser.Bio
+	newUser.Name = oldUser.Name
+	newUser.ProfilePicture = oldUser.ProfilePicture
+	newUser.HeaderPicture = oldUser.HeaderPicture
+	newUser.Password = oldUser.Password
+	newUser.Email = oldUser.Email
+	newUser.Logs = oldUser.Logs
+	newUser.Notifications = oldUser.Notifications
+
+	//_ = copier.Copy(&newUser, &oldUser)
 	req := newUserUpdateRequest()
 	req.populate(newUser)
 	if err := req.bind(c, newUser); err != nil {
