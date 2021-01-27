@@ -394,7 +394,13 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 
-	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), timelineTweets, len(*timelineTweets)))
+	// sort timeline by tweet's creating time
+	timeline := *timelineTweets
+	sort.Slice(timeline, func(i, j int) bool {
+		return timeline[i].Time.After(timeline[j].Time)
+	})
+	fmt.Println(timeline[0])
+	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), &timeline, len(timeline)))
 }
 
 func (h *Handler) SearchUsernames(c echo.Context) error {
