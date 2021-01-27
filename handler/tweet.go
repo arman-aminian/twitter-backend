@@ -76,7 +76,7 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 		}
 
 		pid, _ := h.tweetStore.GetTweetById(&parentId)
-
+		//
 		temp := *model.NewCommentTweet(*pid)
 		temp.CommentsCount = temp.CommentsCount + 1
 		*t.Parents = append(*p.Parents, temp)
