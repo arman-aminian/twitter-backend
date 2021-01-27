@@ -239,6 +239,7 @@ func (h *Handler) UpdateProfile(c echo.Context) error {
 	if err := h.userStore.UpdateProfile(u); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
+	fmt.Println(u.Name)
 	return c.JSON(http.StatusOK, newProfileResponse(h.userStore, u.Username, u))
 }
 
@@ -449,6 +450,9 @@ func (h *Handler) GetLogs(c echo.Context) error {
 	}
 	if u == nil {
 		return c.JSON(http.StatusNotFound, utils.NotFound())
+	}
+	if u.Username != stringFieldFromToken(c, "username") {
+		return c.JSON(http.StatusBadRequest, errors.New("can't get another user's logs"))
 	}
 	return c.JSON(http.StatusOK, newLogsList(u))
 }
