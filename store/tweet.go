@@ -40,6 +40,24 @@ func (ts *TweetStore) GetTweetById(id *string) (*model.Tweet, error) {
 	return &t, err
 }
 
+func (ts *TweetStore) GetTweets(tweets []string) (*[]model.Tweet, error) {
+	var ids []primitive.ObjectID
+	for _, tweet := range tweets {
+		oid, _ := primitive.ObjectIDFromHex(tweet)
+		ids = append(ids, oid)
+	}
+	var result []model.Tweet
+	query := bson.M{"_id": bson.M{"$in": ids}}
+	res, err := ts.db.Find(context.TODO(), query)
+	if err != nil {
+		return nil, err
+	}
+	if err = res.All(context.TODO(), &result); err != nil {
+		return nil, err
+	}
+	return &result, err
+}
+
 func (ts *TweetStore) GetAllTweets() ([]bson.M, error) {
 	var ret []bson.M
 	cur, err := ts.db.Find(context.TODO(), bson.M{})

@@ -143,9 +143,46 @@ type singleTweetResponse struct {
 	Tweet *tweetResponse `json:"tweet"`
 }
 
+type tweetsResponse struct {
+	Tweets []tweetResponse `json:"tweets"`
+}
+
 type tweetListResponse struct {
 	Tweets      []tweetResponse `json:"tweets"`
 	TweetsCount int             `json:"tweetsCount"`
+}
+
+func newTweetsResponse(username string, tweets *[]model.Tweet) *tweetsResponse {
+	tr := make([]tweetResponse, len(*tweets))
+	if tweets == nil {
+		return &tweetsResponse{tr}
+	}
+	for i, tweet := range *tweets {
+		tr[i].ID = tweet.ID.Hex()
+		tr[i].Text = tweet.Text
+		tr[i].Parents = tweet.Parents
+		tr[i].Comments = tweet.Comments
+		tr[i].Media = tweet.Media
+		tr[i].Time = tweet.Time
+
+		for _, t := range *tweet.Likes {
+			if t.Username == username {
+				tr[i].Liked = true
+				break
+			}
+		}
+		tr[i].LikesCount = len(*tweet.Likes)
+		for _, t := range *tweet.Retweets {
+			if t.Username == username {
+				tr[i].Retweeted = true
+				break
+			}
+		}
+		tr[i].RetweetsCount = len(*tweet.Retweets)
+		tr[i].Owner.Username = tweet.Owner.Username
+		tr[i].Owner.ProfilePicture = tweet.Owner.ProfilePicture
+	}
+	return &tweetsResponse{tr}
 }
 
 func newTweetResponse(c echo.Context, t *model.Tweet) *singleTweetResponse {

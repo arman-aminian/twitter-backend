@@ -18,6 +18,14 @@ type Tweet struct {
 	Comments *[]CommentTweet    `json:"comments" bson:"comments"`
 }
 
+type TweetList struct {
+	Tweets *[]Tweet `json:"tweets"`
+}
+
+type TweetIdList struct {
+	Tweets []string `json:"tweets"`
+}
+
 type CommentTweet struct {
 	ID       primitive.ObjectID `json:"id,omitempty" bson:"_id"`
 	Text     string             `json:"text" bson:"text"`

@@ -466,10 +466,8 @@ func (h *Handler) GetNotifications(c echo.Context) error {
 }
 
 func (h *Handler) GetSuggestions(c echo.Context) error {
-	println("suggestions")
 	username := stringFieldFromToken(c, "username")
 	u, err := h.userStore.GetByUsername(username)
-	fmt.Println(u)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
@@ -487,7 +485,6 @@ func (h *Handler) GetSuggestions(c echo.Context) error {
 
 	// to sort suggestions by their frequencies
 	suggestionsFreq := dupCount(suggestions)
-	fmt.Println(suggestionsFreq)
 	sorted := make([]model.Owner, 0, len(suggestionsFreq))
 	for name := range suggestionsFreq {
 		sorted = append(sorted, name)

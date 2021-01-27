@@ -2,6 +2,7 @@ package handler
 
 import (
 	"errors"
+	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/labstack/echo/v4"
@@ -117,6 +118,24 @@ func (h *Handler) GetTweet(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, newTweetResponse(c, t))
+}
+
+func (h *Handler) GetTweets(c echo.Context) error {
+	tweets := &model.TweetIdList{}
+	err := c.Bind(tweets)
+	if err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
+	fmt.Println(tweets)
+	if len(tweets.Tweets) == 0 {
+		return c.JSON(http.StatusBadRequest, utils.NewError(errors.New("nothing to search for")))
+	}
+	res, err := h.tweetStore.GetTweets(tweets.Tweets)
+	if err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+	}
+	fmt.Println(res)
+	return c.JSON(http.StatusOK, newTweetsResponse(stringFieldFromToken(c, "username"), res))
 }
 
 func (h *Handler) DeleteTweet(c echo.Context) error {
