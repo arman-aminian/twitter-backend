@@ -76,7 +76,10 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 		}
 
 		pid, _ := h.tweetStore.GetTweetById(&parentId)
-		*t.Parents = append(*p.Parents, *model.NewCommentTweet(*pid))
+
+		temp := *model.NewCommentTweet(*pid)
+		temp.CommentsCount = temp.CommentsCount + 1
+		*t.Parents = append(*p.Parents, temp)
 		err = h.tweetStore.AddCommentToTweet(p, model.NewCommentTweet(*t))
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, utils.NewError(err))

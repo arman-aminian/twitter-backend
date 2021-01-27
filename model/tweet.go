@@ -27,14 +27,15 @@ type TweetIdList struct {
 }
 
 type CommentTweet struct {
-	ID       primitive.ObjectID `json:"id,omitempty" bson:"_id"`
-	Text     string             `json:"text" bson:"text"`
-	Media    string             `json:"media" bson:"media"`
-	Date     string             `json:"date" bson:"date"`
-	Time     time.Time          `json:"time" bson:"time"`
-	Owner    Owner              `json:"owner" bson:"owner"`
-	Likes    *[]Owner           `json:"likes" bson:"likes"`
-	Retweets *[]Owner           `json:"retweets" bson:"retweets"`
+	ID            primitive.ObjectID `json:"id,omitempty" bson:"_id"`
+	Text          string             `json:"text" bson:"text"`
+	Media         string             `json:"media" bson:"media"`
+	Date          string             `json:"date" bson:"date"`
+	Time          time.Time          `json:"time" bson:"time"`
+	Owner         Owner              `json:"owner" bson:"owner"`
+	Likes         *[]Owner           `json:"likes" bson:"likes"`
+	Retweets      *[]Owner           `json:"retweets" bson:"retweets"`
+	CommentsCount int                `json:"comments_count"`
 }
 
 func NewTweet() *Tweet {
@@ -54,5 +55,6 @@ func NewCommentTweet(tweet Tweet) *CommentTweet {
 	c.Date = tweet.Date
 	c.Time = tweet.Time
 	c.Owner = tweet.Owner
+	c.CommentsCount = len(*tweet.Comments)
 	return &c
 }
