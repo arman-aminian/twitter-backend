@@ -366,7 +366,7 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 	if err != nil {
 		day = 0
 	}
-	fmt.Println(day)
+	day = -1 * day
 	u, err := h.userStore.GetByUsername(stringFieldFromToken(c, "username"))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
