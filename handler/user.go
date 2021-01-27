@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"sort"
+	"strconv"
 	"time"
 )
 
@@ -361,26 +362,38 @@ func (h *Handler) UnFollow(c echo.Context) error {
 // @Failure 500 {object} utils.Error
 // @Router /articles [get]
 func (h *Handler) GetTimeline(c echo.Context) error {
-
+	day, err := strconv.Atoi(c.Param("day"))
+	if err != nil {
+		day = 0
+	}
+	fmt.Println(day)
 	u, err := h.userStore.GetByUsername(stringFieldFromToken(c, "username"))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
+
 	var usernames []string
 	for _, f := range *u.Followings {
 		usernames = append(usernames, f.Username)
 	}
+	usernames = append(usernames, u.Username)
 	if len(usernames) == 0 {
 		return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), nil, 0))
 	}
+
 	tweetsId, err := h.userStore.GetTweetIdListFromUsernameList(usernames)
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	timelineTweets, err := h.tweetStore.GetTimelineFromTweetIDs(*tweetsId, 0)
+	if len(*tweetsId) == 0 {
+		return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), nil, 0))
+	}
+
+	timelineTweets, err := h.tweetStore.GetTimelineFromTweetIDs(*tweetsId, day)
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
+
 	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), timelineTweets, len(*timelineTweets)))
 }
 

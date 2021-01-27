@@ -26,7 +26,7 @@ func (h *Handler) Register(g *echo.Group) {
 	g.POST(login, h.Login)
 
 	home := g.Group(timeline, jwtMiddleware)
-	home.GET("", h.GetTimeline)
+	home.GET("/:day", h.GetTimeline)
 
 	suggestion := g.Group(suggest, jwtMiddleware)
 	suggestion.GET("", h.GetSuggestions)
