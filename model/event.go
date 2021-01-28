@@ -10,7 +10,7 @@ type Event struct {
 	Target    Owner     `json:"target" bson:"target"`
 	Content   string    `json:"content" bson:"content"`
 	TimeStamp time.Time `json:"timestamp" bson:"timestamp"`
-	Tweet     *Tweet    `json:"tweet" bson:"tweet"`
+	Tweet     Tweet     `json:"tweet" bson:"tweet"`
 	// EventID   string              `json:"event_id" bson:"event_id"`
 }
 

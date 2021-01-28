@@ -13,6 +13,10 @@ import (
 	"strconv"
 )
 
+func (h *Handler) Dummy(c echo.Context) error {
+	return c.JSON(http.StatusCreated, errors.New("hello world"))
+}
+
 // signUp godoc
 // @Summary Register a new user
 // @Description Register a new user
