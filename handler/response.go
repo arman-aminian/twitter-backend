@@ -67,8 +67,16 @@ type FollowersAndFollowingListResponse struct {
 
 func newFollowingAndFollowersList(us user.Store, srcUsername string, u *model.User) *FollowersAndFollowingListResponse {
 	l := new(FollowersAndFollowingListResponse)
-	l.Followers = u.Followers
-	l.Followings = u.Followings
+	temp := *u.Followers
+	for i := range temp {
+		temp[i].IsFollowing, _ = us.IsFollower(temp[i].Username, srcUsername)
+	}
+	l.Followers = &temp
+	temp2 := *u.Followings
+	for i := range temp2 {
+		temp2[i].IsFollowing, _ = us.IsFollower(temp2[i].Username, srcUsername)
+	}
+	l.Followings = &temp2
 	l.IsFollowing, _ = us.IsFollower(u.Username, srcUsername)
 	return l
 }
