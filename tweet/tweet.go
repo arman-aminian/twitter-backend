@@ -17,6 +17,7 @@ type Store interface {
 	UnLikeTweet(t *model.Tweet, u *model.User) error
 	Retweet(t *model.Tweet, u *model.User) error
 	UnRetweet(t *model.Tweet, u *model.User) error
+	RemoveComment(u *model.Tweet, id *primitive.ObjectID) error
 
 	ExtractHashtags(t *model.Tweet) map[string]int
 

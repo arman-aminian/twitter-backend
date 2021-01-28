@@ -76,6 +76,17 @@ func (ts *TweetStore) AddCommentToTweet(parent *model.Tweet, child *model.Commen
 	return nil
 }
 
+func (ts *TweetStore) RemoveComment(t *model.Tweet, id *primitive.ObjectID) error {
+	newTweets := &[]model.CommentTweet{}
+	for _, tid := range *t.Comments {
+		if tid.ID != *id {
+			*newTweets = append(*newTweets, tid)
+		}
+	}
+	_, err := ts.db.UpdateOne(context.TODO(), bson.M{"_id": t.ID}, bson.M{"$set": bson.M{"comments": newTweets}})
+	return err
+}
+
 func (ts *TweetStore) LikeTweet(t *model.Tweet, u *model.User) error {
 	*t.Likes = append(*t.Likes, *model.NewOwner(u.Username, u.ProfilePicture, u.Name, u.Bio))
 	_, err := ts.db.UpdateOne(context.TODO(), bson.M{"_id": t.ID}, bson.M{"$set": bson.M{"likes": t.Likes}})
