@@ -1,1 +1,1 @@
-“web: twitter-backend”
+web: go run main.go

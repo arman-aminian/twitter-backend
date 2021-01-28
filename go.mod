@@ -1,5 +1,6 @@
 module github.com/arman-aminian/twitter-backend
 
+// +heroku goVersion go1.12.17
 go 1.14
 
 require (
