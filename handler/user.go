@@ -502,7 +502,7 @@ func (h *Handler) GetSuggestions(c echo.Context) error {
 
 	for i := range suggestions {
 		for j := range followings {
-			if suggestions[i] == followings[j] {
+			if suggestions[i].Username == followings[j].Username || suggestions[i].Username == u.Username {
 				suggestions = removeIndex(suggestions, i)
 				break
 			}
