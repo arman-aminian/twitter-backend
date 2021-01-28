@@ -117,7 +117,7 @@ func newLogsList(u *model.User) *EventListResponse {
 		l.Target = e.Target
 		l.Content = e.Content
 		l.TimeStamp = e.TimeStamp
-		ret.Events = append(ret.Events, *l)
+		ret.Events = append([]SingleEventResponse{*l}, ret.Events...)
 	}
 	return ret
 }
@@ -131,7 +131,7 @@ func newNotificationsList(u *model.User) *EventListResponse {
 		l.Target = e.Target
 		l.Content = e.Content
 		l.TimeStamp = e.TimeStamp
-		ret.Events = append(ret.Events, *l)
+		ret.Events = append([]SingleEventResponse{*l}, ret.Events...)
 	}
 	return ret
 }
