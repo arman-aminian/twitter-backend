@@ -1,4 +1,140 @@
 definitions:
+  handler.EventListResponse:
+    properties:
+      events:
+        items:
+          $ref: '#/definitions/handler.SingleEventResponse'
+        type: array
+    type: object
+  handler.FollowersAndFollowingListResponse:
+    properties:
+      followers:
+        items:
+          $ref: '#/definitions/model.Owner'
+        type: array
+      followings:
+        items:
+          $ref: '#/definitions/model.Owner'
+        type: array
+      is_following:
+        type: boolean
+    type: object
+  handler.OwnerListResponse:
+    properties:
+      users:
+        items:
+          $ref: '#/definitions/model.Owner'
+        type: array
+    type: object
+  handler.SingleEventResponse:
+    properties:
+      content:
+        type: string
+      mode:
+        type: string
+      source:
+        $ref: '#/definitions/model.Owner'
+      target:
+        $ref: '#/definitions/model.Owner'
+      timestamp:
+        type: string
+      tweet:
+        $ref: '#/definitions/model.Tweet'
+    type: object
+  handler.profileResponse:
+    properties:
+      profile:
+        properties:
+          bio:
+            type: string
+          followers:
+            items:
+              $ref: '#/definitions/model.Owner'
+            type: array
+          followings:
+            items:
+              $ref: '#/definitions/model.Owner'
+            type: array
+          header_picture:
+            type: string
+          is_following:
+            type: boolean
+          name:
+            type: string
+          profile_picture:
+            type: string
+          tweets:
+            items:
+              type: string
+            type: array
+          username:
+            type: string
+        type: object
+    type: object
+  handler.singleTweetResponse:
+    properties:
+      tweet:
+        $ref: '#/definitions/handler.tweetResponse'
+    type: object
+  handler.tweetCreateRequest:
+    properties:
+      tweet:
+        properties:
+          media:
+            type: string
+          text:
+            type: string
+        type: object
+    type: object
+  handler.tweetLikeAndRetweetResponse:
+    properties:
+      likes:
+        items:
+          $ref: '#/definitions/model.Owner'
+        type: array
+      retweets:
+        items:
+          $ref: '#/definitions/model.Owner'
+        type: array
+    type: object
+  handler.tweetListResponse:
+    properties:
+      tweets:
+        items:
+          $ref: '#/definitions/handler.tweetResponse'
+        type: array
+      tweetsCount:
+        type: integer
+    type: object
+  handler.tweetResponse:
+    properties:
+      comments:
+        items:
+          $ref: '#/definitions/model.CommentTweet'
+        type: array
+      id:
+        type: string
+      liked:
+        type: boolean
+      likes_count:
+        type: integer
+      media:
+        type: string
+      owner:
+        $ref: '#/definitions/model.Owner'
+      parents:
+        items:
+          $ref: '#/definitions/model.CommentTweet'
+        type: array
+      retweeted:
+        type: boolean
+      retweets_count:
+        type: integer
+      text:
+        type: string
+      time:
+        type: string
+    type: object
   handler.userLoginRequest:
     properties:
       user:
@@ -12,7 +148,58 @@ definitions:
         - password
         type: object
     type: object
+  handler.userProfileUpdateRequest:
+    properties:
+      user:
+        properties:
+          bio:
+            type: string
+          header_Picture:
+            type: string
+          name:
+            type: string
+          profile_picture:
+            type: string
+        type: object
+    type: object
   handler.userRegisterRequest:
+    properties:
+      user:
+        properties:
+          email:
+            type: string
+          name:
+            type: string
+          password:
+            type: string
+          username:
+            type: string
+        required:
+        - email
+        - name
+        - password
+        - username
+        type: object
+    type: object
+  handler.userResponse:
+    properties:
+      user:
+        properties:
+          bio:
+            type: string
+          email:
+            type: string
+          name:
+            type: string
+          profile_picture:
+            type: string
+          token:
+            type: string
+          username:
+            type: string
+        type: object
+    type: object
+  handler.userUpdateRequest:
     properties:
       user:
         properties:
@@ -22,23 +209,76 @@ definitions:
             type: string
           username:
             type: string
-        required:
-        - email
-        - password
-        - username
         type: object
     type: object
-  handler.userResponse:
+  model.CommentTweet:
     properties:
-      user:
-        properties:
-          email:
-            type: string
-          token:
-            type: string
-          username:
-            type: string
-        type: object
+      comments_count:
+        type: integer
+      date:
+        type: string
+      id:
+        type: string
+      likes:
+        items:
+          $ref: '#/definitions/model.Owner'
+        type: array
+      media:
+        type: string
+      owner:
+        $ref: '#/definitions/model.Owner'
+      retweets:
+        items:
+          $ref: '#/definitions/model.Owner'
+        type: array
+      text:
+        type: string
+      time:
+        type: string
+    type: object
+  model.Owner:
+    properties:
+      bio:
+        type: string
+      is_following:
+        type: boolean
+      name:
+        type: string
+      profile_picture:
+        type: string
+      username:
+        type: string
+    type: object
+  model.Tweet:
+    properties:
+      comments:
+        items:
+          $ref: '#/definitions/model.CommentTweet'
+        type: array
+      date:
+        type: string
+      id:
+        type: string
+      likes:
+        items:
+          $ref: '#/definitions/model.Owner'
+        type: array
+      media:
+        type: string
+      owner:
+        $ref: '#/definitions/model.Owner'
+      parents:
+        items:
+          $ref: '#/definitions/model.CommentTweet'
+        type: array
+      retweets:
+        items:
+          $ref: '#/definitions/model.Owner'
+        type: array
+      text:
+        type: string
+      time:
+        type: string
     type: object
   utils.Error:
     properties:
@@ -49,49 +289,50 @@ definitions:
 info:
   contact: {}
 paths:
-  /users:
-    post:
-      consumes:
-      - application/json
-      description: Register a new user
-      operationId: sign-up
+  /header-pictures/{filename}:
+    get:
+      description: Get the header picture of a user based on the filename
+      operationId: get-header-picture
       parameters:
-      - description: User info for registration
+      - description: name of the file.
         in: body
         name: user
         required: true
         schema:
-          $ref: '#/definitions/handler.userRegisterRequest'
+          type: string
+      summary: Get the header picture
+      tags:
+      - user
+  /home:
+    get:
+      description: Get tweets of your followings. Auth is required.
+      operationId: get-timeline
       produces:
       - application/json
       responses:
-        "201":
-          description: Created
+        "200":
+          description: OK
           schema:
-            $ref: '#/definitions/handler.userResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.Error'
-        "404":
-          description: Not Found
+            $ref: '#/definitions/handler.tweetListResponse'
+        "422":
+          description: Unprocessable Entity
           schema:
             $ref: '#/definitions/utils.Error'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/utils.Error'
-      summary: Register a new user
+      summary: Get the timeline of your account
       tags:
-      - user
-  /users/login:
+      - timeline
+  /login:
     post:
       consumes:
       - application/json
-      description: Login for existing user
+      description: Login an existing user
       operationId: login
       parameters:
-      - description: Credentials to use
+      - description: 'Credentials to use: email and password'
         in: body
         name: user
         required: true
@@ -104,12 +345,118 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/handler.userResponse'
-        "400":
-          description: Bad Request
+        "403":
+          description: Forbidden
           schema:
             $ref: '#/definitions/utils.Error'
-        "401":
-          description: Unauthorized
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: Login an existing user
+      tags:
+      - user
+  /profile-pictures/{filename}:
+    get:
+      description: Get the profile picture of a user based on the filename
+      operationId: get-profile-picture
+      parameters:
+      - description: name of the file.
+        in: body
+        name: user
+        required: true
+        schema:
+          type: string
+      summary: Get the profile picture
+      tags:
+      - user
+  /profiles/{username}:
+    get:
+      consumes:
+      - application/json
+      description: Get a profile of a user of the system. Authorization is optional
+      operationId: get-profile
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.userResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Get a profile
+      tags:
+      - profile
+    put:
+      consumes:
+      - application/json
+      description: 'Update user profile based on 4 entries: name, bio, and pictures'
+      operationId: update-profile
+      parameters:
+      - description: User details to update. At least **one** field is required.
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/handler.userProfileUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.userResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Update a user's profile
+      tags:
+      - user
+  /profiles/{username}/follow:
+    delete:
+      consumes:
+      - application/json
+      description: Unfollow a user by username
+      operationId: unfollow
+      parameters:
+      - description: Username of the profile you want to unfollow
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.profileResponse'
+        "400":
+          description: Bad Request
           schema:
             $ref: '#/definitions/utils.Error'
         "404":
@@ -124,7 +471,487 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/utils.Error'
-      summary: Login for existing user
+      security:
+      - ApiKeyAuth: []
+      summary: Unfollow a user
+      tags:
+      - follow
+    post:
+      consumes:
+      - application/json
+      description: Follow a user by username
+      operationId: follow
+      parameters:
+      - description: Username of the profile you want to follow
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.profileResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Follow a user
+      tags:
+      - follow
+  /profiles/{username}/logs:
+    get:
+      description: Get the list of everything the user has done (logs).
+      operationId: get-logs
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.EventListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      tags:
+      - logs
+  /profiles/{username}/notifications:
+    get:
+      description: Get the list of everything done with the use being the target (notifications).
+      operationId: get-notifications
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.EventListResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      tags:
+      - notifications
+  /search/tweet:
+    get:
+      consumes:
+      - application/json
+      description: Search all the tweets related to the query.
+      operationId: search-tweets
+      parameters:
+      - description: Part of the tweets you want to search.
+        in: query
+        name: query
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.tweetListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: Search tweets related to query
+      tags:
+      - search
+  /search/username:
+    get:
+      description: Search by specifying the username. Auth is optional.
+      operationId: search-username
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.tweetListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: Search a user by its username
+      tags:
+      - search
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user
+      operationId: sign-up
+      parameters:
+      - description: 'User info for registration: email, username and password'
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/handler.userRegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.userResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/utils.Error'
+      summary: Register a new user
+      tags:
+      - user
+  /suggestions:
+    get:
+      description: Get the list of the users suggested to a user (followers of its
+        followings)
+      operationId: get-suggestions
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.OwnerListResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      tags:
+      - suggestions
+  /tweets:
+    post:
+      consumes:
+      - application/json
+      description: Create an tweet
+      operationId: create-tweet
+      parameters:
+      - description: Tweet to create made of text and media
+        in: body
+        name: tweet
+        required: true
+        schema:
+          $ref: '#/definitions/handler.tweetCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.singleTweetResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Create an tweet
+      tags:
+      - tweet
+  /tweets/{id}:
+    delete:
+      description: Delete a tweet from a user's tweets based on the token. Auth is
+        required.
+      operationId: delete-tweet
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.singleTweetResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - tweet
+    get:
+      description: Create an tweet. Auth is optional.
+      operationId: get-tweet
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.singleTweetResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - tweet
+    post:
+      description: Get all of the tweets of a user. Auth is required.
+      operationId: get-tweet
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.singleTweetResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - tweet
+  /tweets/{id}/like:
+    delete:
+      description: UnLike a tweet. Auth is required.
+      operationId: unlike
+      parameters:
+      - description: id of the article that you want to unlike
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.singleTweetResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - like
+    post:
+      description: Like a tweet. Auth is required.
+      operationId: like
+      parameters:
+      - description: id of the article that you want to like
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.singleTweetResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - like
+  /tweets/{id}/list:
+    get:
+      description: Get the list of users who liked and retweeted this tweet. Auth
+        not required.
+      operationId: get-likes-retweets-list
+      parameters:
+      - description: Id of the tweet to get the list from.
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.tweetLikeAndRetweetResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      tags:
+      - tweet
+  /tweets/{id}/retweet:
+    delete:
+      description: UnRetweet a tweet. Auth is required.
+      operationId: unretweet
+      parameters:
+      - description: id of the article that you want to unretweet
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.singleTweetResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - unretweet
+    post:
+      description: retweet a tweet. Auth is required.
+      operationId: retweet
+      parameters:
+      - description: id of the article that you want to retweet
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.singleTweetResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - retweet
+  /user:
+    put:
+      consumes:
+      - application/json
+      description: Update user information for a user whom information is given
+      operationId: update-user
+      parameters:
+      - description: User details to update. At least **one** field is required.
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/handler.userUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.userResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/utils.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Update User
       tags:
       - user
 swagger: "2.0"

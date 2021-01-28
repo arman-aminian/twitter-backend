@@ -9,7 +9,7 @@ import (
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/router"
 	"github.com/arman-aminian/twitter-backend/store"
-	echoSwagger "github.com/swaggo/echo-swagger"
+	// echoSwagger "github.com/swaggo/echo-swagger"
 	"go.mongodb.org/mongo-driver/bson"
 	"log"
 )
@@ -23,7 +23,7 @@ func main() {
 
 	if !testHeap {
 		r := router.New()
-		r.GET("/swagger/*", echoSwagger.WrapHandler)
+		// r.GET("/swagger/*", echoSwagger.WrapHandler)
 		mongoClient, err := db.GetMongoClient()
 		if err != nil {
 			log.Fatal(err)
@@ -44,7 +44,7 @@ func main() {
 		// RUN THIS IF YOUR HASHTAG DATABASE IS EMPTY
 		// StartUpTrends(ts, h)
 		
-		r.Logger.Fatal(r.Start(":" + port))
+		r.Logger.Fatal(r.Start("0.0.0.0:" + port))
 	}
 
 	// if testHeap {

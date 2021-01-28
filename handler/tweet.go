@@ -14,20 +14,20 @@ import (
 	"time"
 )
 
-// CreateArticle godoc
+// CreateTweet godoc
 // @Summary Create an tweet
 // @Description Create an tweet
 // @ID create-tweet
-// @Tags article
+// @Tags tweet
 // @Accept  json
 // @Produce  json
-// @Param article body tweetCreateRequest true "Article to create"
+// @Param tweet body tweetCreateRequest true "Tweet to create made of text and media"
 // @Success 201 {object} singleTweetResponse
-// @Failure 401 {object} utils.Error
+// @Failure 404 {object} utils.Error
 // @Failure 422 {object} utils.Error
 // @Failure 500 {object} utils.Error
 // @Security ApiKeyAuth
-// @Router /articles [post]
+// @Router /tweets [post]
 func (h *Handler) CreateTweet(c echo.Context) error {
 	t := model.NewTweet()
 
@@ -113,6 +113,16 @@ func (h *Handler) GetTweetAssetFile(c echo.Context) error {
 	return c.File(mediaPath)
 }
 
+// GetTweet godoc
+// @Description Create an tweet. Auth is optional.
+// @ID get-tweet
+// @Tags tweet
+// @Produce  json
+// @Success 201 {object} singleTweetResponse
+// @Failure 404 {object} utils.Error
+// @Failure 500 {object} utils.Error
+// @Security ApiKeyAuth
+// @Router /tweets/{id} [get]
 func (h *Handler) GetTweet(c echo.Context) error {
 	id := c.Param("id")
 	t, err := h.tweetStore.GetTweetById(&id)
@@ -126,6 +136,16 @@ func (h *Handler) GetTweet(c echo.Context) error {
 	return c.JSON(http.StatusOK, newTweetResponse(c, t))
 }
 
+// GetTweets godoc
+// @Description Get all of the tweets of a user. Auth is required.
+// @ID get-tweet
+// @Tags tweet
+// @Produce  json
+// @Success 201 {object} singleTweetResponse
+// @Failure 404 {object} utils.Error
+// @Failure 500 {object} utils.Error
+// @Security ApiKeyAuth
+// @Router /tweets/{id} [post]
 func (h *Handler) GetTweets(c echo.Context) error {
 	tweets := &model.TweetIdList{}
 	err := c.Bind(tweets)
@@ -149,6 +169,16 @@ func (h *Handler) GetTweets(c echo.Context) error {
 	return c.JSON(http.StatusOK, newTweetsResponse(stringFieldFromToken(c, "username"), &sorted))
 }
 
+// DeleteTweet godoc
+// @Description Delete a tweet from a user's tweets based on the token. Auth is required.
+// @ID delete-tweet
+// @Tags tweet
+// @Produce  json
+// @Success 201 {object} singleTweetResponse
+// @Failure 404 {object} utils.Error
+// @Failure 500 {object} utils.Error
+// @Security ApiKeyAuth
+// @Router /tweets/{id} [delete]
 func (h *Handler) DeleteTweet(c echo.Context) error {
 	id := c.Param("id")
 	t, err := h.tweetStore.GetTweetById(&id)
@@ -199,18 +229,16 @@ func (h *Handler) DeleteTweet(c echo.Context) error {
 	return c.JSON(http.StatusOK, newTweetResponse(c, t))
 }
 
-// GetArticle godoc
-// @Summary Get an article
-// @Description Get an article. Auth not required
-// @ID get-article
-// @Tags article
-// @Accept  json
+// GetTweetLikeAndRetweetList godoc
+// @Description Get the list of users who liked and retweeted this tweet. Auth not required.
+// @ID get-likes-retweets-list
+// @Tags tweet
 // @Produce  json
-// @Param slug path string true "Slug of the article to get"
-// @Success 200 {object} singleArticleResponse
-// @Failure 400 {object} utils.Error
+// @Param id path string true "Id of the tweet to get the list from."
+// @Success 200 {object} tweetLikeAndRetweetResponse
+// @Failure 404 {object} utils.Error
 // @Failure 500 {object} utils.Error
-// @Router /articles/{slug} [get]
+// @Router /tweets/{id}/list [get]
 func (h *Handler) GetTweetLikeAndRetweetList(c echo.Context) error {
 	id := c.Param("id")
 	t, err := h.tweetStore.GetTweetById(&id)
@@ -224,47 +252,18 @@ func (h *Handler) GetTweetLikeAndRetweetList(c echo.Context) error {
 	return c.JSON(http.StatusOK, newLikeAndRetweetResponse(h.userStore, stringFieldFromToken(c, "username"), t))
 }
 
-// GetArticle godoc
-// @Summary Get an article
-// @Description Get an article. Auth not required
-// @ID get-article
-// @Tags article
-// @Accept  json
+// Like godoc
+// @Description Like a tweet. Auth is required.
+// @ID like
+// @Tags like
 // @Produce  json
-// @Param slug path string true "Slug of the article to get"
-// @Success 200 {object} singleArticleResponse
-// @Failure 400 {object} utils.Error
-// @Failure 500 {object} utils.Error
-// @Router /articles/{slug} [get]
-func (h *Handler) GetRetweetList(c echo.Context) error {
-	id := c.Param("id")
-	t, err := h.tweetStore.GetTweetById(&id)
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
-	}
-	if t == nil {
-		return c.JSON(http.StatusNotFound, utils.NotFound())
-	}
-
-	return c.JSON(http.StatusOK, newLikeAndRetweetResponse(h.userStore, stringFieldFromToken(c, "username"), t))
-}
-
-// Favorite godoc
-// @Summary Favorite an article
-// @Description Favorite an article. Auth is required
-// @ID favorite
-// @Tags favorite
-// @Accept  json
-// @Produce  json
-// @Param slug path string true "Slug of the article that you want to favorite"
-// @Success 200 {object} singleArticleResponse
-// @Failure 400 {object} utils.Error
-// @Failure 401 {object} utils.Error
+// @Param id path string true "id of the article that you want to like"
+// @Success 200 {object} singleTweetResponse
 // @Failure 422 {object} utils.Error
 // @Failure 404 {object} utils.Error
 // @Failure 500 {object} utils.Error
 // @Security ApiKeyAuth
-// @Router /articles/{slug}/favorite [post]
+// @Router /tweets/{id}/like [post]
 func (h *Handler) Like(c echo.Context) error {
 	id := c.Param("id")
 	t, err := h.tweetStore.GetTweetById(&id)
@@ -306,22 +305,18 @@ func (h *Handler) Like(c echo.Context) error {
 	return c.JSON(http.StatusOK, newTweetResponse(c, t))
 }
 
-// Favorite godoc
-// @Summary Favorite an article
-// @Description Favorite an article. Auth is required
-// @ID favorite
-// @Tags favorite
-// @Accept  json
+// UnLike godoc
+// @Description UnLike a tweet. Auth is required.
+// @ID unlike
+// @Tags like
 // @Produce  json
-// @Param slug path string true "Slug of the article that you want to favorite"
-// @Success 200 {object} singleArticleResponse
-// @Failure 400 {object} utils.Error
-// @Failure 401 {object} utils.Error
+// @Param id path string true "id of the article that you want to unlike"
+// @Success 200 {object} singleTweetResponse
 // @Failure 422 {object} utils.Error
 // @Failure 404 {object} utils.Error
 // @Failure 500 {object} utils.Error
 // @Security ApiKeyAuth
-// @Router /articles/{slug}/favorite [post]
+// @Router /tweets/{id}/like [delete]
 func (h *Handler) UnLike(c echo.Context) error {
 	id := c.Param("id")
 	t, err := h.tweetStore.GetTweetById(&id)
@@ -352,22 +347,18 @@ func (h *Handler) UnLike(c echo.Context) error {
 	return c.JSON(http.StatusOK, newTweetResponse(c, t))
 }
 
-// Favorite godoc
-// @Summary Favorite an article
-// @Description Favorite an article. Auth is required
-// @ID favorite
-// @Tags favorite
-// @Accept  json
+// Retweet godoc
+// @Description retweet a tweet. Auth is required.
+// @ID retweet
+// @Tags retweet
 // @Produce  json
-// @Param slug path string true "Slug of the article that you want to favorite"
-// @Success 200 {object} singleArticleResponse
-// @Failure 400 {object} utils.Error
-// @Failure 401 {object} utils.Error
+// @Param id path string true "id of the article that you want to retweet"
+// @Success 200 {object} singleTweetResponse
 // @Failure 422 {object} utils.Error
 // @Failure 404 {object} utils.Error
 // @Failure 500 {object} utils.Error
 // @Security ApiKeyAuth
-// @Router /articles/{slug}/favorite [post]
+// @Router /tweets/{id}/retweet [post]
 func (h *Handler) Retweet(c echo.Context) error {
 	id := c.Param("id")
 	t, err := h.tweetStore.GetTweetById(&id)
@@ -413,22 +404,17 @@ func (h *Handler) Retweet(c echo.Context) error {
 	return c.JSON(http.StatusOK, newTweetResponse(c, t))
 }
 
-// Favorite godoc
-// @Summary Favorite an article
-// @Description Favorite an article. Auth is required
-// @ID favorite
-// @Tags favorite
-// @Accept  json
+// UnRetweet godoc
+// @Description UnRetweet a tweet. Auth is required.
+// @ID unretweet
+// @Tags unretweet
 // @Produce  json
-// @Param slug path string true "Slug of the article that you want to favorite"
-// @Success 200 {object} singleArticleResponse
-// @Failure 400 {object} utils.Error
-// @Failure 401 {object} utils.Error
-// @Failure 422 {object} utils.Error
+// @Param id path string true "id of the article that you want to unretweet"
+// @Success 200 {object} singleTweetResponse
 // @Failure 404 {object} utils.Error
 // @Failure 500 {object} utils.Error
 // @Security ApiKeyAuth
-// @Router /articles/{slug}/favorite [post]
+// @Router /tweets/{id}/retweet [delete]
 func (h *Handler) UnRetweet(c echo.Context) error {
 	id := c.Param("id")
 	t, err := h.tweetStore.GetTweetById(&id)
