@@ -397,7 +397,7 @@ paths:
             $ref: '#/definitions/utils.Error'
       security:
       - ApiKeyAuth: []
-      summary: Get a profile
+      summary: Get a User profile
       tags:
       - profile
     put:

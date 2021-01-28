@@ -169,7 +169,7 @@ var doc = `{
                 "tags": [
                     "profile"
                 ],
-                "summary": "Get a profile",
+                "summary": "Get a User profile",
                 "operationId": "get-profile",
                 "responses": {
                     "200": {
