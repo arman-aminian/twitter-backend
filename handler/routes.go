@@ -21,7 +21,7 @@ const (
 )
 
 func (h *Handler) Register(g *echo.Group) {
-	g.GET("", h.Dummy)
+	g.GET("/", h.Dummy)
 	jwtMiddleware := middleware.JWT(utils.JWTSecret)
 	globalMiddleware := middleware.Global(utils.JWTSecret)
 	g.POST(signUp, h.SignUp)
