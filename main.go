@@ -20,35 +20,32 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
-	testHeap := false
 
-	if !testHeap {
-		r := router.New()
-		r.GET("/swagger/*", echoSwagger.WrapHandler)
-		mongoClient, err := db.GetMongoClient()
-		if err != nil {
-			log.Fatal(err)
-		}
-		usersDb := db.SetupUsersDb(mongoClient)
-		tweetsDb := db.SetupTweetsDb(mongoClient)
-		hashtagsDb := db.SetupHashtagsDb(mongoClient)
-		g := r.Group("")
-		us := store.NewUserStore(usersDb)
-		ts := store.NewTweetStore(tweetsDb)
-		hs := store.NewHashtagStore(hashtagsDb)
-		h := handler.NewHandler(us, ts, hs)
-		h.Register(g)
-
-		// Fire up the trends beforehand
-		_ = hs.Update()
-
-		// RUN THIS IF YOUR HASHTAG DATABASE IS EMPTY
-		// StartUpTrends(ts, h)
-		
-		// r.Logger.Fatal(r.Start("0.0.0.0:" + port))
-		r.Logger.Fatal(r.Start("127.0.0.1:" + port))
-		// r.Logger.Fatal(r.Start(":" + port))
+	r := router.New()
+	r.GET("/swagger/*", echoSwagger.WrapHandler)
+	mongoClient, err := db.GetMongoClient()
+	if err != nil {
+		log.Fatal(err)
 	}
+	usersDb := db.SetupUsersDb(mongoClient)
+	tweetsDb := db.SetupTweetsDb(mongoClient)
+	hashtagsDb := db.SetupHashtagsDb(mongoClient)
+	g := r.Group("")
+	us := store.NewUserStore(usersDb)
+	ts := store.NewTweetStore(tweetsDb)
+	hs := store.NewHashtagStore(hashtagsDb)
+	h := handler.NewHandler(us, ts, hs)
+	h.Register(g)
+
+	// Fire up the trends beforehand
+	_ = hs.Update()
+
+	// RUN THIS IF YOUR HASHTAG DATABASE IS EMPTY
+	// StartUpTrends(ts, h)
+	
+	r.Logger.Fatal(r.Start("0.0.0.0:" + port))
+	// r.Logger.Fatal(r.Start("127.0.0.1:" + port))
+	// r.Logger.Fatal(r.Start(":" + port))
 }
 
 func StartUpTrends(ts *store.TweetStore, h *handler.Handler) {
