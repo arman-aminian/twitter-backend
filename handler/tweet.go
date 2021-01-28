@@ -181,8 +181,21 @@ func (h *Handler) DeleteTweet(c echo.Context) error {
 	}
 
 	hashtags := h.tweetStore.ExtractHashtags(t)
-	h.hashtagStore.DeleteTweetHashtags(t, hashtags)
+	_ = h.hashtagStore.DeleteTweetHashtags(t, hashtags)
 
+	temp := *t.Parents
+	parent := temp[len(*t.Parents)-1]
+
+	pid := parent.ID.Hex()
+	pt, err := h.tweetStore.GetTweetById(&pid)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
+	}
+
+	err = h.tweetStore.RemoveComment(pt, &t.ID)
+	if err != nil {
+		panic(err)
+	}
 	return c.JSON(http.StatusOK, newTweetResponse(c, t))
 }
 
