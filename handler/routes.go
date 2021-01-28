@@ -22,6 +22,7 @@ const (
 
 func (h *Handler) Register(g *echo.Group) {
 	jwtMiddleware := middleware.JWT(utils.JWTSecret)
+	globalMiddleware := middleware.Global(utils.JWTSecret)
 	g.POST(signUp, h.SignUp)
 	g.POST(login, h.Login)
 
@@ -39,7 +40,7 @@ func (h *Handler) Register(g *echo.Group) {
 	user := g.Group(userPath, jwtMiddleware)
 	user.PUT(usernameQ, h.UpdateUser)
 
-	profilesGlobal := g.Group(profiles)
+	profilesGlobal := g.Group(profiles, globalMiddleware)
 	profilesGlobal.GET(usernameQ, h.GetProfile)
 	profilesGlobal.GET(usernameQ+"/list", h.GetFollowingAndFollowersList)
 	profiles := g.Group(profiles, jwtMiddleware)
@@ -49,7 +50,7 @@ func (h *Handler) Register(g *echo.Group) {
 	profiles.GET(usernameQ+"/logs", h.GetLogs)
 	profiles.GET(usernameQ+"/notifications", h.GetNotifications)
 
-	tweetsGlobal := g.Group(tweets)
+	tweetsGlobal := g.Group(tweets, globalMiddleware)
 	tweets := g.Group(tweets, jwtMiddleware)
 	tweetsGlobal.GET("/:id", h.GetTweet)
 	tweetsGlobal.POST("/get", h.GetTweets)
