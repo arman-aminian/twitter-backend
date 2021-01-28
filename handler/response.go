@@ -85,9 +85,14 @@ type OwnerListResponse struct {
 	Users *[]model.Owner `json:"users"`
 }
 
-func newOwnerList(users *[]model.Owner) *OwnerListResponse {
+func newOwnerList(us user.Store, srcUsername string, users *[]model.Owner) *OwnerListResponse {
 	l := new(OwnerListResponse)
-	l.Users = users
+
+	temp := *users
+	for i := range temp {
+		temp[i].IsFollowing, _ = us.IsFollower(temp[i].Username, srcUsername)
+	}
+	l.Users = &temp
 	return l
 }
 
@@ -262,10 +267,20 @@ type tweetLikeAndRetweetResponse struct {
 	RetweetsList *[]model.Owner `json:"retweets" bson:"retweets"`
 }
 
-func newLikeAndRetweetResponse(t *model.Tweet) *tweetLikeAndRetweetResponse {
+func newLikeAndRetweetResponse(us user.Store, srcUsername string, t *model.Tweet) *tweetLikeAndRetweetResponse {
 	tr := new(tweetLikeAndRetweetResponse)
-	tr.LikesList = t.Likes
-	tr.RetweetsList = t.Retweets
+
+	temp := *t.Likes
+	for i := range temp {
+		temp[i].IsFollowing, _ = us.IsFollower(temp[i].Username, srcUsername)
+	}
+	tr.LikesList = &temp
+
+	temp2 := *t.Retweets
+	for i := range temp2 {
+		temp2[i].IsFollowing, _ = us.IsFollower(temp2[i].Username, srcUsername)
+	}
+	tr.RetweetsList = &temp2
 	return tr
 }
 

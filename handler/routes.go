@@ -33,7 +33,7 @@ func (h *Handler) Register(g *echo.Group) {
 	suggestion := g.Group(suggest, jwtMiddleware)
 	suggestion.GET("", h.GetSuggestions)
 
-	search := g.Group(search)
+	search := g.Group(search, globalMiddleware)
 	search.GET("/username", h.SearchUsernames)
 	search.POST("/tweet", h.SearchTweets)
 	search.GET("/hashtag", h.SearchHashtag)
@@ -52,10 +52,11 @@ func (h *Handler) Register(g *echo.Group) {
 	profiles.GET(usernameQ+"/notifications", h.GetNotifications)
 
 	tweetsGlobal := g.Group(tweets, globalMiddleware)
-	tweets := g.Group(tweets, jwtMiddleware)
 	tweetsGlobal.GET("/:id", h.GetTweet)
 	tweetsGlobal.POST("/get", h.GetTweets)
 	tweetsGlobal.GET("/:id/list", h.GetTweetLikeAndRetweetList)
+
+	tweets := g.Group(tweets, jwtMiddleware)
 	tweets.POST("", h.CreateTweet)
 	tweets.DELETE("/:id", h.DeleteTweet)
 	tweets.POST("/:id/like", h.Like)
