@@ -208,7 +208,7 @@ func (h *Handler) GetTweetLikeAndRetweetList(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, utils.NotFound())
 	}
 
-	return c.JSON(http.StatusOK, newLikeAndRetweetResponse(t))
+	return c.JSON(http.StatusOK, newLikeAndRetweetResponse(h.userStore, stringFieldFromToken(c, "username"), t))
 }
 
 // GetArticle godoc
@@ -233,7 +233,7 @@ func (h *Handler) GetRetweetList(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, utils.NotFound())
 	}
 
-	return c.JSON(http.StatusOK, newLikeAndRetweetResponse(t))
+	return c.JSON(http.StatusOK, newLikeAndRetweetResponse(h.userStore, stringFieldFromToken(c, "username"), t))
 }
 
 // Favorite godoc
