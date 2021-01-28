@@ -9,7 +9,7 @@ import (
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/router"
 	"github.com/arman-aminian/twitter-backend/store"
-	// echoSwagger "github.com/swaggo/echo-swagger"
+	echoSwagger "github.com/swaggo/echo-swagger"
 	"go.mongodb.org/mongo-driver/bson"
 	"log"
 )
@@ -23,10 +23,7 @@ func main() {
 
 	if !testHeap {
 		r := router.New()
-		// r.GET("/", func(c echo.Context) {
-		// 	c.JSON(http.StatusOK, errors.New("hello world"))
-		// })
-		//r.GET("/swagger/*", echoSwagger.WrapHandler)
+		r.GET("/swagger/*", echoSwagger.WrapHandler)
 		mongoClient, err := db.GetMongoClient()
 		if err != nil {
 			log.Fatal(err)
