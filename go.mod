@@ -1,7 +1,6 @@
 module github.com/arman-aminian/twitter-backend
 
-// +heroku goVersion go1.12.17
-go 1.14
+go 1.12
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
