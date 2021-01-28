@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="154ac8c9-fef3-4900-8bcc-64ee6cecf820" name="Default Changelist" comment="following and followers lists has is_following field.">
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="/usr/local/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="ProjectId" id="1nOgUP6IessxJb9omQZEXmepytC" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="GO_FMT" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+  </component>
+  <component name="RunManager" selected="Go Build.go build github.com/arman-aminian/twitter-backend">
+    <configuration name="go build github.com/arman-aminian/twitter-backend" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="twitter-backend" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <package value="github.com/arman-aminian/twitter-backend" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestGetProfileSuccess in github.com/arman-aminian/twitter-backend/handler" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="twitter-backend" />
+      <working_directory value="$PROJECT_DIR$/handler" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/arman-aminian/twitter-backend/handler" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestGetProfileSuccess$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build github.com/arman-aminian/twitter-backend" />
+        <item itemvalue="Go Test.TestGetProfileSuccess in github.com/arman-aminian/twitter-backend/handler" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Get timeline : bug fixed" />
+    <MESSAGE value="Tweet model modified : parrent tweet and comments added." />
+    <MESSAGE value="Tweet model modified : parent -&gt; parents&#10;Comments completed&#10;Timeline' bug Fixed" />
+    <MESSAGE value="Username search completed.&#10;DB tweet collection modified : index added to text search on text field" />
+    <MESSAGE value="Tweet search completed." />
+    <MESSAGE value="Set cookie for authorization." />
+    <MESSAGE value="Timeline bug Fixed&#10;Comment bug fixed(list of tweet ids -&gt; list of tweets)" />
+    <MESSAGE value="User suggestions to follow completed." />
+    <MESSAGE value="Timeline function modified to response by day." />
+    <MESSAGE value="Timeline updated : url changed and is compatible with date" />
+    <MESSAGE value="Timeline updated : url changed - is compatible with date" />
+    <MESSAGE value="Timeline bug fixed" />
+    <MESSAGE value="Timeline updated : timeline is now sorted." />
+    <MESSAGE value="Get tweets by list api added." />
+    <MESSAGE value="Get tweets is sorted." />
+    <MESSAGE value="Suggestions' bug fixed." />
+    <MESSAGE value="Switch to mongodb atlas." />
+    <MESSAGE value="being ready to deploy" />
+    <MESSAGE value="Create tweet updated" />
+    <MESSAGE value="Create tweet bug fixed" />
+    <MESSAGE value="Routes updated : global routes" />
+    <MESSAGE value="Suggestions Fixed" />
+    <MESSAGE value="Suggestions bug fixed" />
+    <MESSAGE value="Global middleware added." />
+    <MESSAGE value="following and followers lists has is_following field." />
+    <option name="LAST_COMMIT_MESSAGE" value="following and followers lists has is_following field." />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="613" y="251" width="453" height="582" key="#Build_Tags_&amp;_Vendoring" timestamp="1611321684014">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="613" y="251" width="453" height="582" key="#Build_Tags_&amp;_Vendoring/0.0.1680.1050@0.0.1680.1050" timestamp="1611321684014" />
+    <state x="474" y="221" key="#Inspections" timestamp="1611639292608">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="474" y="221" key="#Inspections/0.0.1680.1050@0.0.1680.1050" timestamp="1611639292608" />
+    <state x="536" y="130" key="#go_build_github.com/arman-aminian/twitter-backend" timestamp="1611763685835">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="536" y="130" key="#go_build_github.com/arman-aminian/twitter-backend/0.0.1680.1050@0.0.1680.1050" timestamp="1611763685835" />
+    <state x="536" y="142" key="#go_build_github.com/arman-aminian/twitter-backend/0.25.1680.947@0.25.1680.947" timestamp="1611266960011" />
+    <state x="168" y="62" width="1344" height="840" key="DiffContextDialog" timestamp="1611765965727">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="168" y="62" width="1344" height="840" key="DiffContextDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611765965727" />
+    <state x="168" y="62" width="1344" height="840" key="DiffContextDialog/0.25.1680.942@0.25.1680.942" timestamp="1611632897022" />
+    <state width="1638" height="153" key="GridCell.Tab.0.bottom" timestamp="1611812239509">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="153" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1611812239508" />
+    <state width="1638" height="148" key="GridCell.Tab.0.bottom/0.25.1680.940@0.25.1680.940" timestamp="1611796450885" />
+    <state width="1638" height="241" key="GridCell.Tab.0.bottom/0.25.1680.942@0.25.1680.942" timestamp="1611670293066" />
+    <state width="1638" height="262" key="GridCell.Tab.0.bottom/0.25.1680.945@0.25.1680.945" timestamp="1611494173120" />
+    <state width="1638" height="252" key="GridCell.Tab.0.bottom/0.25.1680.947@0.25.1680.947" timestamp="1611285116710" />
+    <state width="1638" height="153" key="GridCell.Tab.0.center" timestamp="1611812239508">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="153" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1611812239508" />
+    <state width="1638" height="148" key="GridCell.Tab.0.center/0.25.1680.940@0.25.1680.940" timestamp="1611796450883" />
+    <state width="1638" height="241" key="GridCell.Tab.0.center/0.25.1680.942@0.25.1680.942" timestamp="1611670293065" />
+    <state width="1638" height="262" key="GridCell.Tab.0.center/0.25.1680.945@0.25.1680.945" timestamp="1611494173120" />
+    <state width="1638" height="252" key="GridCell.Tab.0.center/0.25.1680.947@0.25.1680.947" timestamp="1611285116709" />
+    <state width="1638" height="153" key="GridCell.Tab.0.left" timestamp="1611812239507">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="153" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1611812239507" />
+    <state width="1638" height="148" key="GridCell.Tab.0.left/0.25.1680.940@0.25.1680.940" timestamp="1611796450881" />
+    <state width="1638" height="241" key="GridCell.Tab.0.left/0.25.1680.942@0.25.1680.942" timestamp="1611670293064" />
+    <state width="1638" height="262" key="GridCell.Tab.0.left/0.25.1680.945@0.25.1680.945" timestamp="1611494173119" />
+    <state width="1638" height="252" key="GridCell.Tab.0.left/0.25.1680.947@0.25.1680.947" timestamp="1611285116709" />
+    <state width="1638" height="153" key="GridCell.Tab.0.right" timestamp="1611812239508">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="153" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1611812239508" />
+    <state width="1638" height="148" key="GridCell.Tab.0.right/0.25.1680.940@0.25.1680.940" timestamp="1611796450884" />
+    <state width="1638" height="241" key="GridCell.Tab.0.right/0.25.1680.942@0.25.1680.942" timestamp="1611670293065" />
+    <state width="1638" height="262" key="GridCell.Tab.0.right/0.25.1680.945@0.25.1680.945" timestamp="1611494173120" />
+    <state width="1638" height="252" key="GridCell.Tab.0.right/0.25.1680.947@0.25.1680.947" timestamp="1611285116709" />
+    <state width="1638" height="308" key="GridCell.Tab.1.bottom" timestamp="1611452733944">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="308" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1611452733944" />
+    <state width="1638" height="308" key="GridCell.Tab.1.bottom/0.25.1680.940@0.25.1680.940" timestamp="1611428382720" />
+    <state width="1638" height="308" key="GridCell.Tab.1.center" timestamp="1611452733943">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="308" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1611452733943" />
+    <state width="1638" height="308" key="GridCell.Tab.1.center/0.25.1680.940@0.25.1680.940" timestamp="1611428382719" />
+    <state width="1638" height="308" key="GridCell.Tab.1.left" timestamp="1611452733943">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="308" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1611452733943" />
+    <state width="1638" height="308" key="GridCell.Tab.1.left/0.25.1680.940@0.25.1680.940" timestamp="1611428382719" />
+    <state width="1638" height="308" key="GridCell.Tab.1.right" timestamp="1611452733944">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="308" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1611452733944" />
+    <state width="1638" height="308" key="GridCell.Tab.1.right/0.25.1680.940@0.25.1680.940" timestamp="1611428382720" />
+    <state x="168" y="91" key="MergeDialog" timestamp="1611648664170">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="168" y="91" key="MergeDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611648664170" />
+    <state x="478" y="290" key="MultipleFileMergeDialog" timestamp="1611648664201">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="478" y="290" key="MultipleFileMergeDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611648664201" />
+    <state x="558" y="245" key="RollbackChangesDialog" timestamp="1611324401655">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="558" y="245" key="RollbackChangesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611324401655" />
+    <state x="440" y="233" key="Vcs.Push.Dialog.v2" timestamp="1611810950129">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="440" y="233" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1611810950129" />
+    <state x="440" y="234" key="Vcs.Push.Dialog.v2/0.25.1680.942@0.25.1680.942" timestamp="1611491881378" />
+    <state x="440" y="235" key="Vcs.Push.Dialog.v2/0.25.1680.945@0.25.1680.945" timestamp="1611494293596" />
+    <state x="440" y="235" key="Vcs.Push.Dialog.v2/0.25.1680.947@0.25.1680.947" timestamp="1611267201554" />
+    <state x="631" y="443" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611648301405">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="631" y="443" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1680.1050@0.0.1680.1050" timestamp="1611648301405" />
+    <state x="541" y="294" width="597" height="582" key="find.popup" timestamp="1611806095602">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="541" y="294" width="597" height="582" key="find.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1611806095602" />
+    <state x="541" y="288" width="597" height="490" key="find.popup/0.25.1680.940@0.25.1680.940" timestamp="1611427517418" />
+    <state x="541" y="289" width="597" height="490" key="find.popup/0.25.1680.942@0.25.1680.942" timestamp="1611491354521" />
+    <state x="502" y="317" key="git4idea.merge.GitPullDialog" timestamp="1611707536120">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="502" y="317" key="git4idea.merge.GitPullDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611707536120" />
+    <state x="502" y="309" key="git4idea.merge.GitPullDialog/0.25.1680.940@0.25.1680.940" timestamp="1611514381438" />
+  </component>
+</project>
