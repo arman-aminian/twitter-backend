@@ -276,6 +276,7 @@ func (h *Handler) Like(c echo.Context) error {
 	}
 
 	e := h.CreateLikeEvent(u, t)
+	fmt.Println("event is ", e)
 	err = h.userStore.AddLog(u, e)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
