@@ -499,10 +499,12 @@ func (h *Handler) GetSuggestions(c echo.Context) error {
 		suggestions = append(suggestions, *following.Followings...)
 	}
 
+	suggestionsSize := len(suggestions)
+	followingsSize := len(followings)
 	for i := range suggestions {
 		for j := range followings {
-			indexI := len(suggestions) - 1 - i
-			indexJ := len(followings) - 1 - j
+			indexI := suggestionsSize - 1 - i
+			indexJ := followingsSize - 1 - j
 			if suggestions[indexI].Username == followings[indexJ].Username || suggestions[indexI].Username == u.Username {
 				suggestions = removeIndex(suggestions, indexI)
 				break
