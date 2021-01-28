@@ -17,7 +17,7 @@ import (
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8585"
+		port = "8080"
 	}
 	testHeap := false
 

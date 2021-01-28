@@ -34,15 +34,18 @@ func JWTWithConfig(config JWTConfig) echo.MiddlewareFunc {
 	extractor := jwtFromHeader("Authorization", "Token")
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			auth, _ := extractor(c)
-			if auth == "" {
-				cookie, err := c.Cookie("Token")
-				if err != nil {
-					c.Set("username", "")
-					return next(c)
-				}
-				auth = cookie.Value
+			auth, err := extractor(c)
+			if err != nil {
+				return c.JSON(http.StatusForbidden, utils.NewError(ErrJWTInvalid))
 			}
+			//if auth == "" {
+			//	cookie, err := c.Cookie("Token")
+			//	if err != nil {
+			//		c.Set("username", "")
+			//		return next(c)
+			//	}
+			//	auth = cookie.Value
+			//}
 			if auth == "" {
 				if config.Skipper != nil {
 					if config.Skipper(c) {

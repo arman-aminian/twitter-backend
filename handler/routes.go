@@ -31,7 +31,7 @@ func (h *Handler) Register(g *echo.Group) {
 	suggestion := g.Group(suggest, jwtMiddleware)
 	suggestion.GET("", h.GetSuggestions)
 
-	search := g.Group(search, jwtMiddleware)
+	search := g.Group(search)
 	search.GET("/username", h.SearchUsernames)
 	search.POST("/tweet", h.SearchTweets)
 	search.GET("/hashtag", h.SearchHashtag)
@@ -39,32 +39,23 @@ func (h *Handler) Register(g *echo.Group) {
 	user := g.Group(userPath, jwtMiddleware)
 	user.PUT(usernameQ, h.UpdateUser)
 
+	profilesGlobal := g.Group(profiles)
+	profilesGlobal.GET(usernameQ, h.GetProfile)
+	profilesGlobal.GET(usernameQ+"/list", h.GetFollowingAndFollowersList)
 	profiles := g.Group(profiles, jwtMiddleware)
-	profiles.GET(usernameQ, h.GetProfile)
 	profiles.PUT(usernameQ, h.UpdateProfile)
 	profiles.POST(follow, h.Follow)
 	profiles.DELETE(follow, h.UnFollow)
-	profiles.GET(usernameQ+"/list", h.GetFollowingAndFollowersList)
 	profiles.GET(usernameQ+"/logs", h.GetLogs)
 	profiles.GET(usernameQ+"/notifications", h.GetNotifications)
 
-	tweets := g.Group(tweets, middleware.JWTWithConfig(
-		middleware.JWTConfig{
-			Skipper: func(c echo.Context) bool {
-				// TODO replace INJA and uncomment
-				// if c.Request().Method == "GET" && c.Path() != "/tweets/INJA" {
-				//	return true
-				// }
-				return false
-			},
-			SigningKey: utils.JWTSecret,
-		},
-	))
+	tweetsGlobal := g.Group(tweets)
+	tweets := g.Group(tweets, jwtMiddleware)
+	tweetsGlobal.GET("/:id", h.GetTweet)
+	tweetsGlobal.POST("/get", h.GetTweets)
+	tweetsGlobal.GET("/:id/list", h.GetTweetLikeAndRetweetList)
 	tweets.POST("", h.CreateTweet)
-	tweets.GET("/:id", h.GetTweet)
-	tweets.POST("/get", h.GetTweets)
 	tweets.DELETE("/:id", h.DeleteTweet)
-	tweets.GET("/:id/list", h.GetTweetLikeAndRetweetList)
 	tweets.POST("/:id/like", h.Like)
 	tweets.DELETE("/:id/like", h.UnLike)
 	tweets.POST("/:id/retweet", h.Retweet)

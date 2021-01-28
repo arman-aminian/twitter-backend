@@ -11,7 +11,6 @@ import (
 	"os"
 	"sort"
 	"strconv"
-	"time"
 )
 
 // signUp godoc
@@ -37,11 +36,12 @@ func (h *Handler) SignUp(c echo.Context) error {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 	response := newUserResponse(u)
-	cookie := new(http.Cookie)
-	cookie.Name = "Token"
-	cookie.Value = response.User.Token
-	cookie.Expires = time.Now().Add(24 * time.Hour)
-	c.SetCookie(cookie)
+	//cookie := new(http.Cookie)
+	//cookie.Name = "Token"
+	//cookie.Value = response.User.Token
+	//cookie.Expires = time.Now().Add(24 * time.Hour)
+	//c.SetCookie(cookie)
+
 	//header('Access-Control-Allow-Origin', yourExactHostname);
 
 	//c.Response().Header().Set(echo.HeaderAccessControlAllowOrigin, "http://localhost:3000")
