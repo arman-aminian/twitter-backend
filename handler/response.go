@@ -85,9 +85,14 @@ type OwnerListResponse struct {
 	Users *[]model.Owner `json:"users"`
 }
 
-func newOwnerList(users *[]model.Owner) *OwnerListResponse {
+func newOwnerList(us user.Store, srcUsername string, users *[]model.Owner) *OwnerListResponse {
 	l := new(OwnerListResponse)
-	l.Users = users
+
+	temp := *users
+	for i := range temp {
+		temp[i].IsFollowing, _ = us.IsFollower(temp[i].Username, srcUsername)
+	}
+	l.Users = &temp
 	return l
 }
 

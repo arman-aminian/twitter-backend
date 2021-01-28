@@ -32,7 +32,7 @@ func (h *Handler) Register(g *echo.Group) {
 	suggestion := g.Group(suggest, jwtMiddleware)
 	suggestion.GET("", h.GetSuggestions)
 
-	search := g.Group(search)
+	search := g.Group(search, globalMiddleware)
 	search.GET("/username", h.SearchUsernames)
 	search.POST("/tweet", h.SearchTweets)
 	search.GET("/hashtag", h.SearchHashtag)

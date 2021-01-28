@@ -421,12 +421,11 @@ func (h *Handler) SearchUsernames(c echo.Context) error {
 	if query == "" {
 		return c.JSON(http.StatusBadRequest, utils.NewError(errors.New("nothing to search for")))
 	}
-
 	result, err := h.userStore.GetUsernameSearchResult(query)
 	if err != nil {
 		return err
 	}
-	return c.JSON(http.StatusOK, newOwnerList(result))
+	return c.JSON(http.StatusOK, newOwnerList(h.userStore, stringFieldFromToken(c, "username"), result))
 }
 
 func (h *Handler) SearchTweets(c echo.Context) error {
@@ -491,7 +490,7 @@ func (h *Handler) GetSuggestions(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, utils.NotFound())
 	}
 	if len(*u.Followings) == 0 {
-		return c.JSON(http.StatusOK, newOwnerList(nil))
+		return c.JSON(http.StatusOK, newOwnerList(h.userStore, username, nil))
 	}
 	var suggestions []model.Owner
 	followings := *u.Followings
@@ -523,10 +522,10 @@ func (h *Handler) GetSuggestions(c echo.Context) error {
 
 	maxNumberOfSuggestions := 3
 	if len(sorted) < maxNumberOfSuggestions {
-		return c.JSON(http.StatusOK, newOwnerList(&sorted))
+		return c.JSON(http.StatusOK, newOwnerList(h.userStore, username, &sorted))
 	}
 	sorted = sorted[:maxNumberOfSuggestions]
-	return c.JSON(http.StatusOK, newOwnerList(&sorted))
+	return c.JSON(http.StatusOK, newOwnerList(h.userStore, username, &sorted))
 }
 
 func removeIndex(s []model.Owner, index int) []model.Owner {
