@@ -20,14 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="013294ec-98ac-45bd-af48-e710fa1307fc" name="Default Changelist" comment="Fixed event sorting.">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boobier" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/swagger.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/swagger.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/tweet.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/tweet.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,6 +66,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="go.vendoring.notification.had.been.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../hw4" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -385,22 +379,22 @@
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
     <state x="743" y="313" width="426" height="485" key="FileChooserDialogImpl/0.25.1920.1055@0.25.1920.1055" timestamp="1611331807352" />
-    <state width="1874" height="217" key="GridCell.Tab.0.bottom" timestamp="1611831867070">
+    <state width="1874" height="217" key="GridCell.Tab.0.bottom" timestamp="1611832380118">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1874" height="217" key="GridCell.Tab.0.bottom/0.25.1920.1055@0.25.1920.1055" timestamp="1611831867070" />
-    <state width="1874" height="217" key="GridCell.Tab.0.center" timestamp="1611831867069">
+    <state width="1874" height="217" key="GridCell.Tab.0.bottom/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380118" />
+    <state width="1874" height="217" key="GridCell.Tab.0.center" timestamp="1611832380116">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1874" height="217" key="GridCell.Tab.0.center/0.25.1920.1055@0.25.1920.1055" timestamp="1611831867069" />
-    <state width="1874" height="217" key="GridCell.Tab.0.left" timestamp="1611831867068">
+    <state width="1874" height="217" key="GridCell.Tab.0.center/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380116" />
+    <state width="1874" height="217" key="GridCell.Tab.0.left" timestamp="1611832380114">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1874" height="217" key="GridCell.Tab.0.left/0.25.1920.1055@0.25.1920.1055" timestamp="1611831867068" />
-    <state width="1874" height="217" key="GridCell.Tab.0.right" timestamp="1611831867069">
+    <state width="1874" height="217" key="GridCell.Tab.0.left/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380114" />
+    <state width="1874" height="217" key="GridCell.Tab.0.right" timestamp="1611832380117">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1874" height="217" key="GridCell.Tab.0.right/0.25.1920.1055@0.25.1920.1055" timestamp="1611831867069" />
+    <state width="1874" height="217" key="GridCell.Tab.0.right/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380117" />
     <state x="0" y="25" width="1920" height="1055" key="MergeDialog" timestamp="1611821926582">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
