@@ -31,7 +31,7 @@ func main() {
 		usersDb := db.SetupUsersDb(mongoClient)
 		tweetsDb := db.SetupTweetsDb(mongoClient)
 		hashtagsDb := db.SetupHashtagsDb(mongoClient)
-		g := r.Group("/")
+		g := r.Group("")
 		us := store.NewUserStore(usersDb)
 		ts := store.NewTweetStore(tweetsDb)
 		hs := store.NewHashtagStore(hashtagsDb)
@@ -44,7 +44,7 @@ func main() {
 		// RUN THIS IF YOUR HASHTAG DATABASE IS EMPTY
 		// StartUpTrends(ts, h)
 		
-		r.Logger.Fatal(r.Start(":" + port))
+		r.Logger.Fatal(r.Start("0.0.0.0:" + port))
 	}
 
 	// if testHeap {
