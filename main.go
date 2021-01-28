@@ -31,7 +31,7 @@ func main() {
 		usersDb := db.SetupUsersDb(mongoClient)
 		tweetsDb := db.SetupTweetsDb(mongoClient)
 		hashtagsDb := db.SetupHashtagsDb(mongoClient)
-		g := r.Group("")
+		g := r.Group("/")
 		us := store.NewUserStore(usersDb)
 		ts := store.NewTweetStore(tweetsDb)
 		hs := store.NewHashtagStore(hashtagsDb)
