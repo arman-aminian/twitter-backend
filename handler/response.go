@@ -101,6 +101,7 @@ type SingleEventResponse struct {
 	Source    model.Owner `json:"source"`
 	Target    model.Owner `json:"target"`
 	Content   string      `json:"content"`
+	Tweet     model.Tweet `json:"tweet"`
 	TimeStamp time.Time   `json:"timestamp"`
 }
 
@@ -116,6 +117,7 @@ func newLogsList(u *model.User) *EventListResponse {
 		l.Source = e.Source
 		l.Target = e.Target
 		l.Content = e.Content
+		l.Tweet = *e.Tweet
 		l.TimeStamp = e.TimeStamp
 		ret.Events = append([]SingleEventResponse{*l}, ret.Events...)
 	}
@@ -130,6 +132,7 @@ func newNotificationsList(u *model.User) *EventListResponse {
 		l.Source = e.Source
 		l.Target = e.Target
 		l.Content = e.Content
+		l.Tweet = *e.Tweet
 		l.TimeStamp = e.TimeStamp
 		ret.Events = append([]SingleEventResponse{*l}, ret.Events...)
 	}
@@ -177,7 +180,7 @@ func newTweetsResponse(username string, tweets *[]model.Tweet) *tweetsResponse {
 		tr[i].Comments = tweet.Comments
 		tr[i].Media = tweet.Media
 		tr[i].Time = tweet.Time
-
+		
 		for _, t := range *tweet.Likes {
 			if t.Username == username {
 				tr[i].Liked = true
@@ -222,7 +225,7 @@ func newTweetResponse(c echo.Context, t *model.Tweet) *singleTweetResponse {
 	tr.RetweetsCount = len(*t.Retweets)
 	tr.Owner.Username = t.Owner.Username
 	tr.Owner.ProfilePicture = t.Owner.ProfilePicture
-
+	
 	return &singleTweetResponse{tr}
 }
 
@@ -238,7 +241,7 @@ func newTweetListResponse(c echo.Context, username string, tweets *[]model.Tweet
 		tr[i].Comments = tweet.Comments
 		tr[i].Media = tweet.Media
 		tr[i].Time = tweet.Time
-
+		
 		for _, t := range *tweet.Likes {
 			if t.Username == username {
 				tr[i].Liked = true

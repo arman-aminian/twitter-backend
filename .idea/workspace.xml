@@ -6,14 +6,22 @@
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
     </expand>
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="154ac8c9-fef3-4900-8bcc-64ee6cecf820" name="Default Changelist" comment="delete tweet from parent's comments.">
+    <list default="true" id="013294ec-98ac-45bd-af48-e710fa1307fc" name="Default Changelist" comment="Fixed event sorting.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/tweet.go" beforeDir="false" afterPath="$PROJECT_DIR$/store/tweet.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,17 +37,27 @@
   </component>
   <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="fix-owner" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
   </component>
-  <component name="ProjectId" id="1nOgUP6IessxJb9omQZEXmepytC" />
+  <component name="ProjectId" id="1nQeTZVwn2YiaBWpPzCEfnSF47D" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="GO_FMT" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -48,17 +66,41 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="go.vendoring.notification.had.been.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../hw4" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
   </component>
-  <component name="RunManager" selected="Go Build.go build github.com/arman-aminian/twitter-backend">
-    <configuration name="go build github.com/arman-aminian/twitter-backend" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build main.go">
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="twitter-backend" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <go_parameters value="-i" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/" />
+      <package value="github.com/arman-aminian/twitter-backend" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="twitter-backend" />
       <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
+      <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/main.go" />
       <package value="github.com/arman-aminian/twitter-backend" />
+      <directory value="$PROJECT_DIR$/" />
       <method v="2" />
     </configuration>
     <configuration name="TestGetProfileSuccess in github.com/arman-aminian/twitter-backend/handler" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -72,12 +114,207 @@
       <pattern value="^TestGetProfileSuccess$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestUpdateProfileSuccess in github.com/arman-aminian/twitter-backend/handler" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="twitter-backend" />
+      <working_directory value="$PROJECT_DIR$/handler" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/arman-aminian/twitter-backend/handler" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestUpdateProfileSuccess$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestUpdateUserSuccess in github.com/arman-aminian/twitter-backend/handler" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="twitter-backend" />
+      <working_directory value="$PROJECT_DIR$/handler" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/arman-aminian/twitter-backend/handler" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestUpdateUserSuccess$" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build main.go" />
+      <item itemvalue="Go Test.TestGetProfileSuccess in github.com/arman-aminian/twitter-backend/handler" />
+      <item itemvalue="Go Test.TestUpdateProfileSuccess in github.com/arman-aminian/twitter-backend/handler" />
+      <item itemvalue="Go Test.TestUpdateUserSuccess in github.com/arman-aminian/twitter-backend/handler" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build github.com/arman-aminian/twitter-backend" />
+        <item itemvalue="Go Build.go build main.go" />
+        <item itemvalue="Go Test.TestUpdateUserSuccess in github.com/arman-aminian/twitter-backend/handler" />
+        <item itemvalue="Go Test.TestUpdateProfileSuccess in github.com/arman-aminian/twitter-backend/handler" />
         <item itemvalue="Go Test.TestGetProfileSuccess in github.com/arman-aminian/twitter-backend/handler" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="013294ec-98ac-45bd-af48-e710fa1307fc" name="Default Changelist" comment="" />
+      <created>1611326749549</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1611326749549</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Added sign up and login from the realworld example and changes are very similar to that.">
+      <created>1611356145376</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1611356145376</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added some tests, AddFollower, IsFollower.">
+      <created>1611426506110</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1611426506110</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added GetProfile test.">
+      <created>1611429775971</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1611429775971</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added updateProfile and updateUser.">
+      <created>1611492691419</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1611492691420</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added updateProfile and updateUser.">
+      <created>1611494231261</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1611494231261</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added Follow and UnFollow.">
+      <created>1611505019777</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1611505019777</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added Like/Unlike and Retweet/UnRetweet.">
+      <created>1611513416188</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1611513416188</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added Followers and Followings list.">
+      <created>1611516118640</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1611516118640</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Event source and target are now Owners.">
+      <created>1611516943701</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1611516943701</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added Like and Retweet events. Event addition is done in UserStore now.">
+      <created>1611521293502</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1611521293502</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Fixed Retweet and UnRetweet. Added Get Tweet.">
+      <created>1611578514469</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1611578514469</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Added Trends and Hashtags. Fixed RemoveTweet in UserStore.">
+      <created>1611603246138</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1611603246138</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Added name to User.">
+      <created>1611603860289</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1611603860289</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Added Logs and Notifications List.">
+      <created>1611618107627</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1611618107627</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Hashtags have their own database now.">
+      <created>1611637552156</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1611637552156</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Added hashtag search.">
+      <created>1611663527804</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1611663527805</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Login now returns more information.">
+      <created>1611667519343</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1611667519343</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Added Name to sign up input.">
+      <created>1611684546365</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1611684546366</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Temporarily fixed GetTimeline.">
+      <created>1611693045732</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1611693045732</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Fixed a bug relating user profile.">
+      <created>1611759770441</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1611759770441</updated>
+    </task>
+    <task id="LOCAL-00021" summary="We don't need token for searching.">
+      <created>1611769267526</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1611769267526</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Fixed event sorting.">
+      <created>1611811186347</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1611811186347</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
+    <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
@@ -95,140 +332,116 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Tweet search completed." />
-    <MESSAGE value="Set cookie for authorization." />
-    <MESSAGE value="Timeline bug Fixed&#10;Comment bug fixed(list of tweet ids -&gt; list of tweets)" />
-    <MESSAGE value="User suggestions to follow completed." />
-    <MESSAGE value="Timeline function modified to response by day." />
-    <MESSAGE value="Timeline updated : url changed and is compatible with date" />
-    <MESSAGE value="Timeline updated : url changed - is compatible with date" />
-    <MESSAGE value="Timeline bug fixed" />
-    <MESSAGE value="Timeline updated : timeline is now sorted." />
-    <MESSAGE value="Get tweets by list api added." />
-    <MESSAGE value="Get tweets is sorted." />
-    <MESSAGE value="Suggestions' bug fixed." />
-    <MESSAGE value="Switch to mongodb atlas." />
-    <MESSAGE value="being ready to deploy" />
-    <MESSAGE value="Create tweet updated" />
-    <MESSAGE value="Create tweet bug fixed" />
-    <MESSAGE value="Routes updated : global routes" />
-    <MESSAGE value="Suggestions Fixed" />
-    <MESSAGE value="Suggestions bug fixed" />
-    <MESSAGE value="Global middleware added." />
-    <MESSAGE value="following and followers lists has is_following field." />
-    <MESSAGE value="search by usernames fixed : ech result has is_following" />
-    <MESSAGE value="like/retweet list fixed : ech result has is_following" />
-    <MESSAGE value="suggestions' bug fixed." />
-    <MESSAGE value="delete tweet from parent's comments." />
-    <option name="LAST_COMMIT_MESSAGE" value="delete tweet from parent's comments." />
+    <MESSAGE value="Added sign up and login from the realworld example and changes are very similar to that." />
+    <MESSAGE value="Added some tests, AddFollower, IsFollower." />
+    <MESSAGE value="Added GetProfile test." />
+    <MESSAGE value="Added updateProfile and updateUser." />
+    <MESSAGE value="Added Follow and UnFollow." />
+    <MESSAGE value="Added Like/Unlike and Retweet/UnRetweet." />
+    <MESSAGE value="Added Followers and Followings list." />
+    <MESSAGE value="Event source and target are now Owners." />
+    <MESSAGE value="Added Like and Retweet events. Event addition is done in UserStore now." />
+    <MESSAGE value="Fixed Retweet and UnRetweet. Added Get Tweet." />
+    <MESSAGE value="Added Trends and Hashtags. Fixed RemoveTweet in UserStore." />
+    <MESSAGE value="Added name to User." />
+    <MESSAGE value="Added Logs and Notifications List." />
+    <MESSAGE value="Hashtags have their own database now." />
+    <MESSAGE value="Added hashtag search." />
+    <MESSAGE value="Login now returns more information." />
+    <MESSAGE value="Added Name to sign up input." />
+    <MESSAGE value="Temporarily fixed GetTimeline." />
+    <MESSAGE value="Fixed a bug relating user profile." />
+    <MESSAGE value="We don't need token for searching." />
+    <MESSAGE value="Fixed event sorting." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed event sorting." />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="WindowStateProjectService">
-    <state x="613" y="251" width="453" height="582" key="#Build_Tags_&amp;_Vendoring" timestamp="1611321684014">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="513" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1611811883713">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state x="613" y="251" width="453" height="582" key="#Build_Tags_&amp;_Vendoring/0.0.1680.1050@0.0.1680.1050" timestamp="1611321684014" />
-    <state x="474" y="221" key="#Inspections" timestamp="1611639292608">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="513" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1611811883713" />
+    <state x="99" y="125" width="1722" height="860" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1611491097649">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state x="474" y="221" key="#Inspections/0.0.1680.1050@0.0.1680.1050" timestamp="1611639292608" />
-    <state x="536" y="130" key="#go_build_github.com/arman-aminian/twitter-backend" timestamp="1611763685835">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="99" y="125" width="1722" height="860" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1611491097649" />
+    <state x="666" y="182" width="580" height="747" key="#go_build_test.go" timestamp="1611501300508">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state x="536" y="130" key="#go_build_github.com/arman-aminian/twitter-backend/0.0.1680.1050@0.0.1680.1050" timestamp="1611763685835" />
-    <state x="536" y="142" key="#go_build_github.com/arman-aminian/twitter-backend/0.25.1680.947@0.25.1680.947" timestamp="1611266960011" />
-    <state x="168" y="62" width="1344" height="840" key="DiffContextDialog" timestamp="1611765965727">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="666" y="182" width="580" height="747" key="#go_build_test.go/0.25.1920.1055@0.25.1920.1055" timestamp="1611501300508" />
+    <state x="99" y="125" width="1722" height="860" maximized="true" key="DiffContextDialog" timestamp="1611521988084">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state x="168" y="62" width="1344" height="840" key="DiffContextDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611765965727" />
-    <state x="168" y="62" width="1344" height="840" key="DiffContextDialog/0.25.1680.942@0.25.1680.942" timestamp="1611632897022" />
-    <state width="1638" height="225" key="GridCell.Tab.0.bottom" timestamp="1611916151560">
-      <screen x="0" y="25" width="1680" height="942" />
+    <state x="99" y="125" width="1722" height="860" maximized="true" key="DiffContextDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1611521988084" />
+    <state x="743" y="313" width="426" height="485" key="FileChooserDialogImpl" timestamp="1611331807352">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1638" height="267" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1611834824155" />
-    <state width="1638" height="267" key="GridCell.Tab.0.bottom/0.25.1680.940@0.25.1680.940" timestamp="1611843385071" />
-    <state width="1638" height="225" key="GridCell.Tab.0.bottom/0.25.1680.942@0.25.1680.942" timestamp="1611916151560" />
-    <state width="1638" height="262" key="GridCell.Tab.0.bottom/0.25.1680.945@0.25.1680.945" timestamp="1611494173120" />
-    <state width="1638" height="252" key="GridCell.Tab.0.bottom/0.25.1680.947@0.25.1680.947" timestamp="1611285116710" />
-    <state width="1638" height="225" key="GridCell.Tab.0.center" timestamp="1611916151559">
-      <screen x="0" y="25" width="1680" height="942" />
+    <state x="743" y="313" width="426" height="485" key="FileChooserDialogImpl/0.25.1920.1055@0.25.1920.1055" timestamp="1611331807352" />
+    <state width="1874" height="217" key="GridCell.Tab.0.bottom" timestamp="1611832380118">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1638" height="267" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1611834824154" />
-    <state width="1638" height="267" key="GridCell.Tab.0.center/0.25.1680.940@0.25.1680.940" timestamp="1611843385070" />
-    <state width="1638" height="225" key="GridCell.Tab.0.center/0.25.1680.942@0.25.1680.942" timestamp="1611916151559" />
-    <state width="1638" height="262" key="GridCell.Tab.0.center/0.25.1680.945@0.25.1680.945" timestamp="1611494173120" />
-    <state width="1638" height="252" key="GridCell.Tab.0.center/0.25.1680.947@0.25.1680.947" timestamp="1611285116709" />
-    <state width="1638" height="225" key="GridCell.Tab.0.left" timestamp="1611916151559">
-      <screen x="0" y="25" width="1680" height="942" />
+    <state width="1874" height="217" key="GridCell.Tab.0.bottom/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380118" />
+    <state width="1874" height="217" key="GridCell.Tab.0.center" timestamp="1611832380116">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1638" height="267" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1611834824153" />
-    <state width="1638" height="267" key="GridCell.Tab.0.left/0.25.1680.940@0.25.1680.940" timestamp="1611843385070" />
-    <state width="1638" height="225" key="GridCell.Tab.0.left/0.25.1680.942@0.25.1680.942" timestamp="1611916151559" />
-    <state width="1638" height="262" key="GridCell.Tab.0.left/0.25.1680.945@0.25.1680.945" timestamp="1611494173119" />
-    <state width="1638" height="252" key="GridCell.Tab.0.left/0.25.1680.947@0.25.1680.947" timestamp="1611285116709" />
-    <state width="1638" height="225" key="GridCell.Tab.0.right" timestamp="1611916151559">
-      <screen x="0" y="25" width="1680" height="942" />
+    <state width="1874" height="217" key="GridCell.Tab.0.center/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380116" />
+    <state width="1874" height="217" key="GridCell.Tab.0.left" timestamp="1611832380114">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1638" height="267" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1611834824155" />
-    <state width="1638" height="267" key="GridCell.Tab.0.right/0.25.1680.940@0.25.1680.940" timestamp="1611843385071" />
-    <state width="1638" height="225" key="GridCell.Tab.0.right/0.25.1680.942@0.25.1680.942" timestamp="1611916151559" />
-    <state width="1638" height="262" key="GridCell.Tab.0.right/0.25.1680.945@0.25.1680.945" timestamp="1611494173120" />
-    <state width="1638" height="252" key="GridCell.Tab.0.right/0.25.1680.947@0.25.1680.947" timestamp="1611285116709" />
-    <state width="1638" height="308" key="GridCell.Tab.1.bottom" timestamp="1611452733944">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1874" height="217" key="GridCell.Tab.0.left/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380114" />
+    <state width="1874" height="217" key="GridCell.Tab.0.right" timestamp="1611832380117">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1638" height="308" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1611452733944" />
-    <state width="1638" height="308" key="GridCell.Tab.1.bottom/0.25.1680.940@0.25.1680.940" timestamp="1611428382720" />
-    <state width="1638" height="308" key="GridCell.Tab.1.center" timestamp="1611452733943">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1874" height="217" key="GridCell.Tab.0.right/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380117" />
+    <state x="0" y="25" width="1920" height="1055" key="MergeDialog" timestamp="1611821926582">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1638" height="308" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1611452733943" />
-    <state width="1638" height="308" key="GridCell.Tab.1.center/0.25.1680.940@0.25.1680.940" timestamp="1611428382719" />
-    <state width="1638" height="308" key="GridCell.Tab.1.left" timestamp="1611452733943">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="0" y="25" width="1920" height="1055" key="MergeDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1611821926582" />
+    <state x="574" y="331" width="714" height="474" key="MultipleFileMergeDialog" timestamp="1611828688612">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1638" height="308" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1611452733943" />
-    <state width="1638" height="308" key="GridCell.Tab.1.left/0.25.1680.940@0.25.1680.940" timestamp="1611428382719" />
-    <state width="1638" height="308" key="GridCell.Tab.1.right" timestamp="1611452733944">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="574" y="331" width="714" height="474" key="MultipleFileMergeDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1611828688612" />
+    <state x="686" y="250" width="539" height="611" key="RollbackChangesDialog" timestamp="1611811079339">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1638" height="308" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1611452733944" />
-    <state width="1638" height="308" key="GridCell.Tab.1.right/0.25.1680.940@0.25.1680.940" timestamp="1611428382720" />
-    <state x="168" y="91" key="MergeDialog" timestamp="1611648664170">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="686" y="250" width="539" height="611" key="RollbackChangesDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1611811079339" />
+    <state x="464" y="190" width="992" height="731" key="SettingsEditor" timestamp="1611412082455">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state x="168" y="91" key="MergeDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611648664170" />
-    <state x="478" y="290" key="MultipleFileMergeDialog" timestamp="1611648664201">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="464" y="190" width="992" height="731" key="SettingsEditor/0.25.1920.1055@0.25.1920.1055" timestamp="1611412082455" />
+    <state x="99" y="125" width="1722" height="860" key="ShowDiffWithBranchDialog" timestamp="1611493173765">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state x="478" y="290" key="MultipleFileMergeDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611648664201" />
-    <state x="558" y="245" key="RollbackChangesDialog" timestamp="1611324401655">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="99" y="125" width="1722" height="860" key="ShowDiffWithBranchDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1611493173765" />
+    <state x="555" y="291" width="802" height="529" key="Vcs.Push.Dialog.v2" timestamp="1611811187894">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state x="558" y="245" key="RollbackChangesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611324401655" />
-    <state x="440" y="233" key="Vcs.Push.Dialog.v2" timestamp="1611828441678">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="555" y="291" width="802" height="529" key="Vcs.Push.Dialog.v2/0.25.1920.1055@0.25.1920.1055" timestamp="1611811187894" />
+    <state x="742" y="318" width="428" height="474" key="com.goide.refactor.move.GoMoveDeclarationDialog" timestamp="1611588018886">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state x="440" y="233" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1611828441678" />
-    <state x="440" y="234" key="Vcs.Push.Dialog.v2/0.25.1680.942@0.25.1680.942" timestamp="1611491881378" />
-    <state x="440" y="235" key="Vcs.Push.Dialog.v2/0.25.1680.945@0.25.1680.945" timestamp="1611494293596" />
-    <state x="440" y="235" key="Vcs.Push.Dialog.v2/0.25.1680.947@0.25.1680.947" timestamp="1611267201554" />
-    <state x="631" y="443" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611648301405">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="742" y="318" width="428" height="474" key="com.goide.refactor.move.GoMoveDeclarationDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1611588018886" />
+    <state x="99" y="125" width="1722" height="860" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1611751700040">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state x="631" y="443" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1680.1050@0.0.1680.1050" timestamp="1611648301405" />
-    <state x="541" y="294" width="597" height="582" key="find.popup" timestamp="1611818432929">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="99" y="125" width="1722" height="860" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1611751700040" />
+    <state x="765" y="471" width="389" height="169" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611828681488">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state x="541" y="294" width="597" height="582" key="find.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1611818432929" />
-    <state x="541" y="288" width="597" height="490" key="find.popup/0.25.1680.940@0.25.1680.940" timestamp="1611427517418" />
-    <state x="541" y="289" width="597" height="490" key="find.popup/0.25.1680.942@0.25.1680.942" timestamp="1611491354521" />
-    <state x="502" y="317" key="git4idea.merge.GitPullDialog" timestamp="1611833308974">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state x="765" y="471" width="389" height="169" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1920.1055@0.25.1920.1055" timestamp="1611828681488" />
+    <state x="68" y="67" width="1628" height="818" key="find.popup" timestamp="1611830089039">
+      <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state x="502" y="317" key="git4idea.merge.GitPullDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611833308974" />
-    <state x="502" y="309" key="git4idea.merge.GitPullDialog/0.25.1680.940@0.25.1680.940" timestamp="1611514381438" />
+    <state x="68" y="67" width="1628" height="818" key="find.popup/0.25.1920.1055@0.25.1920.1055" timestamp="1611830089038" />
+    <state x="804" y="316" width="303" height="478" key="refactoring.ChangeSignatureDialog" timestamp="1611586669164">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="804" y="316" width="303" height="478" key="refactoring.ChangeSignatureDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1611586669164" />
+    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1611789080782">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup/0.25.1920.1055@0.25.1920.1055" timestamp="1611789080782" />
   </component>
 </project>

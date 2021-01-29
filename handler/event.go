@@ -19,6 +19,7 @@ func (h *Handler) CreateLikeEvent(src *model.User, t *model.Tweet) *model.Event 
 	e.Mode = "Like"
 	e.Source = *model.NewOwner(src.Username, src.ProfilePicture, src.Name, src.Bio)
 	e.Target = *model.NewOwner(t.Owner.Username, t.Owner.ProfilePicture, t.Owner.Name, t.Owner.Bio)
+	e.Tweet = t
 	e.Content = fmt.Sprintf("User %s liked Tweet %s at %s.", e.Source.Username, t.Text, e.TimeStamp)
 	return e
 }
@@ -28,6 +29,7 @@ func (h *Handler) CreateRetweetEvent(src *model.User, t *model.Tweet) *model.Eve
 	e.Mode = "Retweet"
 	e.Source = *model.NewOwner(src.Username, src.ProfilePicture, src.Name, src.Bio)
 	e.Target = *model.NewOwner(t.Owner.Username, t.Owner.ProfilePicture, t.Owner.Name, t.Owner.Bio)
+	e.Tweet = t
 	e.Content = fmt.Sprintf("User %s retweeted Tweet %s at %s.", e.Source.Username, t.Text, e.TimeStamp)
 	return e
 }

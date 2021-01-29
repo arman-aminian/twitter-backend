@@ -13,6 +13,10 @@ import (
 	"strconv"
 )
 
+func (h *Handler) Dummy(c echo.Context) error {
+	return c.JSON(http.StatusCreated, errors.New("hello world"))
+}
+
 // signUp godoc
 // @Summary Register a new user
 // @Description Register a new user
@@ -20,12 +24,11 @@ import (
 // @Tags user
 // @Accept  json
 // @Produce  json
-// @Param user body userRegisterRequest true "User info for registration"
+// @Param user body userRegisterRequest true "User info for registration: email, username and password"
 // @Success 201 {object} userResponse
-// @Failure 400 {object} utils.Error
 // @Failure 404 {object} utils.Error
-// @Failure 500 {object} utils.Error
-// @Router /users [post]
+// @Failure 422 {object} utils.Error
+// @Router /signup [post]
 func (h *Handler) SignUp(c echo.Context) error {
 	u := model.NewUser()
 	req := &userRegisterRequest{}
@@ -33,7 +36,7 @@ func (h *Handler) SignUp(c echo.Context) error {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 	if err := h.userStore.Create(u); err != nil {
-		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+		return c.JSON(http.StatusNotFound, utils.NewError(err))
 	}
 	response := newUserResponse(u)
 	//cookie := new(http.Cookie)
@@ -53,20 +56,18 @@ func (h *Handler) SignUp(c echo.Context) error {
 }
 
 // Login godoc
-// @Summary Login for existing user
-// @Description Login for existing user
+// @Summary Login an existing user
+// @Description Login an existing user
 // @ID login
 // @Tags user
 // @Accept  json
 // @Produce  json
-// @Param user body userLoginRequest true "Credentials to use"
+// @Param user body userLoginRequest true "Credentials to use: email and password"
 // @Success 200 {object} userResponse
-// @Failure 400 {object} utils.Error
-// @Failure 401 {object} utils.Error
+// @Failure 403 {object} utils.Error
 // @Failure 422 {object} utils.Error
-// @Failure 404 {object} utils.Error
 // @Failure 500 {object} utils.Error
-// @Router /users/login [post]
+// @Router /login [post]
 func (h *Handler) Login(c echo.Context) error {
 	req := &userLoginRequest{}
 	if err := req.bind(c); err != nil {
@@ -92,16 +93,14 @@ func (h *Handler) Login(c echo.Context) error {
 }
 
 // UpdateUser godoc
-// @Summary Update current user
-// @Description Update user information for current user
+// @Summary Update User
+// @Description Update user information for a user whom information is given
 // @ID update-user
 // @Tags user
 // @Accept  json
 // @Produce  json
 // @Param user body userUpdateRequest true "User details to update. At least **one** field is required."
 // @Success 200 {object} userResponse
-// @Failure 400 {object} utils.Error
-// @Failure 401 {object} utils.Error
 // @Failure 422 {object} utils.Error
 // @Failure 404 {object} utils.Error
 // @Failure 500 {object} utils.Error
@@ -130,7 +129,6 @@ func (h *Handler) UpdateUser(c echo.Context) error {
 	newUser.Logs = oldUser.Logs
 	newUser.Notifications = oldUser.Notifications
 
-	//_ = copier.Copy(&newUser, &oldUser)
 	req := newUserUpdateRequest()
 	req.populate(newUser)
 	if err := req.bind(c, newUser); err != nil {
@@ -143,17 +141,13 @@ func (h *Handler) UpdateUser(c echo.Context) error {
 }
 
 // GetProfile godoc
-// @Summary Get a profile
-// @Description Get a profile of a user of the system. Auth is optional
+// @Summary Get a User profile
+// @Description Get a profile of a user of the system. Authorization is optional
 // @ID get-profile
 // @Tags profile
 // @Accept  json
 // @Produce  json
-// @Param username path string true "Username of the profile to get"
 // @Success 200 {object} userResponse
-// @Failure 400 {object} utils.Error
-// @Failure 401 {object} utils.Error
-// @Failure 422 {object} utils.Error
 // @Failure 404 {object} utils.Error
 // @Failure 500 {object} utils.Error
 // @Security ApiKeyAuth
@@ -173,20 +167,18 @@ func (h *Handler) GetProfile(c echo.Context) error {
 
 // UpdateProfile godoc
 // @Summary Update a user's profile
-// @Description Update user profile
+// @Description Update user profile based on 4 entries: name, bio, and pictures
 // @ID update-profile
 // @Tags user
 // @Accept  json
 // @Produce  json
 // @Param user body userProfileUpdateRequest true "User details to update. At least **one** field is required."
 // @Success 200 {object} userResponse
-// @Failure 400 {object} utils.Error
-// @Failure 401 {object} utils.Error
 // @Failure 422 {object} utils.Error
 // @Failure 404 {object} utils.Error
 // @Failure 500 {object} utils.Error
 // @Security ApiKeyAuth
-// @Router /user [put]
+// @Router /profiles/{username} [put]
 func (h *Handler) UpdateProfile(c echo.Context) error {
 	u, err := h.userStore.GetByUsername(stringFieldFromToken(c, "username"))
 	if err != nil {
@@ -256,12 +248,26 @@ func (h *Handler) UpdateProfile(c echo.Context) error {
 	return c.JSON(http.StatusOK, newProfileResponse(h.userStore, u.Username, u))
 }
 
+// GetProfilePictureFile godoc
+// @Summary Get the profile picture
+// @Description Get the profile picture of a user based on the filename
+// @ID get-profile-picture
+// @Tags user
+// @Param user body string true "name of the file."
+// @Router /profile-pictures/{filename} [get]
 func (h *Handler) GetProfilePictureFile(c echo.Context) error {
 	mediaFolderName := "media/profile-pictures/"
 	mediaPath := mediaFolderName + c.Param("filename")
 	return c.File(mediaPath)
 }
 
+// GetHeaderPictureFile godoc
+// @Summary Get the header picture
+// @Description Get the header picture of a user based on the filename
+// @ID get-header-picture
+// @Tags user
+// @Param user body string true "name of the file."
+// @Router /header-pictures/{filename} [get]
 func (h *Handler) GetHeaderPictureFile(c echo.Context) error {
 	mediaFolderName := "media/header-pictures/"
 	mediaPath := mediaFolderName + c.Param("filename")
@@ -278,7 +284,6 @@ func (h *Handler) GetHeaderPictureFile(c echo.Context) error {
 // @Param username path string true "Username of the profile you want to follow"
 // @Success 200 {object} profileResponse
 // @Failure 400 {object} utils.Error
-// @Failure 401 {object} utils.Error
 // @Failure 422 {object} utils.Error
 // @Failure 404 {object} utils.Error
 // @Failure 500 {object} utils.Error
@@ -328,9 +333,8 @@ func (h *Handler) Follow(c echo.Context) error {
 // @Accept  json
 // @Produce  json
 // @Param username path string true "Username of the profile you want to unfollow"
-// @Success 201 {object} userResponse
+// @Success 201 {object} profileResponse
 // @Failure 400 {object} utils.Error
-// @Failure 401 {object} utils.Error
 // @Failure 422 {object} utils.Error
 // @Failure 404 {object} utils.Error
 // @Failure 500 {object} utils.Error
@@ -360,21 +364,16 @@ func (h *Handler) UnFollow(c echo.Context) error {
 	return c.JSON(http.StatusOK, newProfileResponse(h.userStore, stringFieldFromToken(c, "username"), u))
 }
 
-// Articles godoc
-// @Summary Get recent articles globally
-// @Description Get most recent articles globally. Use query parameters to filter results. Auth is optional
-// @ID get-articles
-// @Tags article
-// @Accept  json
+// GetTimeline godoc
+// @Summary Get the timeline of your account
+// @Description Get tweets of your followings. Auth is required.
+// @ID get-timeline
+// @Tags timeline
 // @Produce  json
-// @Param tag query string false "Filter by tag"
-// @Param author query string false "Filter by author (username)"
-// @Param favorited query string false "Filter by favorites of a user (username)"
-// @Param limit query integer false "Limit number of articles returned (default is 20)"
-// @Param offset query integer false "Offset/skip number of articles (default is 0)"
-// @Success 200 {object} articleListResponse
+// @Success 200 {object} tweetListResponse
+// @Failure 422 {object} utils.Error
 // @Failure 500 {object} utils.Error
-// @Router /articles [get]
+// @Router /home [get]
 func (h *Handler) GetTimeline(c echo.Context) error {
 	day, err := strconv.Atoi(c.Param("day"))
 	if err != nil {
@@ -416,6 +415,15 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), &timeline, len(timeline)))
 }
 
+// SearchUsernames godoc
+// @Summary Search a user by its username
+// @Description Search by specifying the username. Auth is optional.
+// @ID search-username
+// @Tags search
+// @Produce  json
+// @Success 200 {object} tweetListResponse
+// @Failure 400 {object} utils.Error
+// @Router /search/username [get]
 func (h *Handler) SearchUsernames(c echo.Context) error {
 	query := c.QueryParam("query")
 	if query == "" {
@@ -428,6 +436,17 @@ func (h *Handler) SearchUsernames(c echo.Context) error {
 	return c.JSON(http.StatusOK, newOwnerList(h.userStore, stringFieldFromToken(c, "username"), result))
 }
 
+// SearchTweets godoc
+// @Summary Search tweets related to query
+// @Description Search all the tweets related to the query.
+// @ID search-tweets
+// @Tags search
+// @Accept json
+// @Produce  json
+// @Param query query string true "Part of the tweets you want to search."
+// @Success 200 {object} tweetListResponse
+// @Failure 400 {object} utils.Error
+// @Router /search/tweet [get]
 func (h *Handler) SearchTweets(c echo.Context) error {
 	query := &model.SearchQuery{}
 	err := c.Bind(query)
@@ -444,6 +463,16 @@ func (h *Handler) SearchTweets(c echo.Context) error {
 	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), result, len(*result)))
 }
 
+// GetFollowingAndFollowersList godoc
+// @Summary Get the list of followings and followers of a user. Auth is required.
+// @Description Get the list of followings and followers of a user. Auth is required.
+// @ID get-following-followers
+// @Tags following-followers
+// @Produce  json
+// @Success 200 {object} FollowersAndFollowingListResponse
+// @Failure 400 {object} utils.Error
+// @Failure 404 {object} utils.Error
+// @Router /tweets/{id}/list [get]
 func (h *Handler) GetFollowingAndFollowersList(c echo.Context) error {
 	u, err := h.userStore.GetByUsername(c.Param("username"))
 	if err != nil {
@@ -455,6 +484,16 @@ func (h *Handler) GetFollowingAndFollowersList(c echo.Context) error {
 	return c.JSON(http.StatusOK, newFollowingAndFollowersList(h.userStore, stringFieldFromToken(c, "username"), u))
 }
 
+// GetLogs godoc
+// @Description Get the list of everything the user has done (logs).
+// @ID get-logs
+// @Tags logs
+// @Produce  json
+// @Success 200 {object} EventListResponse
+// @Failure 400 {object} utils.Error
+// @Failure 404 {object} utils.Error
+// @Failure 500 {object} utils.Error
+// @Router /profiles/{username}/logs [get]
 func (h *Handler) GetLogs(c echo.Context) error {
 	u, err := h.userStore.GetByUsername(c.Param("username"))
 	if err != nil {
@@ -469,6 +508,15 @@ func (h *Handler) GetLogs(c echo.Context) error {
 	return c.JSON(http.StatusOK, newLogsList(u))
 }
 
+// GetNotifications godoc
+// @Description Get the list of everything done with the use being the target (notifications).
+// @ID get-notifications
+// @Tags notifications
+// @Produce  json
+// @Success 200 {object} EventListResponse
+// @Failure 404 {object} utils.Error
+// @Failure 500 {object} utils.Error
+// @Router /profiles/{username}/notifications [get]
 func (h *Handler) GetNotifications(c echo.Context) error {
 	u, err := h.userStore.GetByUsername(c.Param("username"))
 	if err != nil {
@@ -480,6 +528,15 @@ func (h *Handler) GetNotifications(c echo.Context) error {
 	return c.JSON(http.StatusOK, newNotificationsList(u))
 }
 
+// GetSuggestions godoc
+// @Description Get the list of the users suggested to a user (followers of its followings)
+// @ID get-suggestions
+// @Tags suggestions
+// @Produce  json
+// @Success 200 {object} OwnerListResponse
+// @Failure 404 {object} utils.Error
+// @Failure 500 {object} utils.Error
+// @Router /suggestions [get]
 func (h *Handler) GetSuggestions(c echo.Context) error {
 	username := stringFieldFromToken(c, "username")
 	u, err := h.userStore.GetByUsername(username)

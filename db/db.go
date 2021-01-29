@@ -14,7 +14,7 @@ var clientInstanceError error
 var mongoOnce sync.Once
 
 const (
-	//PATH = "mongodb://localhost:27017"
+	// PATH = "mongodb://localhost:27017"
 	PATH     = "mongodb+srv://arman-aminian:aaaa1234@twitter-db.ugqqk.mongodb.net/twitter?retryWrites=true&w=majority"
 	DB       = "twitter"
 	USERS    = "customers"

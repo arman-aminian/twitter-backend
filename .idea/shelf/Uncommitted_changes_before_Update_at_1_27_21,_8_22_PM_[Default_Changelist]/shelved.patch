@@ -1,0 +1,17 @@
+Index: go.mod
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>module github.com/arman-aminian/twitter-backend\n\ngo 1.14\n\nrequire (\n\tgithub.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751\n\tgithub.com/dgrijalva/jwt-go v3.2.0+incompatible\n\tgithub.com/go-playground/universal-translator v0.17.0 // indirect\n\tgithub.com/jinzhu/copier v0.2.3\n\tgithub.com/labstack/echo/v4 v4.1.17\n\tgithub.com/labstack/gommon v0.3.0\n\tgithub.com/leodido/go-urn v1.2.1 // indirect\n\tgithub.com/stretchr/testify v1.6.1\n\tgithub.com/swaggo/echo-swagger v1.1.0\n\tgithub.com/swaggo/swag v1.7.0\n\tgo.mongodb.org/mongo-driver v1.4.5\n\tgolang.org/x/crypto v0.0.0-20200820211705-5c72a883971a\n\tgolang.org/x/tools v0.0.0-20201207182000-5679438983bd\n\tgopkg.in/go-playground/assert.v1 v1.2.1 // indirect\n\tgopkg.in/go-playground/validator.v9 v9.31.0\n)\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- go.mod	(revision 6c985c5379ce9d5ffae930a5028a512c0f6bf21c)
++++ go.mod	(date 1611760950658)
+@@ -15,7 +15,6 @@
+ 	github.com/swaggo/swag v1.7.0
+ 	go.mongodb.org/mongo-driver v1.4.5
+ 	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
+-	golang.org/x/tools v0.0.0-20201207182000-5679438983bd
+ 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
+ 	gopkg.in/go-playground/validator.v9 v9.31.0
+ )

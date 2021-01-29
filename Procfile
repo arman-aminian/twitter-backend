@@ -1,1 +1,1 @@
-“web: twitter-backend”
+web: bin/twitter-backend
