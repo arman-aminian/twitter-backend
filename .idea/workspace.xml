@@ -19,9 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013294ec-98ac-45bd-af48-e710fa1307fc" name="Default Changelist" comment="Error handled.">
-      <change beforePath="$PROJECT_DIR$/db/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/request.go" afterDir="false" />
+    <list default="true" id="013294ec-98ac-45bd-af48-e710fa1307fc" name="Default Changelist" comment="Error handling.">
+      <change beforePath="$PROJECT_DIR$/hashtag/hashtag.go" beforeDir="false" afterPath="$PROJECT_DIR$/hashtag/hashtag.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/hashtag_with_array.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/hashtags.go" beforeDir="false" afterPath="$PROJECT_DIR$/store/hashtags.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -343,7 +345,9 @@
     <MESSAGE value="Fixed a bug relating user profile." />
     <MESSAGE value="We don't need token for searching." />
     <MESSAGE value="Fixed event sorting." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed event sorting." />
+    <MESSAGE value="Cleaned." />
+    <MESSAGE value="Error handling." />
+    <option name="LAST_COMMIT_MESSAGE" value="Error handling." />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

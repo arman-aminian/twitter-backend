@@ -35,6 +35,8 @@ func (hs *HashtagStore) AddHashtag(ht *model.Hashtag) error {
 		if err != nil {
 			return err
 		}
+	} else if err != nil {
+		return err
 	} else {
 		exists = true
 		newCount := h.Count + ht.Count
