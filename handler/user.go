@@ -372,6 +372,7 @@ func (h *Handler) UnFollow(c echo.Context) error {
 // @Failure 500 {object} utils.Error
 // @Router /home [get]
 func (h *Handler) GetTimeline(c echo.Context) error {
+	// day Param means you want timeline for "day" days ago.
 	day, err := strconv.Atoi(c.Param("day"))
 	if err != nil {
 		day = 0
@@ -382,6 +383,7 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
 	}
 
+	// calculate timeline : tweets from you and yours followings
 	var usernames []string
 	for _, f := range *u.Followings {
 		usernames = append(usernames, f.Username)
@@ -391,15 +393,15 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 		return c.JSON(http.StatusOK, newTweetListResponse(stringFieldFromToken(c, "username"), nil, 0))
 	}
 
-	tweetsId, err := h.userStore.GetTweetIdListFromUsernameList(usernames)
+	tweetsIds, err := h.userStore.GetTweetIdListFromUsernameList(usernames)
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	if len(*tweetsId) == 0 {
+	if len(*tweetsIds) == 0 {
 		return c.JSON(http.StatusOK, newTweetListResponse(stringFieldFromToken(c, "username"), nil, 0))
 	}
 
-	timelineTweets, err := h.tweetStore.GetTimelineFromTweetIDs(*tweetsId, day)
+	timelineTweets, err := h.tweetStore.GetTimelineFromTweetIDs(*tweetsIds, day)
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
@@ -546,6 +548,7 @@ func (h *Handler) GetSuggestions(c echo.Context) error {
 	if len(*u.Followings) == 0 {
 		return c.JSON(http.StatusOK, newOwnerList(h.userStore, username, nil))
 	}
+
 	var suggestions []model.Owner
 	followings := *u.Followings
 	for _, f := range followings {
@@ -553,6 +556,7 @@ func (h *Handler) GetSuggestions(c echo.Context) error {
 		suggestions = append(suggestions, *following.Followings...)
 	}
 
+	// remove user and followings from suggestions
 	suggestionsSize := len(suggestions)
 	followingsSize := len(followings)
 	for i := range suggestions {
@@ -566,7 +570,7 @@ func (h *Handler) GetSuggestions(c echo.Context) error {
 		}
 	}
 
-	// to sort suggestions by their frequencies
+	// sort suggestions by their frequencies
 	suggestionsFreq := dupCount(suggestions)
 	sorted := make([]model.Owner, 0, len(suggestionsFreq))
 	for name := range suggestionsFreq {
@@ -576,7 +580,9 @@ func (h *Handler) GetSuggestions(c echo.Context) error {
 		return suggestionsFreq[sorted[i]] > suggestionsFreq[sorted[j]]
 	})
 
+	// number of suggestion
 	maxNumberOfSuggestions := 3
+
 	if len(sorted) < maxNumberOfSuggestions {
 		return c.JSON(http.StatusOK, newOwnerList(h.userStore, username, &sorted))
 	}

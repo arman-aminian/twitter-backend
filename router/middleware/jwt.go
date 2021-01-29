@@ -65,8 +65,6 @@ func JWTWithConfig(config JWTConfig) echo.MiddlewareFunc {
 			}
 			if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 				username := claims["id"]
-				//fmt.Println("jwt username")
-				//fmt.Println(username)
 				c.Set("username", username)
 				return next(c)
 			}

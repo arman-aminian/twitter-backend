@@ -19,8 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013294ec-98ac-45bd-af48-e710fa1307fc" name="Default Changelist" comment="Error handling.&#10;Code cleaned.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="013294ec-98ac-45bd-af48-e710fa1307fc" name="Default Changelist" comment="Code cleaned.">
+      <change beforePath="$PROJECT_DIR$/handler/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router/middleware/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/router/middleware/jwt.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -344,9 +345,9 @@
     <MESSAGE value="Fixed event sorting." />
     <MESSAGE value="Cleaned." />
     <MESSAGE value="Error handling." />
-    <MESSAGE value="Code cleaned." />
     <MESSAGE value="Error handling.&#10;Code cleaned." />
-    <option name="LAST_COMMIT_MESSAGE" value="Error handling.&#10;Code cleaned." />
+    <MESSAGE value="Code cleaned." />
+    <option name="LAST_COMMIT_MESSAGE" value="Code cleaned." />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -429,10 +430,10 @@
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
     <state x="765" y="471" width="389" height="169" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1920.1055@0.25.1920.1055" timestamp="1611828681488" />
-    <state x="60" y="63" width="1425" height="731" key="find.popup" timestamp="1611935543036">
+    <state x="60" y="63" width="1425" height="731" key="find.popup" timestamp="1611935588431">
       <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state x="60" y="63" width="1425" height="731" key="find.popup/0.25.1680.942@0.25.1680.942" timestamp="1611935543036" />
+    <state x="60" y="63" width="1425" height="731" key="find.popup/0.25.1680.942@0.25.1680.942" timestamp="1611935588431" />
     <state x="68" y="67" width="1628" height="818" key="find.popup/0.25.1920.1055@0.25.1920.1055" timestamp="1611830089038" />
     <state x="804" y="316" width="303" height="478" key="refactoring.ChangeSignatureDialog" timestamp="1611586669164">
       <screen x="0" y="25" width="1920" height="1055" />
