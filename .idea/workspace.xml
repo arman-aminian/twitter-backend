@@ -10,11 +10,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="154ac8c9-fef3-4900-8bcc-64ee6cecf820" name="Default Changelist" comment="suggestions' bug fixed.">
+    <list default="true" id="154ac8c9-fef3-4900-8bcc-64ee6cecf820" name="Default Changelist" comment="delete tweet from parent's comments.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/tweet.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/tweet.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/store/tweet.go" beforeDir="false" afterPath="$PROJECT_DIR$/store/tweet.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tweet/tweet.go" beforeDir="false" afterPath="$PROJECT_DIR$/tweet/tweet.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +95,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Username search completed.&#10;DB tweet collection modified : index added to text search on text field" />
     <MESSAGE value="Tweet search completed." />
     <MESSAGE value="Set cookie for authorization." />
     <MESSAGE value="Timeline bug Fixed&#10;Comment bug fixed(list of tweet ids -&gt; list of tweets)" />
@@ -121,7 +119,8 @@
     <MESSAGE value="search by usernames fixed : ech result has is_following" />
     <MESSAGE value="like/retweet list fixed : ech result has is_following" />
     <MESSAGE value="suggestions' bug fixed." />
-    <option name="LAST_COMMIT_MESSAGE" value="suggestions' bug fixed." />
+    <MESSAGE value="delete tweet from parent's comments." />
+    <option name="LAST_COMMIT_MESSAGE" value="delete tweet from parent's comments." />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -145,36 +144,36 @@
     </state>
     <state x="168" y="62" width="1344" height="840" key="DiffContextDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611765965727" />
     <state x="168" y="62" width="1344" height="840" key="DiffContextDialog/0.25.1680.942@0.25.1680.942" timestamp="1611632897022" />
-    <state width="1638" height="267" key="GridCell.Tab.0.bottom" timestamp="1611828349932">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1638" height="225" key="GridCell.Tab.0.bottom" timestamp="1611916151560">
+      <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state width="1638" height="267" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1611828349932" />
-    <state width="1638" height="148" key="GridCell.Tab.0.bottom/0.25.1680.940@0.25.1680.940" timestamp="1611796450885" />
-    <state width="1638" height="241" key="GridCell.Tab.0.bottom/0.25.1680.942@0.25.1680.942" timestamp="1611670293066" />
+    <state width="1638" height="267" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1611834824155" />
+    <state width="1638" height="267" key="GridCell.Tab.0.bottom/0.25.1680.940@0.25.1680.940" timestamp="1611843385071" />
+    <state width="1638" height="225" key="GridCell.Tab.0.bottom/0.25.1680.942@0.25.1680.942" timestamp="1611916151560" />
     <state width="1638" height="262" key="GridCell.Tab.0.bottom/0.25.1680.945@0.25.1680.945" timestamp="1611494173120" />
     <state width="1638" height="252" key="GridCell.Tab.0.bottom/0.25.1680.947@0.25.1680.947" timestamp="1611285116710" />
-    <state width="1638" height="267" key="GridCell.Tab.0.center" timestamp="1611828349931">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1638" height="225" key="GridCell.Tab.0.center" timestamp="1611916151559">
+      <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state width="1638" height="267" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1611828349931" />
-    <state width="1638" height="148" key="GridCell.Tab.0.center/0.25.1680.940@0.25.1680.940" timestamp="1611796450883" />
-    <state width="1638" height="241" key="GridCell.Tab.0.center/0.25.1680.942@0.25.1680.942" timestamp="1611670293065" />
+    <state width="1638" height="267" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1611834824154" />
+    <state width="1638" height="267" key="GridCell.Tab.0.center/0.25.1680.940@0.25.1680.940" timestamp="1611843385070" />
+    <state width="1638" height="225" key="GridCell.Tab.0.center/0.25.1680.942@0.25.1680.942" timestamp="1611916151559" />
     <state width="1638" height="262" key="GridCell.Tab.0.center/0.25.1680.945@0.25.1680.945" timestamp="1611494173120" />
     <state width="1638" height="252" key="GridCell.Tab.0.center/0.25.1680.947@0.25.1680.947" timestamp="1611285116709" />
-    <state width="1638" height="267" key="GridCell.Tab.0.left" timestamp="1611828349930">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1638" height="225" key="GridCell.Tab.0.left" timestamp="1611916151559">
+      <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state width="1638" height="267" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1611828349930" />
-    <state width="1638" height="148" key="GridCell.Tab.0.left/0.25.1680.940@0.25.1680.940" timestamp="1611796450881" />
-    <state width="1638" height="241" key="GridCell.Tab.0.left/0.25.1680.942@0.25.1680.942" timestamp="1611670293064" />
+    <state width="1638" height="267" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1611834824153" />
+    <state width="1638" height="267" key="GridCell.Tab.0.left/0.25.1680.940@0.25.1680.940" timestamp="1611843385070" />
+    <state width="1638" height="225" key="GridCell.Tab.0.left/0.25.1680.942@0.25.1680.942" timestamp="1611916151559" />
     <state width="1638" height="262" key="GridCell.Tab.0.left/0.25.1680.945@0.25.1680.945" timestamp="1611494173119" />
     <state width="1638" height="252" key="GridCell.Tab.0.left/0.25.1680.947@0.25.1680.947" timestamp="1611285116709" />
-    <state width="1638" height="267" key="GridCell.Tab.0.right" timestamp="1611828349931">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1638" height="225" key="GridCell.Tab.0.right" timestamp="1611916151559">
+      <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state width="1638" height="267" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1611828349931" />
-    <state width="1638" height="148" key="GridCell.Tab.0.right/0.25.1680.940@0.25.1680.940" timestamp="1611796450884" />
-    <state width="1638" height="241" key="GridCell.Tab.0.right/0.25.1680.942@0.25.1680.942" timestamp="1611670293065" />
+    <state width="1638" height="267" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1611834824155" />
+    <state width="1638" height="267" key="GridCell.Tab.0.right/0.25.1680.940@0.25.1680.940" timestamp="1611843385071" />
+    <state width="1638" height="225" key="GridCell.Tab.0.right/0.25.1680.942@0.25.1680.942" timestamp="1611916151559" />
     <state width="1638" height="262" key="GridCell.Tab.0.right/0.25.1680.945@0.25.1680.945" timestamp="1611494173120" />
     <state width="1638" height="252" key="GridCell.Tab.0.right/0.25.1680.947@0.25.1680.947" timestamp="1611285116709" />
     <state width="1638" height="308" key="GridCell.Tab.1.bottom" timestamp="1611452733944">
@@ -209,10 +208,10 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="558" y="245" key="RollbackChangesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611324401655" />
-    <state x="440" y="233" key="Vcs.Push.Dialog.v2" timestamp="1611821896241">
+    <state x="440" y="233" key="Vcs.Push.Dialog.v2" timestamp="1611828441678">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="440" y="233" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1611821896241" />
+    <state x="440" y="233" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1611828441678" />
     <state x="440" y="234" key="Vcs.Push.Dialog.v2/0.25.1680.942@0.25.1680.942" timestamp="1611491881378" />
     <state x="440" y="235" key="Vcs.Push.Dialog.v2/0.25.1680.945@0.25.1680.945" timestamp="1611494293596" />
     <state x="440" y="235" key="Vcs.Push.Dialog.v2/0.25.1680.947@0.25.1680.947" timestamp="1611267201554" />
@@ -226,10 +225,10 @@
     <state x="541" y="294" width="597" height="582" key="find.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1611818432929" />
     <state x="541" y="288" width="597" height="490" key="find.popup/0.25.1680.940@0.25.1680.940" timestamp="1611427517418" />
     <state x="541" y="289" width="597" height="490" key="find.popup/0.25.1680.942@0.25.1680.942" timestamp="1611491354521" />
-    <state x="502" y="317" key="git4idea.merge.GitPullDialog" timestamp="1611707536120">
+    <state x="502" y="317" key="git4idea.merge.GitPullDialog" timestamp="1611833308974">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="502" y="317" key="git4idea.merge.GitPullDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611707536120" />
+    <state x="502" y="317" key="git4idea.merge.GitPullDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611833308974" />
     <state x="502" y="309" key="git4idea.merge.GitPullDialog/0.25.1680.940@0.25.1680.940" timestamp="1611514381438" />
   </component>
 </project>

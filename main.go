@@ -44,7 +44,7 @@ func main() {
 		// RUN THIS IF YOUR HASHTAG DATABASE IS EMPTY
 		// StartUpTrends(ts, h)
 
-		r.Logger.Fatal(r.Start(":" + port))
+		r.Logger.Fatal(r.Start("0.0.0.0:" + port))
 	}
 
 	// if testHeap {
