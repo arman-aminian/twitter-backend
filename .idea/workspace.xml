@@ -369,21 +369,25 @@
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
     <state x="743" y="313" width="426" height="485" key="FileChooserDialogImpl/0.25.1920.1055@0.25.1920.1055" timestamp="1611331807352" />
-    <state width="1874" height="217" key="GridCell.Tab.0.bottom" timestamp="1611832380118">
-      <screen x="0" y="25" width="1920" height="1055" />
+    <state width="1638" height="225" key="GridCell.Tab.0.bottom" timestamp="1611934686737">
+      <screen x="0" y="25" width="1680" height="942" />
     </state>
+    <state width="1638" height="225" key="GridCell.Tab.0.bottom/0.25.1680.942@0.25.1680.942" timestamp="1611934686737" />
     <state width="1874" height="217" key="GridCell.Tab.0.bottom/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380118" />
-    <state width="1874" height="217" key="GridCell.Tab.0.center" timestamp="1611832380116">
-      <screen x="0" y="25" width="1920" height="1055" />
+    <state width="1638" height="225" key="GridCell.Tab.0.center" timestamp="1611934686736">
+      <screen x="0" y="25" width="1680" height="942" />
     </state>
+    <state width="1638" height="225" key="GridCell.Tab.0.center/0.25.1680.942@0.25.1680.942" timestamp="1611934686736" />
     <state width="1874" height="217" key="GridCell.Tab.0.center/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380116" />
-    <state width="1874" height="217" key="GridCell.Tab.0.left" timestamp="1611832380114">
-      <screen x="0" y="25" width="1920" height="1055" />
+    <state width="1638" height="225" key="GridCell.Tab.0.left" timestamp="1611934686736">
+      <screen x="0" y="25" width="1680" height="942" />
     </state>
+    <state width="1638" height="225" key="GridCell.Tab.0.left/0.25.1680.942@0.25.1680.942" timestamp="1611934686736" />
     <state width="1874" height="217" key="GridCell.Tab.0.left/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380114" />
-    <state width="1874" height="217" key="GridCell.Tab.0.right" timestamp="1611832380117">
-      <screen x="0" y="25" width="1920" height="1055" />
+    <state width="1638" height="225" key="GridCell.Tab.0.right" timestamp="1611934686737">
+      <screen x="0" y="25" width="1680" height="942" />
     </state>
+    <state width="1638" height="225" key="GridCell.Tab.0.right/0.25.1680.942@0.25.1680.942" timestamp="1611934686737" />
     <state width="1874" height="217" key="GridCell.Tab.0.right/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380117" />
     <state x="0" y="25" width="1920" height="1055" key="MergeDialog" timestamp="1611821926582">
       <screen x="0" y="25" width="1920" height="1055" />
@@ -405,9 +409,10 @@
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
     <state x="99" y="125" width="1722" height="860" key="ShowDiffWithBranchDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1611493173765" />
-    <state x="555" y="291" width="802" height="529" key="Vcs.Push.Dialog.v2" timestamp="1611811187894">
-      <screen x="0" y="25" width="1920" height="1055" />
+    <state x="486" y="263" width="802" height="529" key="Vcs.Push.Dialog.v2" timestamp="1611934508002">
+      <screen x="0" y="25" width="1680" height="942" />
     </state>
+    <state x="486" y="263" key="Vcs.Push.Dialog.v2/0.25.1680.942@0.25.1680.942" timestamp="1611934508002" />
     <state x="555" y="291" width="802" height="529" key="Vcs.Push.Dialog.v2/0.25.1920.1055@0.25.1920.1055" timestamp="1611811187894" />
     <state x="742" y="318" width="428" height="474" key="com.goide.refactor.move.GoMoveDeclarationDialog" timestamp="1611588018886">
       <screen x="0" y="25" width="1920" height="1055" />

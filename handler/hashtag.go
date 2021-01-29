@@ -66,5 +66,5 @@ func (h *Handler) SearchHashtag(c echo.Context) error {
 		}
 		*tweets = append(*tweets, *t)
 	}
-	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), tweets, len(*tweets)))
+	return c.JSON(http.StatusOK, newTweetListResponse(stringFieldFromToken(c, "username"), tweets, len(*tweets)))
 }

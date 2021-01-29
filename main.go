@@ -20,7 +20,6 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
-	testHeap := false
 
 	r := router.New()
 	r.GET("/swagger/*", echoSwagger.WrapHandler)

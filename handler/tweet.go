@@ -100,7 +100,10 @@ func (h *Handler) CreateTweet(c echo.Context) error {
 
 	hashtags := h.tweetStore.ExtractHashtags(t)
 	for name, cnt := range hashtags {
-		h.AddHashtag(name, t, cnt)
+		err = h.AddHashtag(name, t, cnt)
+		if err != nil {
+			return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
+		}
 	}
 
 	res := newTweetResponse(c, t)

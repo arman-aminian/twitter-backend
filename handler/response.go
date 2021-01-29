@@ -180,7 +180,7 @@ func newTweetsResponse(username string, tweets *[]model.Tweet) *tweetsResponse {
 		tr[i].Comments = tweet.Comments
 		tr[i].Media = tweet.Media
 		tr[i].Time = tweet.Time
-		
+
 		for _, t := range *tweet.Likes {
 			if t.Username == username {
 				tr[i].Liked = true
@@ -225,11 +225,11 @@ func newTweetResponse(c echo.Context, t *model.Tweet) *singleTweetResponse {
 	tr.RetweetsCount = len(*t.Retweets)
 	tr.Owner.Username = t.Owner.Username
 	tr.Owner.ProfilePicture = t.Owner.ProfilePicture
-	
+
 	return &singleTweetResponse{tr}
 }
 
-func newTweetListResponse(c echo.Context, username string, tweets *[]model.Tweet, size int) *tweetListResponse {
+func newTweetListResponse(username string, tweets *[]model.Tweet, size int) *tweetListResponse {
 	tr := make([]tweetResponse, size)
 	if tweets == nil {
 		return &tweetListResponse{tr, size}
@@ -241,7 +241,7 @@ func newTweetListResponse(c echo.Context, username string, tweets *[]model.Tweet
 		tr[i].Comments = tweet.Comments
 		tr[i].Media = tweet.Media
 		tr[i].Time = tweet.Time
-		
+
 		for _, t := range *tweet.Likes {
 			if t.Username == username {
 				tr[i].Liked = true

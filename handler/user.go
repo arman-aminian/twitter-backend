@@ -391,7 +391,7 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 	}
 	usernames = append(usernames, u.Username)
 	if len(usernames) == 0 {
-		return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), nil, 0))
+		return c.JSON(http.StatusOK, newTweetListResponse(stringFieldFromToken(c, "username"), nil, 0))
 	}
 
 	tweetsId, err := h.userStore.GetTweetIdListFromUsernameList(usernames)
@@ -399,7 +399,7 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
 	if len(*tweetsId) == 0 {
-		return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), nil, 0))
+		return c.JSON(http.StatusOK, newTweetListResponse(stringFieldFromToken(c, "username"), nil, 0))
 	}
 
 	timelineTweets, err := h.tweetStore.GetTimelineFromTweetIDs(*tweetsId, day)
@@ -412,7 +412,7 @@ func (h *Handler) GetTimeline(c echo.Context) error {
 	sort.Slice(timeline, func(i, j int) bool {
 		return timeline[i].Time.After(timeline[j].Time)
 	})
-	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), &timeline, len(timeline)))
+	return c.JSON(http.StatusOK, newTweetListResponse(stringFieldFromToken(c, "username"), &timeline, len(timeline)))
 }
 
 // SearchUsernames godoc
@@ -460,7 +460,7 @@ func (h *Handler) SearchTweets(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	return c.JSON(http.StatusOK, newTweetListResponse(c, stringFieldFromToken(c, "username"), result, len(*result)))
+	return c.JSON(http.StatusOK, newTweetListResponse(stringFieldFromToken(c, "username"), result, len(*result)))
 }
 
 // GetFollowingAndFollowersList godoc
