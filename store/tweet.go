@@ -60,6 +60,9 @@ func (ts *TweetStore) GetTweets(tweets []string) (*[]model.Tweet, error) {
 func (ts *TweetStore) GetAllTweets() ([]bson.M, error) {
 	var ret []bson.M
 	cur, err := ts.db.Find(context.TODO(), bson.M{})
+	if err != nil {
+		return nil, err
+	}
 	if err = cur.All(context.TODO(), &ret); err != nil {
 		return nil, err
 	}

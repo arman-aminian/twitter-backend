@@ -547,14 +547,6 @@ func dupCount(list []model.Owner) map[model.Owner]int {
 	return duplicateFrequency
 }
 
-func getFollowingUsernames(followings []model.Owner) []string {
-	var res []string
-	for _, f := range followings {
-		res = append(res, f.Username)
-	}
-	return res
-}
-
 func stringFieldFromToken(c echo.Context, field string) string {
 	field, ok := c.Get(field).(string)
 	if !ok {
