@@ -18,6 +18,7 @@ import (
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
+		// default Port
 		port = "8080"
 	}
 
@@ -38,7 +39,10 @@ func main() {
 	h.Register(g)
 
 	// Fire up the trends beforehand
-	_ = hs.Update()
+	err = hs.Update()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// RUN THIS IF YOUR HASHTAG DATABASE IS EMPTY
 	// StartUpTrends(ts, h)
@@ -59,7 +63,10 @@ func StartUpTrends(ts *store.TweetStore, h *handler.Handler) {
 		_ = bson.Unmarshal(bsonBytes, &t)
 		hashtags := ts.ExtractHashtags(t)
 		for name, cnt := range hashtags {
-			h.AddHashtag(name, t, cnt)
+			err = h.AddHashtag(name, t, cnt)
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
 }
