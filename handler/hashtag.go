@@ -2,7 +2,6 @@ package handler
 
 import (
 	"errors"
-	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/labstack/echo/v4"
@@ -31,7 +30,6 @@ type trendResponse struct {
 
 func (h *Handler) GetTrends(c echo.Context) error {
 	trends := h.hashtagStore.GetTrends()
-	fmt.Println("hahahahahah ", trends)
 	res := trendResponse{}
 	for _, t := range *trends {
 		s := singleTrend{

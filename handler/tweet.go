@@ -2,7 +2,6 @@ package handler
 
 import (
 	"errors"
-	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/labstack/echo/v4"
@@ -155,7 +154,6 @@ func (h *Handler) GetTweets(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	fmt.Println(tweets)
 	if len(tweets.Tweets) == 0 {
 		return c.JSON(http.StatusBadRequest, utils.NewError(errors.New("nothing to search for")))
 	}
@@ -291,7 +289,6 @@ func (h *Handler) Like(c echo.Context) error {
 	}
 
 	e := h.CreateLikeEvent(u, t)
-	fmt.Println("event is ", e)
 	err = h.userStore.AddLog(u, e)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))

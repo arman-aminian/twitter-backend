@@ -2,7 +2,6 @@ package handler
 
 import (
 	"errors"
-	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"github.com/arman-aminian/twitter-backend/utils"
 	"github.com/labstack/echo/v4"
@@ -154,7 +153,6 @@ func (h *Handler) UpdateUser(c echo.Context) error {
 // @Router /profiles/{username} [get]
 func (h *Handler) GetProfile(c echo.Context) error {
 	destUsername := c.Param("username")
-	fmt.Println(destUsername)
 	u, err := h.userStore.GetByUsername(destUsername)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.NewError(err))
@@ -240,11 +238,10 @@ func (h *Handler) UpdateProfile(c echo.Context) error {
 		// Update without Header Picture
 		u.HeaderPicture = ""
 	}
-
 	if err := h.userStore.UpdateProfile(u); err != nil {
 		return c.JSON(http.StatusUnprocessableEntity, utils.NewError(err))
 	}
-	fmt.Println(u.Name)
+
 	return c.JSON(http.StatusOK, newProfileResponse(h.userStore, u.Username, u))
 }
 

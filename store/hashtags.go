@@ -2,7 +2,6 @@ package store
 
 import (
 	"context"
-	"fmt"
 	"github.com/arman-aminian/twitter-backend/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -123,7 +122,6 @@ func (hs *HashtagStore) Update() error {
 	if err = cur.All(context.TODO(), hs.trends); err != nil {
 		return err
 	}
-	fmt.Println(hs.trends)
 	if len(*hs.trends) > 10 {
 		*hs.trends = (*hs.trends)[:hs.trendLength]
 	}
