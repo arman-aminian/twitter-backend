@@ -19,11 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="013294ec-98ac-45bd-af48-e710fa1307fc" name="Default Changelist" comment="Error handling.">
-      <change beforePath="$PROJECT_DIR$/hashtag/hashtag.go" beforeDir="false" afterPath="$PROJECT_DIR$/hashtag/hashtag.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/event.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/hashtag_with_array.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/hashtags.go" beforeDir="false" afterPath="$PROJECT_DIR$/store/hashtags.go" afterDir="false" />
+    <list default="true" id="013294ec-98ac-45bd-af48-e710fa1307fc" name="Default Changelist" comment="Error handling.&#10;Code cleaned.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -347,7 +344,9 @@
     <MESSAGE value="Fixed event sorting." />
     <MESSAGE value="Cleaned." />
     <MESSAGE value="Error handling." />
-    <option name="LAST_COMMIT_MESSAGE" value="Error handling." />
+    <MESSAGE value="Code cleaned." />
+    <MESSAGE value="Error handling.&#10;Code cleaned." />
+    <option name="LAST_COMMIT_MESSAGE" value="Error handling.&#10;Code cleaned." />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -373,25 +372,25 @@
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
     <state x="743" y="313" width="426" height="485" key="FileChooserDialogImpl/0.25.1920.1055@0.25.1920.1055" timestamp="1611331807352" />
-    <state width="1638" height="225" key="GridCell.Tab.0.bottom" timestamp="1611934686737">
+    <state width="1638" height="225" key="GridCell.Tab.0.bottom" timestamp="1611935230447">
       <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state width="1638" height="225" key="GridCell.Tab.0.bottom/0.25.1680.942@0.25.1680.942" timestamp="1611934686737" />
+    <state width="1638" height="225" key="GridCell.Tab.0.bottom/0.25.1680.942@0.25.1680.942" timestamp="1611935230447" />
     <state width="1874" height="217" key="GridCell.Tab.0.bottom/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380118" />
-    <state width="1638" height="225" key="GridCell.Tab.0.center" timestamp="1611934686736">
+    <state width="1638" height="225" key="GridCell.Tab.0.center" timestamp="1611935230446">
       <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state width="1638" height="225" key="GridCell.Tab.0.center/0.25.1680.942@0.25.1680.942" timestamp="1611934686736" />
+    <state width="1638" height="225" key="GridCell.Tab.0.center/0.25.1680.942@0.25.1680.942" timestamp="1611935230446" />
     <state width="1874" height="217" key="GridCell.Tab.0.center/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380116" />
-    <state width="1638" height="225" key="GridCell.Tab.0.left" timestamp="1611934686736">
+    <state width="1638" height="225" key="GridCell.Tab.0.left" timestamp="1611935230445">
       <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state width="1638" height="225" key="GridCell.Tab.0.left/0.25.1680.942@0.25.1680.942" timestamp="1611934686736" />
+    <state width="1638" height="225" key="GridCell.Tab.0.left/0.25.1680.942@0.25.1680.942" timestamp="1611935230445" />
     <state width="1874" height="217" key="GridCell.Tab.0.left/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380114" />
-    <state width="1638" height="225" key="GridCell.Tab.0.right" timestamp="1611934686737">
+    <state width="1638" height="225" key="GridCell.Tab.0.right" timestamp="1611935230446">
       <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state width="1638" height="225" key="GridCell.Tab.0.right/0.25.1680.942@0.25.1680.942" timestamp="1611934686737" />
+    <state width="1638" height="225" key="GridCell.Tab.0.right/0.25.1680.942@0.25.1680.942" timestamp="1611935230446" />
     <state width="1874" height="217" key="GridCell.Tab.0.right/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380117" />
     <state x="0" y="25" width="1920" height="1055" key="MergeDialog" timestamp="1611821926582">
       <screen x="0" y="25" width="1920" height="1055" />
