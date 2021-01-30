@@ -1,11 +1,13 @@
-# twitter-backend
+# A Twitter-like Website
+![Booby Image](https://raw.githubusercontent.com/mehditeymorian/twitter-react/master/images/header_img.jpg)
+
 This repository contains the backend code for the final project of Fall 2020 
 Internet Engineering course. In this project, we were instructed to build a 
 twitter-like website. We called our version "**Boobier**" after a
 special seabird (more information [here](https://en.wikipedia.org/wiki/Booby)), 
-and it's pretty much like Twitter. You can test it at 
-[Boobier](https://booobier.herokuapp.com/). Also, the frontend of this 
-website is available [here](https://github.com/mehditeymorian/twitter-react).
+and it's pretty much like Twitter. The frontend of this 
+project is available [here](https://github.com/mehditeymorian/twitter-react).
+The whole project is deployed on Heroku Cloud Application Platform.
 
 ## Project Explanation
 We chose to write the backend in GoLang since it was the course syllabus,
@@ -84,6 +86,13 @@ Following as explained before and each event has the following fields:
 The actual requests and corresponding responses can be seen in the code itself
 and doesn't need much of an explanation.
 
+##### Search by text
+We tried to implement text-based search much like Twitter itself so our
+search algorithm supports the following examples:
+- "q1 q2 q3": all the tweets with this exact pattern in them.
+- q1 q2 q3: all the tweets having at least one of the queries.
+- "q1" q2 "q3": all the tweets that have q1 and q3. (q2 optional)
+
 You can generate the docs of the backend to get a better sense of
 requests and responses. To generate these docs (automatically with the
 help of [swag](https://github.com/swaggo/swag)), first install the package
@@ -97,7 +106,10 @@ to be shared, and other forms of feedback to be told. Any form of these
 contributions would be a huge help to us improving this project. Thank
 you in advance.
 
-## Our Team
+## Website and Team
+You can test our website at [Boobier](https://booobier.herokuapp.com/).
+
+Our Team:
 - [Mohammad Mehdi Teymourian](https://github.com/mehditeymorian) (Frontend)
 - [Arman Aminian](https://github.com/arman-aminian) (Backend)
 - And me, [Mohammad Hosein Zarei](https://github.com/mhezarei) (Backend + 
