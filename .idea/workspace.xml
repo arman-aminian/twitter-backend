@@ -20,8 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="013294ec-98ac-45bd-af48-e710fa1307fc" name="Default Changelist" comment="Code cleaned.">
-      <change beforePath="$PROJECT_DIR$/handler/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router/middleware/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/router/middleware/jwt.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +67,7 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../hw4" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -373,25 +373,25 @@
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
     <state x="743" y="313" width="426" height="485" key="FileChooserDialogImpl/0.25.1920.1055@0.25.1920.1055" timestamp="1611331807352" />
-    <state width="1638" height="225" key="GridCell.Tab.0.bottom" timestamp="1611935230447">
+    <state width="1638" height="249" key="GridCell.Tab.0.bottom" timestamp="1611936639347">
       <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state width="1638" height="225" key="GridCell.Tab.0.bottom/0.25.1680.942@0.25.1680.942" timestamp="1611935230447" />
+    <state width="1638" height="249" key="GridCell.Tab.0.bottom/0.25.1680.942@0.25.1680.942" timestamp="1611936639347" />
     <state width="1874" height="217" key="GridCell.Tab.0.bottom/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380118" />
-    <state width="1638" height="225" key="GridCell.Tab.0.center" timestamp="1611935230446">
+    <state width="1638" height="249" key="GridCell.Tab.0.center" timestamp="1611936639346">
       <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state width="1638" height="225" key="GridCell.Tab.0.center/0.25.1680.942@0.25.1680.942" timestamp="1611935230446" />
+    <state width="1638" height="249" key="GridCell.Tab.0.center/0.25.1680.942@0.25.1680.942" timestamp="1611936639346" />
     <state width="1874" height="217" key="GridCell.Tab.0.center/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380116" />
-    <state width="1638" height="225" key="GridCell.Tab.0.left" timestamp="1611935230445">
+    <state width="1638" height="249" key="GridCell.Tab.0.left" timestamp="1611936639346">
       <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state width="1638" height="225" key="GridCell.Tab.0.left/0.25.1680.942@0.25.1680.942" timestamp="1611935230445" />
+    <state width="1638" height="249" key="GridCell.Tab.0.left/0.25.1680.942@0.25.1680.942" timestamp="1611936639346" />
     <state width="1874" height="217" key="GridCell.Tab.0.left/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380114" />
-    <state width="1638" height="225" key="GridCell.Tab.0.right" timestamp="1611935230446">
+    <state width="1638" height="249" key="GridCell.Tab.0.right" timestamp="1611936639346">
       <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state width="1638" height="225" key="GridCell.Tab.0.right/0.25.1680.942@0.25.1680.942" timestamp="1611935230446" />
+    <state width="1638" height="249" key="GridCell.Tab.0.right/0.25.1680.942@0.25.1680.942" timestamp="1611936639346" />
     <state width="1874" height="217" key="GridCell.Tab.0.right/0.25.1920.1055@0.25.1920.1055" timestamp="1611832380117" />
     <state x="0" y="25" width="1920" height="1055" key="MergeDialog" timestamp="1611821926582">
       <screen x="0" y="25" width="1920" height="1055" />
@@ -413,10 +413,10 @@
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
     <state x="99" y="125" width="1722" height="860" key="ShowDiffWithBranchDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1611493173765" />
-    <state x="486" y="263" width="802" height="529" key="Vcs.Push.Dialog.v2" timestamp="1611935262859">
+    <state x="486" y="263" width="802" height="529" key="Vcs.Push.Dialog.v2" timestamp="1611936157234">
       <screen x="0" y="25" width="1680" height="942" />
     </state>
-    <state x="486" y="263" key="Vcs.Push.Dialog.v2/0.25.1680.942@0.25.1680.942" timestamp="1611935262859" />
+    <state x="486" y="263" key="Vcs.Push.Dialog.v2/0.25.1680.942@0.25.1680.942" timestamp="1611936157234" />
     <state x="555" y="291" width="802" height="529" key="Vcs.Push.Dialog.v2/0.25.1920.1055@0.25.1920.1055" timestamp="1611811187894" />
     <state x="742" y="318" width="428" height="474" key="com.goide.refactor.move.GoMoveDeclarationDialog" timestamp="1611588018886">
       <screen x="0" y="25" width="1920" height="1055" />

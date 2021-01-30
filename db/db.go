@@ -15,7 +15,7 @@ var mongoOnce sync.Once
 
 const (
 	// PATH = "mongodb://localhost:27017"
-	PATH = "mongodb+srv://arman-aminian:aaaa1234@twitter-db.ugqqk.mongodb.net/twitter?retryWrites=true&w=majority"
+	PATH = "mongodb+srv://arman-aminian:***@twitter-db.ugqqk.mongodb.net/twitter?retryWrites=true&w=majority"
 )
 
 func GetMongoClient() (*mongo.Client, error) {
