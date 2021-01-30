@@ -48,8 +48,6 @@ func main() {
 	// StartUpTrends(ts, h)
 
 	r.Logger.Fatal(r.Start("0.0.0.0:" + port))
-	// r.Logger.Fatal(r.Start("127.0.0.1:" + port))
-	// r.Logger.Fatal(r.Start(":" + port))
 }
 
 func StartUpTrends(ts *store.TweetStore, h *handler.Handler) {
@@ -69,24 +67,4 @@ func StartUpTrends(ts *store.TweetStore, h *handler.Handler) {
 			}
 		}
 	}
-}
-
-func populateAll(us *store.UserStore, ts *store.TweetStore, hh *store.HashtagStore) {
-	for _, s := range []string{"user1", "user2", "user3", "user4"} {
-		u := populateUser(s, s+"@gmail.com", s+"_pass", s+" bio", s+" profile", s+" header")
-		_ = us.Create(u)
-	}
-
-	// ts.CreateTweet()
-}
-
-func populateUser(username, email, password, bio, profile, header string) *model.User {
-	u := model.NewUser()
-	u.Username = username
-	u.Email = email
-	u.Password = password
-	u.Bio = bio
-	u.ProfilePicture = profile
-	u.HeaderPicture = header
-	return u
 }
