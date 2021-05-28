@@ -14,8 +14,13 @@ var clientInstanceError error
 var mongoOnce sync.Once
 
 const (
+	// connect to local database
 	// PATH = "mongodb://localhost:27017"
-	PATH = "mongodb+srv://arman-aminian:***@twitter-db.ugqqk.mongodb.net/twitter?retryWrites=true&w=majority"
+
+	// ### is your username
+	// *** is your password
+	// connect to atlas mongodb
+	PATH = "mongodb+srv://###:***@twitter-db.ugqqk.mongodb.net/twitter?retryWrites=true&w=majority"
 )
 
 func GetMongoClient() (*mongo.Client, error) {

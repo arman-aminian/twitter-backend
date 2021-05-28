@@ -283,7 +283,3 @@ func newLikeAndRetweetResponse(us user.Store, srcUsername string, t *model.Tweet
 	tr.RetweetsList = &temp2
 	return tr
 }
-
-type timelineResponse struct {
-	timeline *[]model.Tweet
-}

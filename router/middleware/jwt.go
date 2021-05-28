@@ -38,14 +38,7 @@ func JWTWithConfig(config JWTConfig) echo.MiddlewareFunc {
 			if err != nil {
 				return c.JSON(http.StatusForbidden, utils.NewError(ErrJWTInvalid))
 			}
-			//if auth == "" {
-			//	cookie, err := c.Cookie("Token")
-			//	if err != nil {
-			//		c.Set("username", "")
-			//		return next(c)
-			//	}
-			//	auth = cookie.Value
-			//}
+
 			if auth == "" {
 				if config.Skipper != nil {
 					if config.Skipper(c) {

@@ -52,7 +52,7 @@ func GlobalWithConfig(config GlobalConfig) echo.MiddlewareFunc {
 	}
 }
 
-// jwtFromHeader returns a `jwtExtractor` that extracts token from the request header.
+// globalFromHeader returns a `jwtExtractor` that extracts token from the request header.
 func globalFromHeader(header string, authScheme string) jwtExtractor {
 	return func(c echo.Context) (string, error) {
 		auth := c.Request().Header.Get(header)

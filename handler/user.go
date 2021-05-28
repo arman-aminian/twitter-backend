@@ -38,6 +38,7 @@ func (h *Handler) SignUp(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, utils.NewError(err))
 	}
 	response := newUserResponse(u)
+
 	//cookie := new(http.Cookie)
 	//cookie.Name = "Token"
 	//cookie.Value = response.User.Token
