@@ -179,7 +179,6 @@ func (us *UserStore) GetUserListFromUsernameList(usernames []string) (*[]model.U
 	if err != nil {
 		return nil, err
 	}
-	// var episodes []bson.M
 	if err = res.All(context.TODO(), &users); err != nil {
 		return nil, err
 	}
@@ -193,7 +192,6 @@ func (us *UserStore) GetTweetIdListFromUsernameList(usernames []string) (*[]prim
 	if err != nil {
 		return nil, err
 	}
-	// var episodes []bson.M
 	if err = res.All(context.TODO(), &users); err != nil {
 		return nil, err
 	}
