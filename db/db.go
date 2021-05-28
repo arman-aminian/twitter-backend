@@ -17,9 +17,9 @@ const (
 	// connect to local database
 	// PATH = "mongodb://localhost:27017"
 
-	// ### is your username
-	// *** is your password
-	// connect to atlas mongodb
+	// ### is your mongodb Atlas username
+	// *** is your mongodb Atlas password
+	// connect to mongodb Atlas
 	PATH = "mongodb+srv://###:***@twitter-db.ugqqk.mongodb.net/twitter?retryWrites=true&w=majority"
 )
 

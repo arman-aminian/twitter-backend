@@ -20,13 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="013294ec-98ac-45bd-af48-e710fa1307fc" name="Default Changelist" comment="Code cleaned.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/response.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/response.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/tweet.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/tweet.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router/middleware/global.go" beforeDir="false" afterPath="$PROJECT_DIR$/router/middleware/global.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router/middleware/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/router/middleware/jwt.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
